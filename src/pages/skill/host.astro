@@ -1,0 +1,14 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import NavBar from "../../components/NavBar.astro";
+import { hostdatas } from "../../datas/skills/hostdatas";
+import List from "../../components/List.astro";
+---
+<Layout>
+    <NavBar />
+    <h1 class="text-4xl text-center font-bold mt-8">Hébergement</h1>
+    <p class="text-lg mt-4 mx-4">
+        Pour héberger votre site web, il existe beaucoup d'alternatives. Certaines sont gratuites, d'autres payantes. Il est important de bien choisir son hébergeur en fonction de ses besoins et de comprendre comment cela fonctionne.
+    </p>
+    <List data={ hostdatas } imagePath="/_ad5a567a-90a1-470c-bf46-78f39bf701db.jpeg" />
+</Layout>

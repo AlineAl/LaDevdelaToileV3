@@ -1,0 +1,155 @@
+---
+import { Icon } from 'astro-icon/components'
+import { Image } from 'astro:assets';
+---
+
+<header class="surface-menu nav sticky top-0 z-50 bg-white border-b border-b-black-100">
+    <nav class="container-xl md:flex md:flex-nowrap items-center gap-6 p-4">
+        <div class="flex">
+            <a href="/">
+                <Image loading="eager" inferSize src="https://i.imgur.com/QQqsY9h.png" alt="Logo" class="w-28 h-28 md:w-32 md:h-32" />
+            </a>
+
+            <button id="menu-toggle" class="block md:hidden ml-auto focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+
+        <ul class="nav-underline nav-links hidden relative flex-nowrap pl-4 uppercase tracking-wide before:absolute before:inset-y-4 before:left-0 before:border-l-2 before:border-primary before:border-opacity-50 md:flex">
+            <li class="hover:font-bold">
+                <a href="/conference" class="block py-3">Conférences</a>
+            </li>
+            <li class="hover:font-bold">
+                <a href="/meetups" class="block py-3">Meetups</a>
+            </li>
+            <li class="hover:font-bold">
+                <a href="/podcasts" class="block py-3">Podcasts</a>
+            </li>
+            <li class="hover:font-bold">
+                <a href="#" class="block py-3">Notes</a>
+            </li>
+            <li class="hover:font-bold">
+                <a href="#" class="block py-3">Ouvrages</a>
+            </li>
+        </ul>
+
+        <ul id="nav-links" class="flex flex-col mt-8 justify-center items-center md:hidden uppercase">
+            <li>
+                <a href="/conference" class="block py-3">Conférences</a>
+            </li>
+            <li>
+                <a href="/meetups" class="block py-3">Meetups</a>
+            </li>
+            <li>
+                <a href="/podcasts" class="block py-3">Podcasts</a>
+            </li>
+            <li>
+                <a href="#" class="block py-3">Notes</a>
+            </li>
+            <li>
+                <a href="#" class="block py-3">Ouvrages</a>
+            </li>
+        </ul>
+
+        <ul id="nav-socials-links" class="nav-underline relative ml-auto md:flex flex flex-nowrap md:justify-end justify-center md:pl-4 uppercase md:mr-0">
+            <li>
+                <a href="https://twitter.com/AlineLSMN" class="block py-3"><Icon class="w-8 h-8 text-sky-500" name="mdi:twitter" /></a>
+            </li>
+            <li>
+                <a href="https://www.linkedin.com/in/ladevdelatoile/" class="block py-3"><Icon class="w-8 h-8 text-sky-500" name="mdi:linkedin" /></a>
+            </li>
+            <li>
+                <a href="https://github.com/AlineAl" class="block py-3"><Icon class="w-8 h-8 text-sky-500" name="mdi:github" /></a>
+            </li>
+            <li>
+                <a href="https://www.youtube.com/channel/UCXIQ74jh19FjnSsOf97NIzg" class="block py-3"><Icon class="w-8 h-8 text-sky-500" name="mdi:youtube" /></a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<script>
+    let lastScrollTop = 0;
+    const navbar = document.querySelector('.nav');
+    const menuToggle = document.getElementById('menu-toggle');
+    const navLinks = document.getElementById('nav-links');
+    const socialLinks = document.getElementById('nav-socials-links');
+
+    menuToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('hidden');
+        socialLinks.classList.toggle('hidden');
+
+        if (navLinks.classList.contains('hidden')) {
+            menuToggle.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>`;
+        } else {
+            menuToggle.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>`;
+        }
+    });
+
+    if (navbar) {
+        const navbarHeight = navbar.offsetHeight;
+
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            if (scrollTop > lastScrollTop && scrollTop > navbarHeight) {
+                navbar.style.transform = `translateY(-100%)`;
+                navbar.style.transition = 'transform 0.3s ease-in-out';
+            } else if (scrollTop < lastScrollTop) {
+                navbar.style.transform = 'translateY(0)';
+                navbar.style.transition = 'transform 0.3s ease-in-out';
+            }
+
+            lastScrollTop = scrollTop;
+        });
+    }
+</script>
+
+<style>
+    .nav {
+        @apply transition-transform duration-500;
+        ul {
+            --_gap: 1rem;
+        }
+        .nav-underline li:not(ul li ul li) {
+            @apply relative overflow-hidden;
+            padding: calc(var(--_gap) / 2);
+            min-inline-size: 1.3rem;
+
+            &::after {
+                @apply absolute rounded-full bg-sky-500;
+                content: "";
+                inset-inline: 0;
+                inset-block-end: 0;
+                block-size: 5px;
+
+                translate: var(--_translate, 0);
+                scale: var(--_scale, 0) 1;
+                transition:
+                        scale 100ms var(--_scale-delay, 0ms),
+                        translate 200ms,
+                        color 200ms;
+            }
+            &:hover ~ li {
+                --_translate: -100%;
+                --_scale-delay: 200ms;
+            }
+        }
+        &:hover li {
+            --_translate: 100%;
+            --_scale-delay: 200ms;
+        }
+
+        li:hover {
+            --_scale: 1;
+            --_translate: 0;
+            --_scale-delay: 0ms;
+        }
+    }
+</style>

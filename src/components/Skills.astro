@@ -1,0 +1,13 @@
+---
+import Card from "./Card.astro";
+import { skills } from "../datas/skills";
+---
+
+<ul class="m-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 auto-rows-[1fr]">
+    {skills.map((skill) => (
+        <Card title={skill.title} description={skill.description} icon={skill.icon} path={skill.path} />
+    ))}
+</ul>
+
+
+

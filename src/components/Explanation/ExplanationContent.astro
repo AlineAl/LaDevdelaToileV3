@@ -1,0 +1,18 @@
+---
+import Footer from "../Footer.astro";
+import { presentationsLinks} from "../../datas/presentationsLinks";
+import CardExplanation from "./CardExplanation.astro";
+import List from "../List.astro";
+---
+<section class="m-4">
+        <div class="max-w-4xl mx-auto px-7 lg:px-0 mt-2">
+            <h2 class="text-2xl font-bold leading-10 tracking-tight text-neutral-900 dark:text-neutral-100">
+                Voici quelques suggestions
+            </h2>
+            <p class="mb-6 text-base text-neutral-600 dark:text-neutral-400">
+                Je ne vais rien vous décrire que ce que je ne fais pas moi-même. J'ai pris le temps de réfléchir aux outils dont j'ai besoin et qui fonctionnent pour moi. Il se pourrait que ce soit autre pour vous.
+            </p>
+            <List data={presentationsLinks} imagePath="./_d9c3cfe4-4397-4630-b3a8-9d13a40390dc.jpeg" />
+        </div>
+    <Footer />
+</section>

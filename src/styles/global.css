@@ -1,0 +1,11 @@
+@font-face {
+    font-family: 'Luciole';
+    src: url('/Luciole_webfonts/Luciole-Regular/Luciole-Regular.woff2') format('woff2'),
+         url('/Luciole_webfonts/Luciole-Regular/Luciole-Regular.woff') format('woff');
+}
+
+[data-is-scrolling-up="false"][data-is-top="false"] {
+    .nav {
+        @apply -translate-y-full;
+    }
+}
