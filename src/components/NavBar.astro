@@ -7,7 +7,7 @@ import { Image } from 'astro:assets';
     <nav class="container-xl md:flex md:flex-nowrap items-center gap-6 p-4">
         <div class="flex">
             <a href="/">
-                <Image loading="eager" inferSize src="https://i.imgur.com/QQqsY9h.png" alt="Logo" class="w-28 h-28 md:w-32 md:h-32" />
+                <Image loading="eager" inferSize src="https://i.imgur.com/QQqsY9h.png" alt="Logo" class="w-20 h-20 md:w-32 md:h-32" />
             </a>
 
             <button id="menu-toggle" class="block md:hidden ml-auto focus:outline-none">
@@ -35,7 +35,7 @@ import { Image } from 'astro:assets';
             </li>
         </ul>
 
-        <ul id="nav-links" class="flex flex-col mt-8 justify-center items-center md:hidden uppercase">
+        <ul id="nav-links" class="flex hidden flex-col mt-8 justify-center items-center md:hidden uppercase">
             <li>
                 <a href="/conference" class="block py-3">Conférences</a>
             </li>
@@ -53,7 +53,7 @@ import { Image } from 'astro:assets';
             </li>
         </ul>
 
-        <ul id="nav-socials-links" class="nav-underline relative ml-auto md:flex flex flex-nowrap md:justify-end justify-center md:pl-4 uppercase md:mr-0">
+        <ul id="nav-socials-links" class="nav-underline hidden relative ml-auto md:flex flex flex-nowrap md:justify-end justify-center md:pl-4 uppercase md:mr-0">
             <li>
                 <a href="https://twitter.com/AlineLSMN" class="block py-3"><Icon class="w-8 h-8 text-sky-500" name="mdi:twitter" /></a>
             </li>
@@ -76,6 +76,10 @@ import { Image } from 'astro:assets';
     const menuToggle = document.getElementById('menu-toggle');
     const navLinks = document.getElementById('nav-links');
     const socialLinks = document.getElementById('nav-socials-links');
+
+    menuToggle.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>`;
 
     menuToggle.addEventListener('click', () => {
         navLinks.classList.toggle('hidden');
