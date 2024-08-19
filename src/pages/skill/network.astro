@@ -1,0 +1,14 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import NavBar from "../../components/NavBar.astro";
+import { networkdatas } from "../../datas/skills/networkdatas";
+import List from "../../components/List.astro";
+---
+<Layout title="Réseau">
+    <NavBar />
+    <h1 class="text-4xl text-center font-bold mt-8">Réseau</h1>
+    <p class="text-lg mt-4 mx-4">
+        Le réseau est un ensemble d'équipements interconnectés qui permettent de communiquer et d'échanger des données. Il existe différents types de réseaux, des réseaux locaux aux réseaux étendus, en passant par Internet. Il concerne aussi tout ce qui touche le fonctionnement du web en général, la sécurité, les protocoles, etc...
+    </p>
+    <List data={ networkdatas } imagePath="/_3227ca23-5d70-44c4-beac-3c3941ecd66c.jpeg" />
+</Layout>

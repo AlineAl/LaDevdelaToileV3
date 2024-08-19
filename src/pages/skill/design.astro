@@ -1,0 +1,14 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import NavBar from "../../components/NavBar.astro";
+import { designdatas} from "../../datas/skills/designdatas";
+import List from "../../components/List.astro";
+---
+<Layout title="Design">
+    <NavBar />
+    <h1 class="text-4xl text-center font-bold mt-8">Design</h1>
+    <p class="text-lg mt-4 mx-4">
+        Le design est une discipline qui consiste à concevoir des objets, des espaces, des services ou des messages en tenant compte des besoins et des attentes des utilisateurices. Il s'agit de créer des solutions innovantes et esthétiques qui répondent à des problématiques spécifiques.
+    </p>
+    <List data={ designdatas } imagePath="/_ffb6e54a-3602-49d2-b681-a00a3e40ccb7.jpeg" />
+</Layout>
