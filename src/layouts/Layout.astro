@@ -36,11 +36,34 @@ const { title } = Astro.props;
 
 	@font-face {
 		font-family: 'Luciole';
-		src: url('/Luciole_webfonts/Luciole-Regular/Luciole-Regular.woff2') format('woff2'),
-		url('/Luciole_webfonts/Luciole-Regular/Luciole-Regular.woff') format('woff');
+		src: url('/fonts/Luciole_webfonts/Luciole-Regular/Luciole-Regular.woff2') format('woff2');
+		font-weight: normal;
+		font-style: normal;
 	}
 
-	html {
+	@font-face {
+		font-family: 'Luciole';
+		src: url('/fonts/Luciole_webfonts/Luciole-Bold/Luciole-Bold.woff2') format('woff2');
+		font-weight: bold;
+		font-style: normal;
+	}
+
+	@font-face {
+		font-family: 'Luciole';
+		src: url('/fonts/Luciole_webfonts/Luciole-Italic/Luciole-Italic.woff2') format('woff2');
+		font-weight: normal;
+		font-style: italic;
+	}
+
+	@font-face {
+		font-family: 'Luciole';
+		src: url('/fonts/Luciole_webfonts/Luciole-BoldItalic/Luciole-BoldItalic.woff2') format('woff2');
+		font-weight: bold;
+		font-style: italic;
+	}
+
+
+	body {
 		font-family: Luciole, sans-serif;
 	}
 
