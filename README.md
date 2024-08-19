@@ -1,7 +1,9 @@
-# Astro Starter Kit: Basics
+# Welcome to my Astro project!
 
-```sh
-npm create astro@latest -- --template basics
+## 🚀 Basics to running this project
+
+1. ```sh
+npm install
 ```
 
 [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
