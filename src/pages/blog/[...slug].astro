@@ -3,6 +3,7 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import Footer from "../../components/Footer.astro";
 import NavBar from "../../components/NavBar.astro";
+export const prerender = true;
 
 export interface Props {
     post: CollectionEntry<"blog">;
