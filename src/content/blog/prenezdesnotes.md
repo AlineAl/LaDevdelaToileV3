@@ -3,7 +3,7 @@ title: La prise de notes
 description: Comment prendre des notes efficacement ? Et pour quelles raisons le faire ?
 ---
 
-<img class="w-full h-96 object-cover" src="/public/notesIllustration.jpeg" alt="Furette de couleur chocolat tenant un crayon dans ses pattes pour prendre des notes" />
+<img class="w-full h-96 object-cover" src="/notesIllustration.jpeg" alt="Furette de couleur chocolat tenant un crayon dans ses pattes pour prendre des notes" />
 
 Avant de se lancer dans l'apprentissage, il est important de comprendre la façon dont nous fonctionnons mais surtout ce qui nous convient le mieux. Nous avons des méthodes de mémorisation, de compréhension et d’assimilation qui nous sont propres. Certain·e·s d’entre nous serons plus visuel·le·s, d’autres plus auditif·ve·s etc…
 

@@ -3,7 +3,7 @@ title: Ciblez vos outils
 description: Quels outils choisir pour progresser et apprendre ? Comment les choisir ?
 ---
 
-<img class="w-full h-96 object-cover" src="/public/_c25b0c88-be4a-4181-a0ac-26d1450e7226.jpeg" alt="Furette de couleur chocolat tenant un crayon dans ses pattes pour prendre des notes" />
+<img class="w-full h-96 object-cover" src="/_c25b0c88-be4a-4181-a0ac-26d1450e7226.jpeg" alt="Furette de couleur chocolat tenant un crayon dans ses pattes pour prendre des notes" />
 
 Le talent n'existe pas. 
 

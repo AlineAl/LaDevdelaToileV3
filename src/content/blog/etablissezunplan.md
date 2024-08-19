@@ -3,7 +3,7 @@ title: Établissez un plan
 description: Vous commencez dans le dev et tout vous semble être comme une montagne dont vous ne voyez pas le sommet ? Pas de panique, en y allant étape par étape, avec un plan à suivre il vous sera plus simple d'y voir plus clair.
 ---
 
-<img class="w-full h-96 object-cover" src="/public/_21c1846f-36a7-497d-9d43-84a1243d2d78.jpeg" alt="Illustration d'un furet tenant un agenda dans ses pattes et portant une paire de lunettes" />
+<img class="w-full h-96 object-cover" src="/_21c1846f-36a7-497d-9d43-84a1243d2d78.jpeg" alt="Illustration d'un furet tenant un agenda dans ses pattes et portant une paire de lunettes" />
 
 Établir un plan c’est se donner une ligne directive à suivre pour pouvoir parvenir à son ou ses objectifs. Il y a les petits objectifs, plus proches et abordables en terme de temporalité et celui ou ceux que nous avons à long terme: le ou les objectifs finaux.
 
