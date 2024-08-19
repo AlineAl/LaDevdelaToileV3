@@ -16,7 +16,7 @@ npm run dev
 
 ## Great ! Now you can start coding 🎉
 
-1 - Add your resources or known resources in the `datas` folder
+### Add your resources or known resources in the `datas` folder
 - Go to the `datas` folder 
 - Inside `datas` folder, go to the `skills` folder
 - Click on the file that you want to edit
