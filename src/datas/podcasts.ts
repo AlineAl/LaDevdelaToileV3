@@ -14,4 +14,9 @@ export const podcasts = [
         description: 'Podcasts animés par Nicolas Brondin-Bernard sur le développement web, son fonctionnement et toute la culture tech autour.',
         path: 'https://code-garage.fr/podcast/'
     },
+    {
+        title: 'React Native Radio',
+        description: 'Podcasts pour en apprendre plus sur React Native, ses nouveautés et les bonnes pratiques.',
+        path: 'https://reactnativeradio.com/'
+    },
 ];
