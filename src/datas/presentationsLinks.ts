@@ -14,9 +14,4 @@ export const presentationsLinks = [
         description: "Avoir le temps, ce n'est pas toujours simple. Concilier sa vie professionnelle et personnelle est déjà un challenge en soi alors consacrer du temps à sa formation peut être compliqué. C'est pourquoi il est important de s'organiser. Vous pouvez par exemple établir un planning hebdomadaire. Cela vous permettra de voir plus clair et de vous organiser en fonction de vos disponibilités.",
         path: '/blog/etablissezunplan',
     },
-    /*{
-        title: "Rejoignez le Discord",
-        description: "Le principe est d'être le plus autonome possible. Mais autonomie ne signifie pas solitude. Savoir demander de l'aide c'est une compétence à part entière tout aussi importante ! Alors j'ai ouvert un Discord qui sera aussi l'occasion de faire des ateliers ensemble.",
-        link: "/blog/rejoignezlediscord",
-    }*/
 ];
