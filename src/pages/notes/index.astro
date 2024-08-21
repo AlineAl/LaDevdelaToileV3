@@ -1,0 +1,44 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import NavBar from "../../components/NavBar.astro";
+import Card from "../../components/Card.astro";
+
+const notes = [
+    { title: "Note 1", description: "Description for note 1", path: "/notes/note-1" },
+    { title: "Note 2", description: "Description for note 2", path: "/notes/note-2" },
+    { title: "Note 3", description: "Description for note 3", path: "/notes/note-3" },
+];
+---
+
+<Layout title="Notes">
+    <NavBar />
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-center mb-8">Notes</h1>
+        <div class="col-span-12 lg:col-span-9">
+            <div class="grid md:grid-cols-3 ltablet:grid-cols-3 lg:grid-cols-3 gap-x-6 ptablet:gap-x-4 gap-y-16 pt-10">
+                <a href="https://www.notion.so/Culture-Web-47604875936c4d83bfbc5f66cb83e431" class="relative rounded-lg mt-4 hover:scale-105 hover:transition cursor-pointer border border-muted-200 dark:border-muted-800 bg-white dark:bg-muted-900 transition-all duration-300 p-4" :class="'p-4'">
+                    <div class="relative w-full h-40 rounded-lg bg-muted-200 dark:bg-muted-800">
+                        <img class="absolute bottom-0 inset-x-0 mx-auto w-full max-w-72 ptablet:max-w-[150px]" src="/_7cc475b6-8a8e-4ce1-b1c1-cc6084f92ded-removebg-preview.png" alt="Doctor">
+                    </div>
+                    <div class="font-sans mt-3">
+                        <h4 class="font-semibold text-muted-800 dark:text-muted-100">
+                            Mes notes
+                        </h4>
+                        <p class="text-sm text-muted-400">
+                            Par LaDevdelaToile
+                        </p>
+                    </div>
+                    <div class="mt-2">
+                        <p class="text-sm ptablet:text-xs text-muted-500 dark:text-muted-400">
+                            Retrouvez ici mes notes sur les contenus et ouvrages que j'ai pu suivre autour du dev web. N'hésitez pas à y jeter un oeil !
+                        </p>
+                    </div>
+                    <div class="flex items-center justify-between font-sans mt-3">
+                        <div class="flex items-center gap-2">
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</Layout>

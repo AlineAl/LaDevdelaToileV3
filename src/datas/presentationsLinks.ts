@@ -6,7 +6,7 @@ export const presentationsLinks = [
     },
     {
         title: 'Prenez des notes',
-        description: 'La prise de note doit être concise et rapide. Une dizaine de minutes par jour sont suffisantes ! Vous pouvez utiliser tout ce que vous voulez: un carnet, un bloc-notes, une application de prise de notes sur votre téléphone, votre ordinateur, votre tablette. Peu importe tant que cet outil vous convient.',
+        description: 'La prise de notes doit être concise et rapide. Une dizaine de minutes par jour sont suffisantes ! Vous pouvez utiliser tout ce que vous voulez: un carnet, un bloc-notes, une application de prise de notes sur votre téléphone, votre ordinateur, votre tablette. Peu importe tant que cet outil vous convient.',
         path: '/blog/prenezdesnotes',
     },
     {
