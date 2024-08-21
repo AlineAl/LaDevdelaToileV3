@@ -56,8 +56,8 @@ npm run dev
 ### Add your known **conferences** links in the `datas` folder with event that already created
 - Go to the `datas` folder
 - Go to the `conferences` folder
-- Go to the folder of the event that you want to add a conference
-- Click on the file of the event that you want to add a conference with the following format:
+- Go to the folder of the event where you want to add a conference
+- Click on the file of the event where you want to add a conference with the following format:
 ```
     {
         title: 'Write title of the conference here',
