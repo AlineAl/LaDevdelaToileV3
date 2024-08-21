@@ -14,9 +14,18 @@ npm install
 npm run dev
 ```
 
+## 🧠 Basics to contribute to this project
+
+1. Fork the project (click on the fork button)
+2. Clone the project on your local machine
+3. Push your branch on your fork
+4. Click on `contribute` on the project page
+5. Click on `open a pull request`
+6. Merge from your main branch to the main branch of this project
+
 ## Great ! Now you can start coding 🎉
 
-### Add your resources or known resources in the `datas` folder
+### Add your resources or known resources in the `src/datas` folder
 - Go to the `datas` folder 
 - Inside `datas` folder, go to the `skills` folder
 - Click on the file that you want to edit
@@ -29,7 +38,7 @@ npm run dev
     }
 ```
 
-### Add your known **meetups** links in the `datas` folder
+### Add your known **meetups** links in the `src/datas` folder
 - Go to the `datas` folder 
 - Click on the `meetups.ts` file
 - Add your meetups in the file with the following format:
@@ -41,7 +50,7 @@ npm run dev
     }
 ```
 
-### Add your known **podcasts** links in the `datas` folder
+### Add your known **podcasts** links in the `src/datas` folder
 - Go to the `datas` folder
 - Click on the `podcasts.ts` file
 - Add your podcasts in the file with the following format:
@@ -53,7 +62,7 @@ npm run dev
     }
 ```
 
-### Add your known **conferences** links in the `datas` folder with event that already created
+### Add your known **conferences** links in the `src/datas` folder
 - Go to the `datas` folder
 - Go to the `conferences` folder
 - Go to the folder of the event where you want to add a conference
@@ -66,10 +75,10 @@ npm run dev
     }
 ```
 
-### Add your known **events around web development with conferences** links in the `datas` folder
+### Add your known **events around web development with conferences** links in the `src/datas` folder
 /!\ Create an event around web development with conferences ONLY IF NOT EXISTS
 
-1 - First, you need to create a folder for the event around web development with conferences if not exists
+1 - First, you need to create a folder
 - Go to the `datas` folder
 - Go to the `conferences` folder
 - Create a new folder with the name of the conference. For example, if you want to add a new conference for AFUP, create a folder named `AFUP`
@@ -83,7 +92,7 @@ npm run dev
     }
 ```
 
-2 - Second, you need to create a page for the event around web development with conferences
+2 - Second, you need to create a page
 - Go to the `pages` folder
 - Go to the `conferences` folder
 - Create a new file with the following format. For example, if you want to add a new conference for AFUP, create a file named `AFUP.astro`:
