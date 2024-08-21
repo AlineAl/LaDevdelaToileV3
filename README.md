@@ -26,7 +26,7 @@ npm run dev
 ## Great ! Now you can start coding 🎉
 
 ### Add your resources or known resources in the `src/datas` folder
-- Go to the `datas` folder 
+- Go to the `datas` folder
 - Inside `datas` folder, go to the `skills` folder
 - Click on the file that you want to edit
 - Add your resources in the file with the following format:
@@ -39,7 +39,7 @@ npm run dev
 ```
 
 ### Add your known **meetups** links in the `src/datas` folder
-- Go to the `datas` folder 
+- Go to the `datas` folder
 - Click on the `meetups.ts` file
 - Add your meetups in the file with the following format:
 ```
@@ -65,8 +65,8 @@ npm run dev
 ### Add your known **conferences** links in the `src/datas` folder
 - Go to the `datas` folder
 - Go to the `conferences` folder
-- Go to the folder of the event where you want to add a conference
-- Click on the file of the event where you want to add a conference with the following format:
+- Go to the folder of the event that you want to add a conference
+- Click on the file of the event that you want to add a conference with the following format:
 ```
     {
         title: 'Write title of the conference here',
