@@ -46,5 +46,11 @@ export const conferences = [
         description: "Touraine Tech est un événement qui se déroule à Tours et qui propose des conférences sur divers sujets. Le principe est aussi de donner la voix aux speakers qui débutent.",
         icon: 'mdi:web',
         path: '/conferences/tourainetech'
+    },
+    {
+        title: "OpenTechCon",
+        description: "L'OpenTechCon se veut être un événement inclusif, ouvert à tou·te·s, et bienveillant. Il se déroule en ligne, pour permettre à chacun·e de participer, quelque soit son lieu de résidence. L'événement est gratuit, pour que l'argent ne soit pas un frein à la participation.",
+        icon: 'mdi:web',
+        path: '/conferences/opentechcon'
     }
 ];

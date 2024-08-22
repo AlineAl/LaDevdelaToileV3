@@ -1,0 +1,10 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import NavBar from "../../components/NavBar.astro";
+import { OpenTechConConferences } from "../../datas/conferences/OpenTechCon/OpenTechConconferences";
+import List from "../../components/List.astro";
+---
+<Layout title="OpenTechCon" >
+    <NavBar />
+    <List data={OpenTechConConferences} imagePath="/_759B362E-6183-40DC-A54E-53A925C20BE1_OPTC.webp" />
+</Layout>
