@@ -1,5 +1,10 @@
 export const meetups = [
     {
+        title: 'Software Craft Lille',
+        description: 'Meetup ouvert à tous·tes les développeur·euse·s passionné·e·s par le Software Craftsmanship.',
+        path: 'https://www.meetup.com/fr-FR/software-craftsmanship-lille/'
+    },
+    {
         title: 'Software Crafters Lyon',
         description: 'Meetup ouvert à tous·tes les développeur·euse·s passionné·e·s par le Software Craftsmanship.',
         path: 'https://www.meetup.com/fr-FR/software-craftsmanship-lyon/'
