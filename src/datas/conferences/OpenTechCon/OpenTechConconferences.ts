@@ -1,10 +1,10 @@
 export const OpenTechConConferences = [
     {
-        "title": "Ouverture de l'événement",
+        "title": "Ouverture de l'événement (prochainement le 28 septembre 2024)",
         "description": "Par Yoan Bernabeu",
         "path": "https://opentechcon.fr/programme"
     },
-    {
+    /*{
         "title": "Keynote d'ouverture",
         "description": "Par Marcy Ericka Charollois",
         "path": "https://opentechcon.fr/programme"
@@ -83,5 +83,5 @@ export const OpenTechConConferences = [
         "title": "Clôture de l'événement",
         "description": "Par Yoan Bernabeu",
         "path": "https://opentechcon.fr/programme"
-    }
+    }*/
 ]
