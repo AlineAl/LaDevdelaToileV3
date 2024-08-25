@@ -1,11 +1,11 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import NavBar from "../../components/NavBar.astro";
-import { notes } from "../../datas/notes";
+import { books } from "../../datas/books";
 import ListShareRessource from "../../components/ListShareRessource.astro";
 ---
 
-<Layout title="Notes">
+<Layout title="Ouvrages">
     <NavBar />
-    <ListShareRessource title="Notes" data={notes}  />
+    <ListShareRessource title="Ouvrages" data={books}  />
 </Layout>
