@@ -108,3 +108,35 @@ npm run dev
         <List data={AFUPConferences} imagePath="/_759b362e-6183-40dc-a54e-53a925c20be1.jpeg" />
     </Layout>
 ```
+
+## Add a book in the `src/datas` folder
+- Go to the `datas` folder
+- Click on the `books.ts` file
+- Add your books in the file with the following format:
+```
+    {
+        title: 'Write title of the book here',
+        author: 'Write author of the book here',
+        description: 'Add a low description',
+        imagePath: './_5c777f50-f03f-4e3e-8035-84d6d137a34e-removebg-preview.png',
+        path: 'Share the path of the book here'
+    },
+```
+/!\ The `imagePath` is the path of the image of the book and I only want FERRET :D. You can less me to choose illustration. If you want to choose it, you need to add the image in the `public` folder and share the path of the image in the `imagePath` key. /!\
+
+## Add your notes link in the `src/datas` folder
+- Go to the `datas` folder
+- Click on the `notes.ts` file
+- Add your notes in the file with the following format:
+```
+    {
+        title: 'Write title of the notes here',
+        author: 'Write author of the notes here',
+        description: 'Add a low description',
+        imagePath: '/_7cc475b6-8a8e-4ce1-b1c1-cc6084f92ded-removebg-preview.png',
+        path: 'Share the path of the notes here'
+    },
+```
+/!\ The `imagePath` is the path of the image of the book and I only want FERRET :D. You can less me to choose illustration. If you want to choose it, you need to add the image in the `public` folder and share the path of the image in the `imagePath` key. /!\
+        
+        
