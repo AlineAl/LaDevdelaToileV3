@@ -19,4 +19,19 @@ export const podcasts = [
         description: 'Podcasts pour en apprendre plus sur React Native, ses nouveautés et les bonnes pratiques.',
         path: 'https://reactnativeradio.com/'
     },
+    {
+        title: 'Zenikast',
+        description: 'Podcast porté par les collaboratrices et collaborateurs Zenika afin de parler de sujet tech, mais pas que.',
+        path: 'https://podcasters.spotify.com/pod/show/zenika6'
+    },
+    {
+        title: 'Message à caractère informatique',
+        description: 'Podcast animé par l\'équipe de Clever Cloud',
+        path: 'https://www.clever-cloud.com/fr/podcast/'
+    },
+    {
+        title: 'Tranches de tech',
+        description: 'Podcast animé par l\'équipe des DevRel d\'OVH ',
+        path: 'https://smartlink.ausha.co/tranches-de-tech'
+    }
 ];
