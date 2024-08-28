@@ -19,4 +19,9 @@ export const meetups = [
         description: 'Meetup pour tous·tes les développeur·euse·s passionné·e·s par TypeScript.',
         path: 'https://www.meetup.com/fr-FR/paris-typescript/'
     },
+    {
+        title: 'Nantes Community',
+        description: 'Liste des communautés tech actives sur Nantes',
+        path: 'https://nantes.community/'
+    },
 ];
