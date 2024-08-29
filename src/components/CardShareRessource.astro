@@ -13,9 +13,9 @@ const { title, author, description, path, imagePath } = Astro.props;
 
 <div class="col-span-12 lg:col-span-9">
     <div class="grid md:grid-cols-3 ltablet:grid-cols-3 lg:grid-cols-3 gap-x-6 ptablet:gap-x-4 gap-y-16 pt-10">
-        <a href={path} class="relative rounded-lg mt-4 hover:scale-105 hover:transition cursor-pointer border border-muted-200 dark:border-muted-800 bg-white dark:bg-muted-900 transition-all duration-300 p-4" :class="'p-4'">
+        <a href={path} class="relative rounded-lg mt-8 hover:scale-105 hover:transition cursor-pointer border border-muted-200 dark:border-muted-800 bg-white dark:bg-muted-900 transition-all duration-300 p-4" :class="'p-4'">
             <div class="relative w-full h-40 rounded-lg bg-muted-200 dark:bg-muted-800">
-                <img class="absolute bottom-0 inset-x-0 mx-auto w-full max-w-72 ptablet:max-w-[150px]" src={imagePath} alt="Doctor">
+                <img class="absolute bottom-0 inset-x-0 mx-auto w-full max-w-60" src={imagePath} alt="Doctor">
             </div>
             <div class="font-sans mt-3">
                 <h4 class="font-semibold text-muted-800 dark:text-muted-100">
