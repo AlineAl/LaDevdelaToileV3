@@ -1,0 +1,36 @@
+---
+import 'leaflet/dist/leaflet.css';
+---
+
+<div id="map" style="height: 400px;"></div>
+
+<script>
+	import { events } from '../datas/maps/events.ts';
+
+	document.addEventListener('DOMContentLoaded', async () => {
+		const L = (await import('leaflet')).default;
+
+		const map = L.map('map').setView([48.866667, 2.333333], 10); // Coordonnées par défaut
+
+		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+		}).addTo(map);
+
+		events.forEach(event => {
+      const marker = L.marker(event.location.coordinates).addTo(map);
+	  const bounds = L.latLngBounds(events.map(event => L.latLng(event.location.coordinates[0], event.location.coordinates[1])));
+      marker.bindPopup(`
+        <div class="popup-content">
+          <h3 class="font-bold text-lg">${event.name}</h3>
+          <p class="text-gray-700">${event.description}</p>
+          <p class="text-sm text-gray-500">📅 ${new Date(event.date).toLocaleString()}</p>
+          <p class="text-sm text-gray-500">🏙️ ${event.location.city}</p>
+          <a href="${event.url}" target="_blank" class="text-blue-500 hover:underline">Plus de détails</a>
+        </div>
+      `);
+
+	  map.fitBounds(bounds);
+
+    });
+	});
+</script>

@@ -5,6 +5,7 @@ import Footer from "../../components/Footer.astro";
 
 import { conferences } from "../../datas/conferences";
 import Card from "../../components/Card.astro";
+import Map from "../../components/Map.astro";
 ---
 <Layout title="Conférences">
     <NavBar />
@@ -17,5 +18,10 @@ import Card from "../../components/Card.astro";
             <Card title={conference.title} description={conference.description} icon={conference.icon} path={conference.path} />
         ))}
     </ul>
+
+    <div class="m-4">
+        <Map/>
+    </div>
+
     <Footer />
 </Layout>
