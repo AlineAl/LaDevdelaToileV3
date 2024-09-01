@@ -3,7 +3,12 @@ export const conferences = [
         title: 'Paris Web',
         description: 'Grand événement annuel de la communauté francophone du web. Il est dédié aux standards, à l\'accessibilité, à la qualité et à la conception web.',
         icon: 'mdi:bug',
-        path:  '/conferences/parisweb'
+        path:  '/conferences/parisweb',
+        location: {
+            city: "Paris",
+            address: "9-11 rue Robert et Sonia Delaunay, 75011 Paris",
+            coordinates: [48.8551324, 2.3909413]
+        },
     },
     {
         title: 'AFUP',

@@ -6,22 +6,36 @@ import Footer from "../../components/Footer.astro";
 import { conferences } from "../../datas/conferences";
 import Card from "../../components/Card.astro";
 import Map from "../../components/Map.astro";
+
 ---
+
 <Layout title="Conférences">
     <NavBar />
     <h1 class="text-4xl text-center font-bold mt-8">Conférences</h1>
     <p class="text-center text-lg mt-4 mx-4">
         Retrouvez ici une liste non-exhaustive de nombreuses conférences tech qui vous en apprendront davantage sur le monde du développement.
     </p>
+    <button id="button" class="flex items-center justify-center p-0.5 mx-auto my-4 text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-[#0369A1] group-hover:from-cyan-500 group-hover:to-[#0369A1] hover:text-white focus:ring-4 focus:outline-none focus:ring-[#0369A1]">
+        <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+            Afficher avec la carte
+        </span>
+    </button>
     <ul class="m-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 auto-rows-[1fr]">
         {conferences.map((conference) => (
             <Card title={conference.title} description={conference.description} icon={conference.icon} path={conference.path} />
         ))}
     </ul>
 
-    <div class="m-4">
-        <Map/>
+    <div class="m-4 map">
+        <Map />
     </div>
 
     <Footer />
 </Layout>
+
+<script is:inline>
+    document.getElementById("button").addEventListener("click", () => {
+        document.querySelector(".map").classList.toggle("hidden");
+        console.log("clicked");
+    });
+</script>
