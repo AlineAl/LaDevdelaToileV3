@@ -13,6 +13,7 @@
     "@astrojs/netlify": "^5.5.1",
     "@astrojs/tailwind": "^5.1.0",
     "@tailwindcss/typography": "^0.5.13",
+    "@types/leaflet": "^1.9.12",
     "astro": "^4.5.17",
     "astro-icon": "^1.1.0",
     "leaflet": "^1.9.4",
