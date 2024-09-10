@@ -1,0 +1,59 @@
+---
+import 'leaflet/dist/leaflet.css';
+---
+
+<div id="map" style="height: 400px"></div>
+
+<script>
+    import { conferences } from "../../datas/conferences";
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        const L = (await import('leaflet')).default;
+
+        // Initialize the map
+        const map = L.map('map').setView([48.866667, 2.333333], 10);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        const markers = {};
+
+        conferences.forEach(conference => {
+            const marker = L.marker(conference.location.coordinates).addTo(map);
+
+            marker.bindPopup(`
+                <div class="popup-content">
+                    <h3 class="font-bold text-lg">${conference.title}</h3>
+                    <p class="text-gray-700">${conference.description}</p>
+                    <p class="text-sm text-gray-500">${conference.location.city}</p>
+                    <a href="${conference.path}" target="_blank" class="text-blue-500 hover:underline">Voir les conférences</a>
+                </div>
+            `);
+
+            markers[conference.title] = marker;
+        });
+
+        const bounds = L.latLngBounds(conferences.map(conference => L.latLng(conference.location.coordinates)));
+        map.fitBounds(bounds);
+
+        const allItems = document.querySelectorAll(".marker-item");
+
+        allItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const markerTitle = item.getAttribute('data-marker');
+
+                const marker = markers[markerTitle];
+                if (marker) {
+                    marker.openPopup();
+
+                    const markerLatLng = marker.getLatLng();
+                    map.setView(markerLatLng, 10, { animate: true });
+
+                    const offsetLatLng = L.latLng(markerLatLng.lat + 0.10, markerLatLng.lng);
+                    map.panTo(offsetLatLng);
+                }
+            });
+        });
+    });
+</script>
