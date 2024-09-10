@@ -2,11 +2,10 @@
 import NavBar from "../../components/NavBar.astro";
 import Layout from "../../layouts/Layout.astro";
 import Footer from "../../components/Footer.astro";
-
 import { conferences } from "../../datas/conferences";
 import Card from "../../components/Card.astro";
 import ConferenceMap from "../../components/Map/ConferenceMap.astro";
-
+import ListMap from "../../components/ListMap.astro";
 ---
 
 <Layout title="Conférences">
@@ -15,27 +14,51 @@ import ConferenceMap from "../../components/Map/ConferenceMap.astro";
     <p class="text-center text-lg mt-4 mx-4">
         Retrouvez ici une liste non-exhaustive de nombreuses conférences tech qui vous en apprendront davantage sur le monde du développement.
     </p>
-    <button id="button" class="flex items-center justify-center p-0.5 mx-auto my-4 text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-[#0369A1] group-hover:from-cyan-500 group-hover:to-[#0369A1] hover:text-white focus:ring-4 focus:outline-none focus:ring-[#0369A1]">
-        <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-            Afficher avec la carte
+
+    <button id="toggleButton" class="flex items-center justify-center p-0.5 mx-auto my-4 text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-[#0369A1] group-hover:from-cyan-500 group-hover:to-[#0369A1] hover:text-white focus:ring-4 focus:outline-none focus:ring-[#0369A1]">
+        <span id="buttonText" class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
+            Afficher sans la carte
         </span>
     </button>
-    <ul class="m-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 auto-rows-[1fr]">
+
+    <ul id="cardView" class="m-4 hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 auto-rows-[1fr]">
         {conferences.map((conference) => (
             <Card title={conference.title} description={conference.description} icon={conference.icon} path={conference.path} />
         ))}
     </ul>
 
-    <div class="m-4 map">
-        <ConferenceMap />
+    <div id="mapView" class="flex flex-wrap md:flex-nowrap">
+        <ul class="md:w-[50%] h-96 overflow-auto">
+            {conferences.map((conference) => (
+                <ListMap data={conference} />
+            ))}
+        </ul>
+
+        <div class="m-4 map w-full md:w-[50%]">
+            <ConferenceMap />
+        </div>
     </div>
 
     <Footer />
 </Layout>
 
+
 <script is:inline>
-    document.getElementById("button").addEventListener("click", () => {
-        document.querySelector(".map").classList.toggle("hidden");
-        console.log("clicked");
+    const toggleButton = document.getElementById("toggleButton");
+    const cardView = document.getElementById("cardView");
+    const mapView = document.getElementById("mapView");
+    const buttonText = document.getElementById("buttonText");
+
+    toggleButton.addEventListener("click", () => {
+        cardView.classList.toggle("hidden");
+        mapView.classList.toggle("hidden");
+
+        if (mapView.classList.contains("hidden")) {
+            buttonText.textContent = "Afficher avec la carte";
+        } else {
+            buttonText.textContent = "Afficher sans la carte";
+        }
     });
 </script>
+
+
