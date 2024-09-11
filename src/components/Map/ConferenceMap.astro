@@ -1,16 +1,12 @@
----
-import 'leaflet/dist/leaflet.css';
----
-
 <div id="map" style="height: 400px"></div>
 
 <script>
     import { conferences } from "../../datas/conferences";
+    import 'leaflet/dist/leaflet.css';
 
     document.addEventListener('DOMContentLoaded', async () => {
         const L = (await import('leaflet')).default;
 
-        // Initialize the map
         const map = L.map('map').setView([48.866667, 2.333333], 10);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -27,7 +23,7 @@ import 'leaflet/dist/leaflet.css';
                     <h3 class="font-bold text-lg">${conference.title}</h3>
                     <p class="text-gray-700">${conference.description}</p>
                     <p class="text-sm text-gray-500">${conference.location.city}</p>
-                    <a href="/${conference.path}" target="_blank" class="text-blue-500 hover:underline">Voir les conférences</a>
+                    <a href="${conference.path}" target="_blank" class="text-blue-500 hover:underline">Voir les conférences</a>
                 </div>
             `);
 
