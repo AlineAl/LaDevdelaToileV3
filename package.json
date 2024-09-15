@@ -10,11 +10,11 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/netlify": "^5.5.1",
+    "@astrojs/netlify": "^5.5.2",
     "@astrojs/tailwind": "^5.1.0",
     "@tailwindcss/typography": "^0.5.13",
     "@types/leaflet": "^1.9.12",
-    "astro": "^4.5.17",
+    "astro": "^4.15.6",
     "astro-icon": "^1.1.0",
     "leaflet": "^1.9.4",
     "tailwindcss": "^3.4.3",

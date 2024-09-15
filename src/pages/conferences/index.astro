@@ -4,8 +4,13 @@ import Layout from "../../layouts/Layout.astro";
 import Footer from "../../components/Footer.astro";
 import { conferences } from "../../datas/conferences";
 import Card from "../../components/Card.astro";
-import ConferenceMap from "../../components/Map/ConferenceMap.astro";
 import ListMap from "../../components/ListMap.astro";
+import { Icon } from "astro-icon/components";
+
+let startIndex = 0;
+let endIndex = 6;
+let pageNumber = 1;
+const visibleData = conferences.slice(startIndex, endIndex);
 ---
 
 <Layout title="Conférences">
@@ -21,44 +26,265 @@ import ListMap from "../../components/ListMap.astro";
         </span>
     </button>
 
+    <div class="flex items-center space-x-4 mx-4">
+        <div class="relative w-[40%]">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <Icon class="size-8" name="mdi:search" />
+            </div>
+            <input
+                    type="text"
+                    placeholder="Rechercher par titre"
+                    id="searchInput"
+                    class="w-full border ps-12 rounded-lg p-4 text-lg font-medium text-gray-900 outline-none"
+            />
+        </div>
+
+        <div class="relative">
+            <select
+                    id="citySelect"
+                    class="w-full border rounded-lg p-5 text-lg font-medium text-gray-900 outline-none"
+            >
+                <option value="">Villes</option>
+                {Array.from(new Set(conferences.map(c => c.location.city))).map(city => (
+                        <option value={city}>{city}</option>
+                ))}
+            </select>
+        </div>
+    </div>
+
+
     <ul id="cardView" class="m-4 hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 auto-rows-[1fr]">
-        {conferences.map((conference) => (
+        {visibleData.map((conference) => (
             <Card title={conference.title} description={conference.description} icon={conference.icon} path={conference.path} />
         ))}
     </ul>
 
     <div id="mapView" class="flex flex-wrap md:flex-nowrap">
-        <ul class="md:w-[50%] h-96 overflow-auto">
-            {conferences.map((conference) => (
+        <ul id="mapList" class="md:w-[50%] h-96 overflow-auto">
+            {visibleData.map((conference) => (
                 <ListMap data={conference} />
             ))}
         </ul>
 
         <div class="m-4 map w-full md:w-[50%]">
-            <ConferenceMap />
+            <div id="map" style="height: 400px;"></div>
         </div>
+    </div>
+
+    <div class="flex items-center justify-center mt-4">
+        <button id="prev" class="flex items-center justify-center px-3 h-12 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700">
+            <Icon class="size-8" name="mdi:chevron-left" />
+        </button>
+        <input disabled id="page-number" class="w-12 h-12 px-4 flex items-center justify-center leading-tight text-gray-500 bg-white border border-gray-300 border-r-0" value={pageNumber} />
+        <span class="flex items-center justify-center text-gray-500 border border-gray-300 border-x-0 h-12">/</span>
+        <span id="total-pages" class="w-12 flex items-center justify-center text-gray-500 border border-gray-300 border-x-0 h-12">
+            { Math.ceil(conferences.length / 6) }
+        </span>
+        <button id="next" class="flex items-center justify-center px-3 h-12 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700">
+            <Icon class="size-8" name="mdi:chevron-right" />
+        </button>
     </div>
 
     <Footer />
 </Layout>
 
 
-<script is:inline>
-    const toggleButton = document.getElementById("toggleButton");
-    const cardView = document.getElementById("cardView");
-    const mapView = document.getElementById("mapView");
-    const buttonText = document.getElementById("buttonText");
+<script>
+    import { conferences } from "../../datas/conferences";
 
-    toggleButton.addEventListener("click", () => {
-        cardView.classList.toggle("hidden");
-        mapView.classList.toggle("hidden");
+    document.addEventListener('DOMContentLoaded', async () => {
+        const L = (await import('leaflet')).default;
 
-        if (mapView.classList.contains("hidden")) {
-            buttonText.textContent = "Afficher avec la carte";
-        } else {
-            buttonText.textContent = "Afficher sans la carte";
+        const map = L.map('map').setView([48.866667, 2.333333], 10);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        let markers = {};
+
+        function updateMap(visibleData) {
+            Object.values(markers).forEach(marker => map.removeLayer(marker));
+            markers = {};
+
+            visibleData.forEach(conference => {
+                const marker = L.marker(conference.location.coordinates).addTo(map);
+
+                marker.bindPopup(`
+                    <div class="popup-content">
+                        <h3 class="font-bold text-lg">${conference.title}</h3>
+                        <p class="text-gray-700">${conference.description}</p>
+                        <p class="text-sm text-gray-500">${conference.location.city}</p>
+                        <a href="${conference.path}" target="_blank" class="text-blue-500 hover:underline">Voir les conférences</a>
+                    </div>
+                `);
+
+                markers[conference.title] = marker;
+            });
+
+            const bounds = L.latLngBounds(visibleData.map(conference => L.latLng(conference.location.coordinates)));
+            map.fitBounds(bounds);
         }
+
+        updateMap(conferences);
+
+        const itemsPerPage = 6;
+        let startIndex = 0;
+        let endIndex = itemsPerPage;
+        let pageNumber = 1;
+        const totalItems = conferences.length;
+        const toggleButton = document.getElementById("toggleButton");
+        const cardView = document.getElementById("cardView");
+        const mapView = document.getElementById("mapView");
+        const buttonText = document.getElementById("buttonText");
+
+        toggleButton.addEventListener("click", () => {
+            cardView.classList.toggle("hidden");
+            mapView.classList.toggle("hidden");
+
+            if (mapView.classList.contains("hidden")) {
+                buttonText.textContent = "Afficher avec la carte";
+            } else {
+                buttonText.textContent = "Afficher sans la carte";
+            }
+        });
+
+        function mapData(visibleData) {
+            const listContainer = document.getElementById("mapList");
+            const cardContainer = document.getElementById("cardView");
+
+            if (!listContainer) {
+                console.error("L'élément cardContainer est introuvable");
+                return;
+            }
+
+            if (!cardContainer) {
+                console.error("L'élément cardContainer est introuvable");
+                return;
+            }
+
+            listContainer.innerHTML = "";
+            cardContainer.innerHTML = "";
+
+            visibleData.forEach(d => {
+                const list = document.createElement("li");
+                list.innerHTML = `
+            <li data-marker="${d.title}" class="marker-item p-4 mb-4 m-4 bg-white border border-default transition-all hover:cursor-pointer hover:text-white hover:bg-sky-700">
+                <h2 class="font-semibold">${d.title}</h2>
+                <p class="text-sm my-2 truncate">${d.description}</p>
+                <span class="bg-sky-100 text-sky-800 text-sm font-medium me-2 px-2.5 py-1 rounded">
+                    ${d.location.city}
+                </span>
+            </li>`;
+                listContainer.appendChild(list);
+            });
+
+            visibleData.forEach(d => {
+                const card = document.createElement("div");
+                card.innerHTML = `<a href=${d.path}>
+                <div class="min-h-full flex flex-col items-center gap-4 border border-default bg-offset p-6 transition duration-300 ease-in-out hover:cursor-pointer hover:text-white hover:bg-sky-700">
+                    <p class="text-center font-extrabold text-xl">${ d.title }</p>
+                    <p class="text-center text-offset text-sm">${ d.description }</p>
+                </div>
+            </a>`
+                cardContainer.appendChild(card);
+            });
+
+            updateMap(visibleData);
+
+            const allItems = document.querySelectorAll(".marker-item");
+
+            allItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const markerTitle = item.getAttribute('data-marker');
+                    const marker = markers[markerTitle];
+
+                    if (marker) {
+                        marker.openPopup();
+
+                        const markerLatLng = marker.getLatLng();
+
+                        const offsetLatLng = L.latLng(markerLatLng.lat + 0.05, markerLatLng.lng);
+                        map.setView(offsetLatLng, 10, { animate: true });
+                    }
+                });
+            });
+        };
+
+
+        document.getElementById('page-number').value = pageNumber;
+
+        function prevPage() {
+            if (startIndex > 0) {
+                startIndex -= itemsPerPage;
+                endIndex -= itemsPerPage;
+                pageNumber -= 1;
+                document.getElementById('page-number').value = pageNumber;
+                mapData(conferences.slice(startIndex, endIndex));
+            }
+        }
+
+        function nextPage() {
+            if (endIndex < totalItems) {
+                startIndex += itemsPerPage;
+                endIndex += itemsPerPage;
+                pageNumber += 1;
+                document.getElementById('page-number').value = pageNumber;
+                mapData(conferences.slice(startIndex, endIndex));
+            }
+        }
+
+        document.getElementById('page-number').addEventListener('change', (e) => {
+            let currentPageNumber = parseInt(e.target.value);
+            const maxPageNumber = Math.ceil(totalItems / itemsPerPage);
+
+            if (currentPageNumber >= maxPageNumber) {
+                currentPageNumber = maxPageNumber - 1;
+            } else if (currentPageNumber < 1) {
+                currentPageNumber = 1;
+            }
+
+            pageNumber = currentPageNumber;
+            startIndex = (pageNumber - 1) * itemsPerPage;
+            endIndex = startIndex + itemsPerPage;
+            mapData(conferences.slice(startIndex, endIndex));
+        });
+
+        document.getElementById('prev').addEventListener('click', prevPage);
+        document.getElementById('next').addEventListener('click', nextPage);
+
+        function filterCards() {
+            const input = document.getElementById('searchInput').value.toUpperCase();
+
+            if (input === "") {
+                mapData(conferences);
+            } else {
+                const filteredData = conferences.filter((d) =>
+                    d.title.toUpperCase().includes(input)
+                );
+                mapData(filteredData);
+            }
+        }
+
+        function filterByCity() {
+            const city = document.getElementById('citySelect').value;
+
+            if (city === "") {
+                mapData(conferences);
+            } else {
+                const filteredData = conferences.filter((d) =>
+                    d.location.city === city
+                );
+                mapData(filteredData);
+            }
+        }
+
+        document.getElementById('searchInput').addEventListener('keyup', filterCards);
+        document.getElementById('citySelect').addEventListener('change', filterByCity);
+        mapData(conferences.slice(startIndex, endIndex));
     });
 </script>
+
+
 
 
