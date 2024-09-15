@@ -94,22 +94,19 @@ const visibleData = conferences.slice(startIndex, endIndex);
 
     document.addEventListener('DOMContentLoaded', async () => {
         const L = (await import('leaflet')).default;
-
         const map = L.map('map').setView([48.866667, 2.333333], 10);
-
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
         let markers = {};
+        let filteredConferences = [...conferences];
 
         function updateMap(visibleData) {
             Object.values(markers).forEach(marker => map.removeLayer(marker));
             markers = {};
-
             visibleData.forEach(conference => {
                 const marker = L.marker(conference.location.coordinates).addTo(map);
-
                 marker.bindPopup(`
                     <div class="popup-content">
                         <h3 class="font-bold text-lg">${conference.title}</h3>
@@ -118,75 +115,49 @@ const visibleData = conferences.slice(startIndex, endIndex);
                         <a href="${conference.path}" target="_blank" class="text-blue-500 hover:underline">Voir les conférences</a>
                     </div>
                 `);
-
                 markers[conference.title] = marker;
             });
-
             const bounds = L.latLngBounds(visibleData.map(conference => L.latLng(conference.location.coordinates)));
             map.fitBounds(bounds);
         }
-
-        updateMap(conferences);
 
         const itemsPerPage = 6;
         let startIndex = 0;
         let endIndex = itemsPerPage;
         let pageNumber = 1;
-        const totalItems = conferences.length;
-        const toggleButton = document.getElementById("toggleButton");
-        const cardView = document.getElementById("cardView");
-        const mapView = document.getElementById("mapView");
-        const buttonText = document.getElementById("buttonText");
 
-        toggleButton.addEventListener("click", () => {
-            cardView.classList.toggle("hidden");
-            mapView.classList.toggle("hidden");
-
-            if (mapView.classList.contains("hidden")) {
-                buttonText.textContent = "Afficher avec la carte";
-            } else {
-                buttonText.textContent = "Afficher sans la carte";
-            }
-        });
+        function updatePageNumber() {
+            document.getElementById('page-number').value = pageNumber;
+            document.getElementById('total-pages').textContent = Math.ceil(filteredConferences.length / itemsPerPage);
+        }
 
         function mapData(visibleData) {
             const listContainer = document.getElementById("mapList");
             const cardContainer = document.getElementById("cardView");
-
-            if (!listContainer) {
-                console.error("L'élément cardContainer est introuvable");
-                return;
-            }
-
-            if (!cardContainer) {
-                console.error("L'élément cardContainer est introuvable");
-                return;
-            }
-
             listContainer.innerHTML = "";
             cardContainer.innerHTML = "";
 
             visibleData.forEach(d => {
                 const list = document.createElement("li");
                 list.innerHTML = `
-            <li data-marker="${d.title}" class="marker-item p-4 mb-4 m-4 bg-white border border-default transition-all hover:cursor-pointer hover:text-white hover:bg-sky-700">
-                <h2 class="font-semibold">${d.title}</h2>
-                <p class="text-sm my-2 truncate">${d.description}</p>
-                <span class="bg-sky-100 text-sky-800 text-sm font-medium me-2 px-2.5 py-1 rounded">
-                    ${d.location.city}
-                </span>
-            </li>`;
+                    <li data-marker="${d.title}" class="marker-item p-4 mb-4 m-4 bg-white border border-default transition-all hover:cursor-pointer hover:text-white hover:bg-sky-700">
+                        <h2 class="font-semibold">${d.title}</h2>
+                        <p class="text-sm my-2 truncate">${d.description}</p>
+                        <span class="bg-sky-100 text-sky-800 text-sm font-medium me-2 px-2.5 py-1 rounded">
+                            ${d.location.city}
+                        </span>
+                    </li>`;
                 listContainer.appendChild(list);
             });
 
             visibleData.forEach(d => {
                 const card = document.createElement("div");
                 card.innerHTML = `<a href=${d.path}>
-                <div class="min-h-full flex flex-col items-center gap-4 border border-default bg-offset p-6 transition duration-300 ease-in-out hover:cursor-pointer hover:text-white hover:bg-sky-700">
-                    <p class="text-center font-extrabold text-xl">${ d.title }</p>
-                    <p class="text-center text-offset text-sm">${ d.description }</p>
-                </div>
-            </a>`
+                    <div class="min-h-full flex flex-col items-center gap-4 border border-default bg-offset p-6 transition duration-300 ease-in-out hover:cursor-pointer hover:text-white hover:bg-sky-700">
+                        <p class="text-center font-extrabold text-xl">${ d.title }</p>
+                        <p class="text-center text-offset text-sm">${ d.description }</p>
+                    </div>
+                </a>`;
                 cardContainer.appendChild(card);
             });
 
@@ -205,85 +176,76 @@ const visibleData = conferences.slice(startIndex, endIndex);
                         const markerLatLng = marker.getLatLng();
 
                         const offsetLatLng = L.latLng(markerLatLng.lat + 0.05, markerLatLng.lng);
-                        map.setView(offsetLatLng, 10, { animate: true });
+                        map.setView(offsetLatLng, 11, { animate: true });
                     }
                 });
             });
-        };
-
-
-        document.getElementById('page-number').value = pageNumber;
+        }
 
         function prevPage() {
             if (startIndex > 0) {
                 startIndex -= itemsPerPage;
                 endIndex -= itemsPerPage;
                 pageNumber -= 1;
-                document.getElementById('page-number').value = pageNumber;
-                mapData(conferences.slice(startIndex, endIndex));
+                updatePageNumber();
+                mapData(filteredConferences.slice(startIndex, endIndex));
             }
         }
 
         function nextPage() {
-            if (endIndex < totalItems) {
+            if (endIndex < filteredConferences.length) {
                 startIndex += itemsPerPage;
                 endIndex += itemsPerPage;
                 pageNumber += 1;
-                document.getElementById('page-number').value = pageNumber;
-                mapData(conferences.slice(startIndex, endIndex));
+                updatePageNumber();
+                mapData(filteredConferences.slice(startIndex, endIndex));
             }
         }
 
-        document.getElementById('page-number').addEventListener('change', (e) => {
-            let currentPageNumber = parseInt(e.target.value);
-            const maxPageNumber = Math.ceil(totalItems / itemsPerPage);
+        function filterData() {
+            const input = document.getElementById('searchInput').value.toUpperCase();
+            const city = document.getElementById('citySelect').value;
 
-            if (currentPageNumber >= maxPageNumber) {
-                currentPageNumber = maxPageNumber - 1;
-            } else if (currentPageNumber < 1) {
-                currentPageNumber = 1;
+            filteredConferences = conferences.filter(d => {
+                const matchesTitle = d.title.toUpperCase().includes(input);
+                const matchesCity = city === "" || d.location.city === city;
+                return matchesTitle && matchesCity;
+            });
+
+            startIndex = 0;
+            endIndex = itemsPerPage;
+            pageNumber = 1;
+            updatePageNumber();
+
+            mapData(filteredConferences.slice(startIndex, endIndex));
+        }
+
+        const toggleButton = document.getElementById("toggleButton");
+        const cardView = document.getElementById("cardView");
+        const mapView = document.getElementById("mapView");
+        const buttonText = document.getElementById("buttonText");
+
+        toggleButton.addEventListener("click", () => {
+            cardView.classList.toggle("hidden");
+            mapView.classList.toggle("hidden");
+
+            if (mapView.classList.contains("hidden")) {
+                buttonText.textContent = "Afficher avec la carte";
+            } else {
+                buttonText.textContent = "Afficher sans la carte";
             }
-
-            pageNumber = currentPageNumber;
-            startIndex = (pageNumber - 1) * itemsPerPage;
-            endIndex = startIndex + itemsPerPage;
-            mapData(conferences.slice(startIndex, endIndex));
         });
 
         document.getElementById('prev').addEventListener('click', prevPage);
         document.getElementById('next').addEventListener('click', nextPage);
+        document.getElementById('searchInput').addEventListener('keyup', filterData);
+        document.getElementById('citySelect').addEventListener('change', filterData);
 
-        function filterCards() {
-            const input = document.getElementById('searchInput').value.toUpperCase();
-
-            if (input === "") {
-                mapData(conferences);
-            } else {
-                const filteredData = conferences.filter((d) =>
-                    d.title.toUpperCase().includes(input)
-                );
-                mapData(filteredData);
-            }
-        }
-
-        function filterByCity() {
-            const city = document.getElementById('citySelect').value;
-
-            if (city === "") {
-                mapData(conferences);
-            } else {
-                const filteredData = conferences.filter((d) =>
-                    d.location.city === city
-                );
-                mapData(filteredData);
-            }
-        }
-
-        document.getElementById('searchInput').addEventListener('keyup', filterCards);
-        document.getElementById('citySelect').addEventListener('change', filterByCity);
-        mapData(conferences.slice(startIndex, endIndex));
+        updatePageNumber();
+        mapData(filteredConferences.slice(startIndex, endIndex));
     });
 </script>
+
 
 
 
