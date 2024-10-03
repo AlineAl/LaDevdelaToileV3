@@ -38,10 +38,10 @@ npm run dev
     }
 ```
 
-### Add your known **meetups** links in the `src/datas` folder
+### Add your known **VNements** links in the `src/datas` folder
 - Go to the `datas` folder
-- Click on the `meetups.ts` file
-- Add your meetups in the file with the following format:
+- Click on the `VNements.ts` file
+- Add your VNements in the file with the following format:
 ```
     {
         title: 'Write title of the meetup here',

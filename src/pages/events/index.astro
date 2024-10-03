@@ -1,23 +1,23 @@
 ---
-import NavBar from "../../components/NavBar.astro";
 import Layout from "../../layouts/Layout.astro";
-import Footer from "../../components/Footer.astro";
-import { conferences } from "../../datas/conferences";
+import NavBar from "../../components/NavBar.astro";
+import Footer from "../../components/Footer.astro"
+import { events } from "../../datas/events";
 import Card from "../../components/Card.astro";
-import ListMap from "../../components/ListMap.astro";
 import { Icon } from "astro-icon/components";
+import ListMap from "../../components/ListMap.astro";
 
 let startIndex = 0;
 let endIndex = 6;
 let pageNumber = 1;
-const visibleData = conferences.slice(startIndex, endIndex);
+const visibleData = events.slice(startIndex, endIndex);
 ---
 
-<Layout title="Conférences">
+<Layout title="Événements">
     <NavBar />
-    <h1 class="text-4xl text-center font-bold mt-8">Conférences</h1>
+    <h1 class="text-4xl text-center font-bold mt-8">Événements</h1>
     <p class="text-center text-lg mt-4 mx-4">
-        Retrouvez ici une liste non-exhaustive de nombreuses conférences tech qui vous en apprendront davantage sur le monde du développement.
+        Retrouvez ici une liste non-exhaustive de nombreux événements et communautés dev.
     </p>
 
     <button id="toggleButton" class="flex items-center justify-center p-0.5 mx-auto my-4 text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-[#0369A1] group-hover:from-cyan-500 group-hover:to-[#0369A1] hover:text-white focus:ring-4 focus:outline-none focus:ring-[#0369A1]">
@@ -45,24 +45,27 @@ const visibleData = conferences.slice(startIndex, endIndex);
                     class="w-full border rounded-lg p-5 text-lg font-medium text-gray-900 outline-none"
             >
                 <option value="">Villes</option>
-                {Array.from(new Set(conferences.map(c => c.location.city))).map(city => (
-                        <option value={city}>{city}</option>
+                {Array.from(new Set(events.map(c => c.location.city))).map(city => (
+                    <option value={city}>{city}</option>
                 ))}
             </select>
         </div>
     </div>
 
-
     <ul id="cardView" class="m-4 hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 auto-rows-[1fr]">
-        {visibleData.map((conference) => (
-            <Card title={conference.title} description={conference.description} path={conference.path} />
+        {visibleData.map((event) => (
+            <Card
+                title={event.title}
+                description={event.description}
+                path={event.path}
+            />
         ))}
     </ul>
 
     <div id="mapView" class="flex flex-wrap md:flex-nowrap">
         <ul id="mapList" class="md:w-[50%] h-96 overflow-auto">
             {visibleData.map((conference) => (
-                <ListMap data={conference} />
+                    <ListMap data={conference} />
             ))}
         </ul>
 
@@ -78,7 +81,7 @@ const visibleData = conferences.slice(startIndex, endIndex);
         <input disabled id="page-number" class="w-12 h-12 px-4 flex items-center justify-center leading-tight text-gray-500 bg-white border border-gray-300 border-r-0" value={pageNumber} />
         <span class="flex items-center justify-center text-gray-500 border border-gray-300 border-x-0 h-12">/</span>
         <span id="total-pages" class="w-12 flex items-center justify-center text-gray-500 border border-gray-300 border-x-0 h-12">
-            { Math.ceil(conferences.length / 6) }
+            { Math.ceil(events.length / 6) }
         </span>
         <button id="next" class="flex items-center justify-center px-3 h-12 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700">
             <Icon class="size-8" name="mdi:chevron-right" />
@@ -88,9 +91,8 @@ const visibleData = conferences.slice(startIndex, endIndex);
     <Footer />
 </Layout>
 
-
 <script>
-    import { conferences } from "../../datas/conferences";
+    import { events } from "../../datas/events";
 
     document.addEventListener('DOMContentLoaded', async () => {
         const L = (await import('leaflet')).default;
@@ -100,24 +102,24 @@ const visibleData = conferences.slice(startIndex, endIndex);
         }).addTo(map);
 
         let markers = {};
-        let filteredConferences = [...conferences];
+        let filteredEvents = [...events];
 
         function updateMap(visibleData) {
             Object.values(markers).forEach(marker => map.removeLayer(marker));
             markers = {};
-            visibleData.forEach(conference => {
-                const marker = L.marker(conference.location.coordinates).addTo(map);
+            visibleData.forEach(event => {
+                const marker = L.marker(event.location.coordinates).addTo(map);
                 marker.bindPopup(`
                     <div class="popup-content">
-                        <h3 class="font-bold text-lg">${conference.title}</h3>
-                        <p class="text-gray-700">${conference.description}</p>
-                        <p class="text-sm text-gray-500">${conference.location.city}</p>
-                        <a href="${conference.path}" target="_blank" class="text-blue-500 hover:underline">Voir les conférences</a>
+                        <h3 class="font-bold text-lg">${event.title}</h3>
+                        <p class="text-gray-700">${event.description}</p>
+                        <p class="text-sm text-gray-500">${event.location.city}</p>
+                        <a href="${event.path}" target="_blank" class="text-blue-500 hover:underline">Voir les conférences</a>
                     </div>
                 `);
-                markers[conference.title] = marker;
+                markers[event.title] = marker;
             });
-            const bounds = L.latLngBounds(visibleData.map(conference => L.latLng(conference.location.coordinates)));
+            const bounds = L.latLngBounds(visibleData.map(event => L.latLng(event.location.coordinates)));
             map.fitBounds(bounds);
         }
 
@@ -128,7 +130,7 @@ const visibleData = conferences.slice(startIndex, endIndex);
 
         function updatePageNumber() {
             document.getElementById('page-number').value = pageNumber;
-            document.getElementById('total-pages').textContent = Math.ceil(filteredConferences.length / itemsPerPage);
+            document.getElementById('total-pages').textContent = Math.ceil(filteredEvents.length / itemsPerPage);
         }
 
         function mapData(visibleData) {
@@ -188,17 +190,17 @@ const visibleData = conferences.slice(startIndex, endIndex);
                 endIndex -= itemsPerPage;
                 pageNumber -= 1;
                 updatePageNumber();
-                mapData(filteredConferences.slice(startIndex, endIndex));
+                mapData(filteredEvents.slice(startIndex, endIndex));
             }
         }
 
         function nextPage() {
-            if (endIndex < filteredConferences.length) {
+            if (endIndex < filteredEvents.length) {
                 startIndex += itemsPerPage;
                 endIndex += itemsPerPage;
                 pageNumber += 1;
                 updatePageNumber();
-                mapData(filteredConferences.slice(startIndex, endIndex));
+                mapData(filteredEvents.slice(startIndex, endIndex));
             }
         }
 
@@ -206,7 +208,9 @@ const visibleData = conferences.slice(startIndex, endIndex);
             const input = document.getElementById('searchInput').value.toUpperCase();
             const city = document.getElementById('citySelect').value;
 
-            filteredConferences = conferences.filter(d => {
+            console.log(input, city);
+
+            filteredEvents = events.filter(d => {
                 const matchesTitle = d.title.toUpperCase().includes(input);
                 const matchesCity = city === "" || d.location.city === city;
                 return matchesTitle && matchesCity;
@@ -217,7 +221,7 @@ const visibleData = conferences.slice(startIndex, endIndex);
             pageNumber = 1;
             updatePageNumber();
 
-            mapData(filteredConferences.slice(startIndex, endIndex));
+            mapData(filteredEvents.slice(startIndex, endIndex));
         }
 
         const toggleButton = document.getElementById("toggleButton");
@@ -242,11 +246,7 @@ const visibleData = conferences.slice(startIndex, endIndex);
         document.getElementById('citySelect').addEventListener('change', filterData);
 
         updatePageNumber();
-        mapData(filteredConferences.slice(startIndex, endIndex));
+        mapData(filteredEvents.slice(startIndex, endIndex));
     });
 </script>
-
-
-
-
 
