@@ -1,0 +1,36 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+    data: [];
+}
+
+const { data } = Astro.props;
+---
+
+
+<div class="flex items-center space-x-4 mx-4">
+    <div class="relative w-[40%]">
+        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <Icon class="size-8" name="mdi:search" />
+        </div>
+        <input
+                type="text"
+                placeholder="Rechercher par titre"
+                id="searchInput"
+                class="w-full border ps-12 rounded-lg p-4 text-lg font-medium text-gray-900 outline-none"
+        />
+    </div>
+
+    <div class="relative">
+        <select
+                id="citySelect"
+                class="w-full border rounded-lg p-5 text-lg font-medium text-gray-900 outline-none"
+        >
+            <option value="">Villes</option>
+            {Array.from(new Set(data.map(c => c.location.city))).map(city => (
+                    <option value={city}>{city}</option>
+            ))}
+        </select>
+    </div>
+</div>
