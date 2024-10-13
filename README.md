@@ -38,15 +38,19 @@ npm run dev
     }
 ```
 
-### Add your known **VNements** links in the `src/datas` folder
+### Add your known **events** links in the `src/datas` folder
 - Go to the `datas` folder
-- Click on the `VNements.ts` file
-- Add your VNements in the file with the following format:
+- Click on the `events.ts` file
+- Add your event in the file with the following format:
 ```
     {
         title: 'Write title of the meetup here',
         description: 'Add a low description',
-        path: 'Share the path of the meetup here'
+        path: 'Share the path of the meetup here',
+        location: {
+            city: 'Write the city of the meetup here',
+            coordinates: [latitude of city, longitude of city]
+        },
     }
 ```
 
@@ -71,7 +75,12 @@ npm run dev
     {
         title: 'Write title of the conference here',
         description: 'Add a low description',
-        path: 'Share the path of the conference here'
+        path: 'Share the path of the conference here',
+        location: {
+            city: 'Write the city of the conference here',
+            address: 'Write the address of the conference here',
+            coordinates: [latitude, longitude]
+        },
     }
 ```
 
@@ -88,7 +97,12 @@ npm run dev
     {
         title: 'Write title of the conference here',
         description: 'Add a low description',
-        path: 'Share the path of the conference here'
+        path: 'Share the path of the conference here',
+        location: {
+            city: 'Write the city of the conference here',
+            address: 'Write the address of the conference here',
+            coordinates: [latitude, longitude]
+        },
     }
 ```
 
@@ -118,7 +132,6 @@ npm run dev
         title: 'Write title of the book here',
         author: 'Write author of the book here',
         description: 'Add a low description',
-        imagePath: './_5c777f50-f03f-4e3e-8035-84d6d137a34e-removebg-preview.png',
         path: 'Share the path of the book here'
     },
 ```
@@ -133,10 +146,8 @@ npm run dev
         title: 'Write title of the notes here',
         author: 'Write author of the notes here',
         description: 'Add a low description',
-        imagePath: '/_7cc475b6-8a8e-4ce1-b1c1-cc6084f92ded-removebg-preview.png',
         path: 'Share the path of the notes here'
     },
 ```
-/!\ The `imagePath` is the path of the image of the book and I only want FERRET :D. You can less me to choose illustration. If you want to choose it, you need to add the image in the `public` folder and share the path of the image in the `imagePath` key. /!\
         
         
