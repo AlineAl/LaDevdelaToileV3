@@ -1,0 +1,104 @@
+[
+    {
+        "city": "Nantes",
+        "communities": [
+            {
+                "name": "HumanTalks-Nantes",
+                "platform": "meetup"
+            },
+            {
+                "name": "Nantes-Java-User-Group",
+                "platform": "meetup"
+            },
+            {
+                "name": "Agile-nantes-sessions-mensuelles",
+                "platform": "meetup"
+            },
+            {
+                "name": "Blockchain-Societe",
+                "platform": "meetup"
+            },
+            {
+                "name": "CocoaHeads-Nantes",
+                "platform": "meetup"
+            },
+            {
+                "name": "Nantes-DevOps",
+                "platform": "meetup"
+            },
+            {
+                "name": "Nantes-Machine-Learning-Meetup",
+                "platform": "meetup"
+            },
+            {
+                "name": "Nantes-Python-Meetup",
+                "platform": "meetup"
+            },
+            {
+                "name": "GDG-Nantes",
+                "platform": "meetup"
+            },
+            {
+                "name": "gdg-cloud-nantes",
+                "platform": "meetup"
+            },
+            {
+                "name": "frenchproduit-nantesbretagne",
+                "platform": "meetup"
+            },
+            {
+                "name": "flutter-nantes",
+                "platform": "meetup"
+            },
+            {
+                "name": "MTG-Nantes",
+                "platform": "meetup"
+            },
+            {
+                "name": "Nantes-rb",
+                "platform": "meetup"
+            },
+            {
+                "name": "nantes-software-crafters-nantes",
+                "platform": "meetup"
+            },
+            {
+                "name": "generative-ai-nantes",
+                "platform": "meetup"
+            },
+            {
+                "name": "gdg_nantes_android",
+                "platform": "meetup"
+            },
+            {
+                "name": "aws-nantes",
+                "platform": "meetup"
+            }
+        ]
+    },
+    {
+        "city": "Grenoble",
+        "communities": [
+            {
+                "name": "alpescraft-coding-dojos",
+                "platform": "meetup"
+            },
+            {
+                "name": "Software-Craftsmanship-Grenoble",
+                "platform": "meetup"
+            },
+            {
+                "name": "humantalks-grenoble",
+                "platform": "meetup"
+            },
+            {
+                "name": "AlpesJUG",
+                "platform": "meetup"
+            },
+            {
+                "name": "grenoble-web-development-meetup-group",
+                "platform": "meetup"
+            }
+        ]
+    }
+]
