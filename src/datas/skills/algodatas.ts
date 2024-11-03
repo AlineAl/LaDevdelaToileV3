@@ -24,4 +24,9 @@ export const algodatas = [
         description: 'CodeWars est une plateforme pour améliorer ses compétences en programmation en résolvant des exercices.',
         path:  'https://exercism.org/'
     },
+    {
+        title: 'Javascript 30',
+        description: 'Faites un challenge par jour en lien avec le Javascript sur une durée de 30 jours.',
+        path: 'https://javascript30.com/'
+    }
 ];
