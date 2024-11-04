@@ -3,14 +3,9 @@ import Layout from "../../layouts/Layout.astro";
 import NavBar from "../../components/NavBar.astro";
 import { gitdatas } from "../../datas/skills/gitdatas";
 import List from "../../components/List.astro";
+import LayoutSkill from "../../layouts/LayoutSkill.astro";
 ---
-<Layout title="GIT/GITHUB">
-    <NavBar />
-    <h1 class="text-4xl text-center font-bold mt-8">GIT/GITHUB</h1>
-    <p class="text-lg mt-4 mx-4">
-        Git est un logiciel de gestion de versions décentralisé créé par Linus Torvalds en 2005, aussi auteur du noyau Linux.
-        GitHub, quant à elle, est une plateforme de développement collaboratif de logiciels propriétaires et open source. Elle propose des fonctionnalités de gestion de projet, de suivi des problèmes, de demandes de fonctionnalités, et de documentation.
-        Ce sont donc des outils indispensables pour tout développeur.
-    </p>
+<LayoutSkill title="GIT/GITHUB">
+    <p slot="description">Git est un logiciel de gestion de versions décentralisé créé par Linus Torvalds en 2005, aussi auteur du noyau Linux. GitHub, quant à elle, est une plateforme de développement collaboratif de logiciels propriétaires et open source. Elle propose des fonctionnalités de gestion de projet, de suivi des problèmes, de demandes de fonctionnalités, et de documentation.Ce sont donc des outils indispensables pour tout développeur.</p>
     <List data={ gitdatas } imagePath="/_e40a63b3-6481-4c4f-bad7-3a3e1569059e.jpeg" />
-</Layout>
+</LayoutSkill>

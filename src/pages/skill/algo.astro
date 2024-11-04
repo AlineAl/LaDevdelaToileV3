@@ -1,14 +1,9 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-import NavBar from "../../components/NavBar.astro";
+import LayoutSkill from "../../layouts/LayoutSkill.astro";
 import { algodatas } from "../../datas/skills/algodatas";
 import List from "../../components/List.astro";
 ---
-<Layout title="Algorithmique">
-    <NavBar />
-    <h1 class="text-4xl text-center font-bold mt-8">Algorithmique</h1>
-    <p class="text-lg mt-4 mx-4">
-        L'algorithmique est une base fondamentale de la programmation. En réalité, elle est présente partout dans notre quotidien, puisqu'il va s'agir essentiellement de résoudre des problèmes. Et pour cela il existe plusieurs manières de faire, notamment plusieurs manières de conduire la machine à faire ce que l'on veut.
-    </p>
+<LayoutSkill title="Algorithmique">
+    <p slot="description">L'algorithmique est une base fondamentale de la programmation. En réalité, elle est présente partout dans notre quotidien, puisqu'il va s'agir essentiellement de résoudre des problèmes. Et pour cela il existe plusieurs manières de faire, notamment plusieurs manières de conduire la machine à faire ce que l'on veut.</p>
     <List data={ algodatas } imagePath="/_856f2967-a3c2-4a97-8a9b-da21fa531683.jpeg" />
-</Layout>
+</LayoutSkill>
