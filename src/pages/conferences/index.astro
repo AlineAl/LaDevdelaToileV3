@@ -1,5 +1,4 @@
 ---
-import NavBar from "../../components/NavBar.astro";
 import Layout from "../../layouts/Layout.astro";
 import Footer from "../../components/Footer.astro";
 import { conferences } from "../../datas/conferences";
@@ -16,7 +15,6 @@ const visibleData = conferences.slice(startIndex, endIndex);
 ---
 
 <Layout title="Conférences">
-    <NavBar />
     <h1 class="text-4xl text-center font-bold mt-8">Conférences</h1>
     <p class="text-center text-lg mt-4 mx-4">
         Retrouvez ici une liste non-exhaustive de nombreuses conférences tech qui vous en apprendront davantage sur le monde du développement.
@@ -51,7 +49,11 @@ const visibleData = conferences.slice(startIndex, endIndex);
 <script>
     import { conferences } from "../../datas/conferences";
 
-    document.addEventListener('DOMContentLoaded', async () => {
+    document.addEventListener('astro:page-load', async () => {
+        if (window.location.pathname !== "/conferences") {
+            return;
+        }
+
         const L = (await import('leaflet')).default;
         const map = L.map('map').setView([48.866667, 2.333333], 10);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
