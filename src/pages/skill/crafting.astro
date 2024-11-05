@@ -1,12 +1,10 @@
 ---
-import Layout from "../../layouts/Layout.astro";
 import { craftingdatas } from "../../datas/skills/craftingdatas";
 import List from "../../components/List.astro";
+import LayoutSkill from "../../layouts/LayoutSkill.astro";
 ---
-<Layout title="Crafting">
-    <h1 class="text-4xl text-center font-bold mt-8">Crafting</h1>
-    <p class="text-lg mt-4 mx-4">
-        Le craft est une approche de développement, un concept qui va consister à réfléchir à la manière dont on va structurer le code. Il ne va pas s'agir seulement de faire du fonctionnel mais aussi de faire du code propre, bien conçu, lisible, testable, structuré et maintenable.
-    </p>
+  
+<LayoutSkill title="Crafting">
+    <p slot="description">Le craft est une approche de développement, un concept qui va consister à réfléchir à la manière dont on va structurer le code. Il ne va pas s'agir seulement de faire du fonctionnel mais aussi de faire du code propre, bien conçu, lisible, testable, structuré et maintenable.</p>
     <List data={ craftingdatas } imagePath="/_ae8ae75a-469b-4e86-aa83-4ac76c6c6589.jpeg" />
-</Layout>
+</LayoutSkill>

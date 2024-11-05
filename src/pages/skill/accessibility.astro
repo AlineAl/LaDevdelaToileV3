@@ -1,13 +1,10 @@
 ---
-import Layout from "../../layouts/Layout.astro";
 import { accessibilitydatas} from "../../datas/skills/accessibilitydatas";
 import List from "../../components/List.astro";
+import LayoutSkill from "../../layouts/LayoutSkill.astro";
 ---
-<Layout title="Accessibilité">
-    <h1 class="text-4xl text-center font-bold mt-8">Accessibilité</h1>
-    <p class="text-lg mt-4 mx-4">
-        L'accessibilité numérique est un enjeu majeur pour rendre le web accessible à toutes personnes dont les personnes en situation de handicap. En tant que développeur·euse, vous avez un rôle à jouer pour rendre le web accessible à tous·tes.
-        Retrouvez ici des ressources pour vous aider à rendre vos sites web accessibles et à en comprendre les enjeux.
-    </p>
+
+<LayoutSkill title="Accessibilité">
+    <p slot="description">L'accessibilité numérique est un enjeu majeur pour rendre le web accessible à toutes personnes dont les personnes en situation de handicap. En tant que développeur·euse, vous avez un rôle à jouer pour rendre le web accessible à tous·tes.Retrouvez ici des ressources pour vous aider à rendre vos sites web accessibles et à en comprendre les enjeux.</p>
     <List data={ accessibilitydatas } imagePath="/_2f8cc6cb-3260-4f11-87dc-b3604672ff9d.jpeg" />
-</Layout>
+</LayoutSkill>
