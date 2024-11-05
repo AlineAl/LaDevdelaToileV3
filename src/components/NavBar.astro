@@ -70,48 +70,50 @@ import { Icon } from 'astro-icon/components';
 </header>
 
 <script>
-    let lastScrollTop = 0;
-    const navbar = document.querySelector('.nav');
-    const menuToggle = document.getElementById('menu-toggle');
-    const navLinks = document.getElementById('nav-links');
-    const socialLinks = document.getElementById('nav-socials-links');
+    document.addEventListener('astro:page-load', () => {
+        let lastScrollTop = 0;
+        const navbar = document.querySelector('.nav');
+        const menuToggle = document.getElementById('menu-toggle');
+        const navLinks = document.getElementById('nav-links');
+        const socialLinks = document.getElementById('nav-socials-links');
 
-    menuToggle.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        menuToggle.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
             </svg>`;
 
-    menuToggle.addEventListener('click', () => {
-        navLinks.classList.toggle('hidden');
-        socialLinks.classList.toggle('hidden');
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('hidden');
+            socialLinks.classList.toggle('hidden');
 
-        if (navLinks.classList.contains('hidden')) {
-            menuToggle.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            if (navLinks.classList.contains('hidden')) {
+                menuToggle.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
             </svg>`;
-        } else {
-            menuToggle.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            } else {
+                menuToggle.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
             </svg>`;
+            }
+        });
+
+        if (navbar) {
+            const navbarHeight = navbar.offsetHeight;
+
+            window.addEventListener('scroll', function() {
+                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+                if (scrollTop > lastScrollTop && scrollTop > navbarHeight) {
+                    navbar.style.transform = `translateY(-100%)`;
+                    navbar.style.transition = 'transform 0.3s ease-in-out';
+                } else if (scrollTop < lastScrollTop) {
+                    navbar.style.transform = 'translateY(0)';
+                    navbar.style.transition = 'transform 0.3s ease-in-out';
+                }
+
+                lastScrollTop = scrollTop;
+            });
         }
     });
-
-    if (navbar) {
-        const navbarHeight = navbar.offsetHeight;
-
-        window.addEventListener('scroll', function() {
-            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-            if (scrollTop > lastScrollTop && scrollTop > navbarHeight) {
-                navbar.style.transform = `translateY(-100%)`;
-                navbar.style.transition = 'transform 0.3s ease-in-out';
-            } else if (scrollTop < lastScrollTop) {
-                navbar.style.transform = 'translateY(0)';
-                navbar.style.transition = 'transform 0.3s ease-in-out';
-            }
-
-            lastScrollTop = scrollTop;
-        });
-    }
 </script>
 
 <style>
