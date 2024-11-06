@@ -16,7 +16,7 @@ export const designdatas = [
   },
   {
     title: 'Responsive App',
-    description: 'Maîtrisez l’art de créer des applications Web réactives comme un pro ! Un outil de développement indispensable pour tous les développeurs Web qui facilitera votre travail.',
+    description: 'Maîtrisez l’art de créer des applications Web réactives comme un pro ! Un outil de développement indispensable pour tous·tes les développeur·euse·s web qui facilitera votre travail.',
     path: 'https://responsively.app/',
   },
 ];
