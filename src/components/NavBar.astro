@@ -34,7 +34,9 @@ import { Icon } from 'astro-icon/components';
             </li>
         </ul>
 
-        <ul id="nav-links" class="flex hidden flex-col mt-8 justify-center items-center md:hidden uppercase">
+				
+				<!-- remove display flex in this ul -->
+        <ul id="nav-links" class="hidden flex-col mt-8 justify-center items-center md:hidden uppercase">
             <li>
                 <a href="/conferences" class="block py-3">Conférences</a>
             </li>
@@ -52,23 +54,35 @@ import { Icon } from 'astro-icon/components';
             </li>
         </ul>
 
-        <ul id="nav-socials-links" class="nav-underline hidden relative ml-auto md:flex flex flex-nowrap md:justify-end justify-center md:pl-4 uppercase md:mr-0">
-            <li>
-                <a href="https://twitter.com/AlineLSMN" class="block py-3"><Icon class="w-8 h-8 text-sky-500" name="mdi:twitter" /></a>
-            </li>
-            <li>
-                <a href="https://www.linkedin.com/in/ladevdelatoile/" class="block py-3"><Icon class="w-8 h-8 text-sky-500" name="mdi:linkedin" /></a>
-            </li>
-            <li>
-                <a href="https://github.com/AlineAl" class="block py-3"><Icon class="w-8 h-8 text-sky-500" name="mdi:github" /></a>
-            </li>
-            <li>
-                <a href="https://www.youtube.com/channel/UCXIQ74jh19FjnSsOf97NIzg" class="block py-3"><Icon class="w-8 h-8 text-sky-500" name="mdi:youtube" /></a>
-            </li>
-        </ul>
+				<!-- correct display flex and hidden in this ul -->
+      <ul id="nav-socials-links" class="nav-underline hidden md:flex items-center gap-4 ml-auto uppercase">
+        <div class="flex items-center justify-center">
+					<li class="w-fit">
+						<a href="https://twitter.com/AlineLSMN" class="block py-3">
+							<Icon class="w-8 h-8 text-sky-500" name="mdi:twitter" />
+            </a>
+					</li>
+        <li class="w-fit">
+            <a href="https://www.linkedin.com/in/ladevdelatoile/" class="block py-3">
+							<Icon class="w-8 h-8 text-sky-500" name="mdi:linkedin" />
+            </a>
+					</li>
+					<li class="w-fit">
+						<a href="https://github.com/AlineAl" class="block py-3">
+							<Icon class="w-8 h-8 text-sky-500" name="mdi:github" />
+            </a>
+					</li>
+					<li class="w-fit">
+						<a href="https://www.youtube.com/channel/UCXIQ74jh19FjnSsOf97NIzg" class="block py-3">
+                <Icon class="w-8 h-8 text-sky-500" name="mdi:youtube" />
+							</a>
+						</li>
+					</div>
+    </ul>
     </nav>
 </header>
 
+<!--Types corrected -->
 <script>
     let lastScrollTop = 0;
     const navbar = document.querySelector('.nav');
@@ -76,15 +90,17 @@ import { Icon } from 'astro-icon/components';
     const navLinks = document.getElementById('nav-links');
     const socialLinks = document.getElementById('nav-socials-links');
 
-    menuToggle.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    if (menuToggle) {
+        menuToggle.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
             </svg>`;
+    }
 
-    menuToggle.addEventListener('click', () => {
-        navLinks.classList.toggle('hidden');
-        socialLinks.classList.toggle('hidden');
+    menuToggle?.addEventListener('click', () => {
+        navLinks?.classList.toggle('hidden');
+        socialLinks?.classList.toggle('hidden');
 
-        if (navLinks.classList.contains('hidden')) {
+        if (navLinks?.classList.contains('hidden')) {
             menuToggle.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
             </svg>`;
@@ -96,17 +112,17 @@ import { Icon } from 'astro-icon/components';
     });
 
     if (navbar) {
-        const navbarHeight = navbar.offsetHeight;
+        const navbarHeight = (navbar as HTMLElement).offsetHeight;
 
         window.addEventListener('scroll', function() {
             let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
             if (scrollTop > lastScrollTop && scrollTop > navbarHeight) {
-                navbar.style.transform = `translateY(-100%)`;
-                navbar.style.transition = 'transform 0.3s ease-in-out';
+                (navbar as HTMLElement).style.transform = `translateY(-100%)`;
+                (navbar as HTMLElement).style.transition = 'transform 0.3s ease-in-out';
             } else if (scrollTop < lastScrollTop) {
-                navbar.style.transform = 'translateY(0)';
-                navbar.style.transition = 'transform 0.3s ease-in-out';
+                (navbar as HTMLElement).style.transform = 'translateY(0)';
+                (navbar as HTMLElement).style.transition = 'transform 0.3s ease-in-out';
             }
 
             lastScrollTop = scrollTop;
