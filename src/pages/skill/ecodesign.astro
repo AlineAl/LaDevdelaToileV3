@@ -1,14 +1,9 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-import NavBar from "../../components/NavBar.astro";
 import { ecodesigndatas} from "../../datas/skills/ecodesigndatas";
 import List from "../../components/List.astro";
+import LayoutSkill from "../../layouts/LayoutSkill.astro";
 ---
-<Layout title="Éco-conception">
-    <NavBar />
-    <h1 class="text-4xl text-center font-bold mt-8">Éco-conception</h1>
-    <p class="text-lg mt-4 mx-4">
-        L'éco-conception est une démarche qui vise à réduire l'impact environnemental d'un produit ou d'un service tout au long de son cycle de vie. Elle s'inscrit dans une logique de développement durable et de responsabilité sociétale des entreprises.
-    </p>
+<LayoutSkill title="Éco-conception">
+    <p slot="description">L'éco-conception est une démarche qui vise à réduire l'impact environnemental d'un produit ou d'un service tout au long de son cycle de vie. Elle s'inscrit dans une logique de développement durable et de responsabilité sociétale des entreprises.</p>
     <List data={ ecodesigndatas } imagePath="/_511fc190-b530-43ac-ac6d-6feb477d67ba.jpeg" />
-</Layout>
+</LayoutSkill>

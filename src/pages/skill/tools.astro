@@ -1,14 +1,12 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-import NavBar from "../../components/NavBar.astro";
 import { toolsdatas } from "../../datas/skills/toolsdatas";
 import List from "../../components/List.astro";
+import LayoutSkill from "../../layouts/LayoutSkill.astro";
 ---
-<Layout title="Outils">
-    <NavBar />
-    <h1 class="text-4xl text-center font-bold mt-8">Outils</h1>
-    <p class="text-lg mt-4 mx-4">
+<LayoutSkill title="Outils">
+    <p slot="description">
         En tant que développeur·euse, vous aurez besoin de votre caisse à outils et ceux-ci sont nombreux. Retrouvez donc ici une liste non-exhaustive de ce qui existe.
     </p>
     <List data={ toolsdatas } imagePath="/_50dd8268-2df4-4fb3-b400-e6a8b7238eb4.jpeg" />
-</Layout>
+</LayoutSkill>
+

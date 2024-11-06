@@ -21,11 +21,11 @@ let pageNumber = 1;
 const visibleData = data.slice(startIndex, endIndex);
 ---
 
-<div class="w-full max-w-4xl mx-auto my-7 xl:px-0">
+<div class="w-full max-w-4xl mx-auto my-7 xl:px-0 px-4">
     <div class="flex flex-col items-start justify-start md:flex-row md:space-x-7">
         <div class="w-full md:w-2/3 space-y-7">
             {Astro.url.pathname !== "/explanation" &&
-                <div class="relative mx-4 md:mx-0">
+                <div class="relative">
                     <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                         <Icon class="size-8" name="mdi:search" />
                     </div>
@@ -85,7 +85,7 @@ const visibleData = data.slice(startIndex, endIndex);
 
         visibleData.forEach(d => {
             const card = document.createElement("div");
-            card.innerHTML = `<a href="${d.path}" class="block card m-4 md:mx-0">
+            card.innerHTML = `<a href="${d.path}" class="block card my-4">
                 <div class="relative border border-transparent border-dashed cursor-pointer p-7 group rounded-2xl">
                     <div class="absolute inset-0 z-20 w-full h-full duration-300 ease-out bg-white border border-dashed dark:bg-neutral-950 rounded-2xl border-neutral-300 dark:border-neutral-600 group-hover:-translate-x-1 group-hover:-translate-y-1"></div>
                     <div class="absolute inset-0 z-10 w-full h-full duration-300 ease-out border border-dashed rounded-2xl border-neutral-300 dark:border-neutral-600 group-hover:translate-x-1 group-hover:translate-y-1"></div>
