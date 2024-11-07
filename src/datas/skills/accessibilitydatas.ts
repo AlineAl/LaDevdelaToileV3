@@ -34,5 +34,9 @@ export const accessibilitydatas = [
         description: 'Une ressource communautaire qui aide à rendre le web plus accessible pour tous.',
         path: 'https://www.a11yproject.com/'
     },
-
+    {
+        title: 'MDN Web Accessibility Guide',
+        description: 'Guide complet de Mozilla sur l\'accessibilité web, incluant les bonnes pratiques et les techniques d\'implémentation.',
+        path: 'https://developer.mozilla.org/fr/docs/Web/Accessibility'
+    },
 ];
