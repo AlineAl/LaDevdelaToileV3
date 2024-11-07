@@ -49,5 +49,9 @@ export const accessibilitydatas = [
         description: 'Outil en ligne pour vérifier le contraste des couleurs selon les normes WCAG.',
         path: 'https://webaim.org/resources/contrastchecker/'
     },
-
+    {
+        title: 'Inclusive Components',
+        description: 'Blog de Heydon Pickering présentant des patterns de conception inclusifs et accessibles.',
+        path: 'https://inclusive-components.design/'
+    }
 ];
