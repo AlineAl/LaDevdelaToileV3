@@ -39,4 +39,9 @@ export const accessibilitydatas = [
         description: 'Guide complet de Mozilla sur l\'accessibilité web, incluant les bonnes pratiques et les techniques d\'implémentation.',
         path: 'https://developer.mozilla.org/fr/docs/Web/Accessibility'
     },
+    {
+        title: 'ARIA Authoring Practices',
+        description: 'Guide des meilleures pratiques pour implémenter ARIA (Accessible Rich Internet Applications).',
+        path: 'https://www.w3.org/WAI/ARIA/apg/'
+    },
 ];
