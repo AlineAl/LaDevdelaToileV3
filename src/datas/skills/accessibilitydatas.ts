@@ -44,4 +44,10 @@ export const accessibilitydatas = [
         description: 'Guide des meilleures pratiques pour implémenter ARIA (Accessible Rich Internet Applications).',
         path: 'https://www.w3.org/WAI/ARIA/apg/'
     },
+    {
+        title: 'WebAIM Color Contrast Checker',
+        description: 'Outil en ligne pour vérifier le contraste des couleurs selon les normes WCAG.',
+        path: 'https://webaim.org/resources/contrastchecker/'
+    },
+
 ];
