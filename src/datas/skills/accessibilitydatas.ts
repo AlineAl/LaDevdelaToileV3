@@ -24,4 +24,9 @@ export const accessibilitydatas = [
         description: 'Article de Jess Budd sur comment cacher du contenu de manière accessible.',
         path: 'https://jessbudd.com/blog/hiding-content-accessibly/'
     },
+    {
+        title: 'WCAG 2.1 Guidelines',
+        description: 'Guide complet sur les Web Content Accessibility Guidelines (WCAG) 2.1, le standard international pour l\'accessibilité web.',
+        path: 'https://www.accessiway.fr/wcag'
+    }
 ];
