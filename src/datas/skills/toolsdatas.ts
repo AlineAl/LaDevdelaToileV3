@@ -50,9 +50,9 @@ export const toolsdatas = [
         path: 'https://tabby.sh/'
     },
     {
-        title: 'Oh My SSH',
-        description: 'Client SSH pour Windows, Mac et Linux.',
-        path: 'https://ohmy.ssh/'
+        title: 'Oh My ZSH',
+        description: 'Framework pour personnaliser votre terminal zsh.',
+        path: 'https://ohmyz.sh/'
     },
     {
         title: 'Can I Use',
