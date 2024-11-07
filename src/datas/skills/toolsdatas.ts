@@ -24,4 +24,9 @@ export const toolsdatas = [
         description: 'Outil indispensable pour se trouver plein de projets concrets à réaliser pour mettre en pratique ses compétences.',
         path: 'https://projectlearn.io/'
     },
+    {
+        title: 'Postman',
+        description: 'Outil indispensable permettant de tester des API.',
+        path: 'https://www.postman.com/'
+    },
 ];
