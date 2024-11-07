@@ -28,5 +28,11 @@ export const accessibilitydatas = [
         title: 'WCAG 2.1 Guidelines',
         description: 'Guide complet sur les Web Content Accessibility Guidelines (WCAG) 2.1, le standard international pour l\'accessibilité web.',
         path: 'https://www.accessiway.fr/wcag'
-    }
+    },
+    {
+        title: 'A11Y Project',
+        description: 'Une ressource communautaire qui aide à rendre le web plus accessible pour tous.',
+        path: 'https://www.a11yproject.com/'
+    },
+
 ];
