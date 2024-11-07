@@ -8,7 +8,7 @@ export const ecodesigndatas = [
         title: 'Appliquez les principes du Green IT',
         description: 'Cours de OpenClassrooms pour apprendre à mettre en place des pratiques de Green IT',
         path: 'https://openclassrooms.com/fr/courses/6227476-appliquez-les-principes-du-green-it-dans-votre-entreprise'
-    }
+    },
     {
         title: 'EcoIndex',
         description: 'Site de l\'EcoIndex, une plateforme pour évaluer et comparer la performance énergétique',
