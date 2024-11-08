@@ -9,4 +9,15 @@ export const seodatas = [
         description: 'Petit guide sur le site LaConsole pour comprendre les bases du SEO pour les dev.',
         path:  'https://laconsole.dev/blog/guide-seo-cles-indispensables-devs'
     },
+    {
+        title: 'SEO pour les développeurs',
+        description: 'Cours proposé par Grafikart pour apprendre les bases du SEO.',
+        path: 'https://grafikart.fr/formations/seo-developpeur'
+    },
+    {
+        title: 'SEO : Boostez le référencement de votre site',
+        description: 'Cours proposé par My-Mooc pour apprendre les bases du SEO.',
+        path: 'https://www.my-mooc.com/fr/mooc/seo-boostez-le-referencement-de-votre-site/'
+    },
+    
 ];
