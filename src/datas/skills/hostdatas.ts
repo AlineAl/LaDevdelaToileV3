@@ -5,6 +5,16 @@ export const hostdatas = [
         path:  'https://grafikart.fr/formations/upload-site'
     },
     {
+        title: 'OVH',
+        description: "Entreprise française pour l'hebergement de serveur.",
+        path:  'https://www.ovhcloud.com/fr/'
+    },
+    {
+        title: 'PlanetHoster',
+        description: "Service d'hébergement de site web.",
+        path:  'https://www.planethoster.com/fr'
+    }, 
+    {
         title: 'Apprendre à utiliser Vercel',
         description: 'Tutoriel pour déployer votre site web gratuitement avec Vercel.',
         path: 'https://vercel.com/docs'

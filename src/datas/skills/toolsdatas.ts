@@ -25,6 +25,11 @@ export const toolsdatas = [
         path: 'https://projectlearn.io/'
     },
     {
+        title: 'Postman',
+        description: 'Outil indispensable permettant de tester des API.',
+        path: 'https://www.postman.com/'
+    },
+    {
         title: 'CodeSandbox',
         description: 'Éditeur de code en ligne pour expérimenter, partager et apprendre.',
         path: 'https://codesandbox.io/'
