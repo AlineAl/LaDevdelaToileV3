@@ -19,4 +19,9 @@ export const designdatas = [
     description: 'Maîtrisez l’art de créer des applications Web réactives comme un pro ! Un outil de développement indispensable pour tous·tes les développeur·euse·s web qui facilitera votre travail.',
     path: 'https://responsively.app/',
   },
+  {
+    title: 'Canva Design School',
+    description: 'Des cours gratuits pour apprendre le design graphique avec Canva.',
+    path: 'https://www.canva.com/designschool/',
+  },
 ];
