@@ -150,4 +150,14 @@ npm run dev
     },
 ```
         
-        
+## To run the app as a service into a docker container
+- You need to have docker installed on your machine, please follow https://docs.docker.com/get-started/get-docker/
+```
+docker build -t ladevdelatoile:latest .
+docker run --name ladevdelatoile -p 4321:4321 ladevdelatoile:latest
+```
+- You can now access the application in your browser at: http://localhost:4321
+- If you want to stop the container, please use:
+```
+docker stop ladevdelatoile
+```

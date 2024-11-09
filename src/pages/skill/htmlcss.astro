@@ -1,16 +1,13 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-import NavBar from "../../components/NavBar.astro";
 import { htmlcssdatas } from "../../datas/skills/htmlcssdatas";
 import List from "../../components/List.astro";
+import LayoutSkill from "../../layouts/LayoutSkill.astro";
 ---
-<Layout title="HTML/CSS">
-    <NavBar />
-    <h1 class="text-4xl text-center font-bold mt-8">HTML/CSS</h1>
-    <p class="text-lg mt-4 mx-4">
+<LayoutSkill title="HTML/CSS">
+    <p slot="description">
         Contrairement aux apparences le HTML et CSS ne sont pas seulement de simples bases pour le développement web.
         L'apprentissage de ceux-ci nécessitent de la rigueur et de la précision pour être maîtrisés.
         Nous devons en plus de cela respecter des normes telles que celles véhiculées par le <a class="hover:font-bold" href="https://www.w3c.fr/standards/">W3C</a>.
     </p>
     <List data={ htmlcssdatas } imagePath="/_4f5b9708-c5c0-4320-98ec-9ae675c2e71e.jpeg" />
-</Layout>
+</LayoutSkill>

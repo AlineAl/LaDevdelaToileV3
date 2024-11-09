@@ -1,10 +1,8 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import NavBar from "../../components/NavBar.astro";
 import Footer from "../../components/Footer.astro"
 import { events } from "../../datas/events";
 import Card from "../../components/Card.astro";
-import { Icon } from "astro-icon/components";
 import ListMap from "../../components/ListMap.astro";
 import Pagination from "../../components/Pagination.astro";
 import InputAndFilter from "../../components/InputAndFilter.astro";
@@ -17,7 +15,6 @@ const visibleData = events.slice(startIndex, endIndex);
 ---
 
 <Layout title="Événements">
-    <NavBar />
     <h1 class="text-4xl text-center font-bold mt-8">Événements</h1>
     <p class="text-center text-lg mt-4 mx-4">
         Retrouvez ici une liste non-exhaustive de nombreux événements et communautés dev.
@@ -55,7 +52,11 @@ const visibleData = events.slice(startIndex, endIndex);
 <script>
     import { events } from "../../datas/events";
 
-    document.addEventListener('DOMContentLoaded', async () => {
+    document.addEventListener('astro:page-load', async () => {
+        if (window.location.pathname !== "/events") {
+            return;
+        }
+
         const L = (await import('leaflet')).default;
         const map = L.map('map').setView([48.866667, 2.333333], 10);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

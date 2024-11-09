@@ -1,14 +1,11 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-import NavBar from "../../components/NavBar.astro";
 import { seodatas } from "../../datas/skills/seodatas";
 import List from "../../components/List.astro";
+import LayoutSkill from "../../layouts/LayoutSkill.astro";
 ---
-<Layout title="Réseau">
-    <NavBar />
-    <h1 class="text-4xl text-center font-bold mt-8">SEO</h1>
-    <p class="text-lg mt-4 mx-4">
+<LayoutSkill title="Réseau">
+    <p slot="description">
         Le SEO (Search Engine Optimization) est un ensemble de techniques visant à optimiser la visibilité d'un site web dans les pages de résultats de recherche. Ces techniques visent à améliorer le positionnement d'un site web dans les moteurs de recherche et à augmenter le trafic de ce dernier.
     </p>
     <List data={ seodatas } imagePath="/_cc5d6c47-9d16-4b55-8824-d00f9486eb43.jpeg" />
-</Layout>
+</LayoutSkill>
