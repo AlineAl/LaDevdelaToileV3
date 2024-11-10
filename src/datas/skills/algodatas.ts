@@ -25,7 +25,7 @@ export const algodatas = [
     path: 'https://exercism.org/',
   },
   {
-    title: 'LeeCode',
+    title: 'LeetCode',
     description: 'LeetCode est une plateforme pour améliorer ses compétences en programmation en résolvant des exercices.',
     path: 'https://leetcode.com/',
   },
@@ -38,5 +38,10 @@ export const algodatas = [
     title: 'Visualgo',
     description: 'Visualgo est un outil interactif pour visualiser les algorithmes et les structures de données.',
     path: 'https://visualgo.net/en',
+  },
+  {
+    title: 'Project Euler',
+    description: 'Project Euler est une plateforme de défis mathématiques qui utilise des concepts d\'algorithmique pour résoudre des problèmes.',
+    path: 'https://projecteuler.net/',
   },
 ];
