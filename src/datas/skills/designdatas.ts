@@ -24,4 +24,9 @@ export const designdatas = [
     description: 'Des cours gratuits pour apprendre le design graphique avec Canva.',
     path: 'https://www.canva.com/designschool/',
   },
+  {
+    title: 'Mobbin',
+    description: "Collection massive de conceptions d'interfaces utilisateur (UI) provenant d'applications mobiles populaires et bien conçues.",
+    path: 'https://mobbin.com/browse/ios/apps',
+  },
 ];
