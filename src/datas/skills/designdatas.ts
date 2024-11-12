@@ -29,4 +29,9 @@ export const designdatas = [
     description: "Collection massive de conceptions d'interfaces utilisateur (UI) provenant d'applications mobiles populaires et bien conçues.",
     path: 'https://mobbin.com/browse/ios/apps',
   },
+  {
+    title: 'I am Tamara',
+    description: 'Superbe site de Tamara, UX designer spécialisée en accessiblité. Il y a énormément de ressources pour les designers et développeurs web.',
+    path: 'https://www.iamtamara.design/fr'
+  }
 ];
