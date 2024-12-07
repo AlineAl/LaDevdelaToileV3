@@ -2,11 +2,11 @@
 import Layout from "../../layouts/Layout.astro";
 import Footer from "../../components/Footer.astro"
 import { events } from "../../datas/events";
-import Card from "../../components/Card.astro";
-import ListMap from "../../components/ListMap.astro";
 import Pagination from "../../components/Pagination.astro";
 import InputAndFilter from "../../components/InputAndFilter.astro";
 import GetOrHideMapButton from "../../components/GetOrHideMapButton.astro";
+import CardEvent from "../../components/CardEvent.astro";
+import ListMapEvent from "../../components/ListMapEvent.astro";
 
 let startIndex = 0;
 let endIndex = 6;
@@ -21,22 +21,22 @@ const visibleData = events.slice(startIndex, endIndex);
     </p>
 
     <GetOrHideMapButton />
-    <InputAndFilter data={events} />
+    {/*<InputAndFilter data={events} />*/}
 
     <ul id="cardView" class="m-4 hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 auto-rows-[1fr]">
         {visibleData.map((event) => (
-            <Card
+            <CardEvent
                 title={event.title}
                 description={event.description}
-                path={event.path}
+                events={event.events}
             />
         ))}
     </ul>
 
     <div id="mapView" class="flex flex-wrap md:flex-nowrap">
         <ul id="mapList" class="md:w-[50%] h-96 overflow-auto">
-            {visibleData.map((conference) => (
-                    <ListMap data={conference} />
+            {visibleData.map((event) => (
+                    <ListMapEvent data={event} />
             ))}
         </ul>
 
@@ -50,8 +50,6 @@ const visibleData = events.slice(startIndex, endIndex);
 </Layout>
 
 <script>
-    import { events } from "../../datas/events";
-
     document.addEventListener('astro:page-load', async () => {
         if (window.location.pathname !== "/events") {
             return;
@@ -64,24 +62,78 @@ const visibleData = events.slice(startIndex, endIndex);
         }).addTo(map);
 
         let markers = {};
-        let filteredEvents = [...events];
+        let filteredEvents = [];
+        let allEvents = [];
+
+        async function loadEvents() {
+            const response = await fetch('/communities-events.json');
+            const data = await response.json();
+
+            data.forEach(city => {
+                city.communities.forEach(community => {
+                    const events = community.events.length > 0
+                        ? community.events.map(event => ({
+                            path: event.link,
+                            location: {
+                                city: city.city,
+                                coordinates: [event.latitude, event.longitude]
+                            }
+                        }))
+                        : [{
+                            path: "#",
+                            location: {
+                                city: city.city,
+                                coordinates: [48.8566, 2.3522]
+                            }
+                        }];
+
+                    allEvents.push({
+                        title: community.name,
+                        description: community.description,
+                        events
+                    });
+                });
+            });
+
+            console.log("data", data);
+
+            filteredEvents = [...allEvents];
+            setupPagination();
+            mapData(filteredEvents.slice(startIndex, endIndex));
+        }
+
+        function setupPagination() {
+            updatePageNumber();
+            const totalPages = Math.ceil(filteredEvents.length / itemsPerPage);
+            document.getElementById('total-pages').textContent = totalPages;
+        }
 
         function updateMap(visibleData) {
             Object.values(markers).forEach(marker => map.removeLayer(marker));
             markers = {};
-            visibleData.forEach(event => {
-                const marker = L.marker(event.location.coordinates).addTo(map);
-                marker.bindPopup(`
-                    <div class="popup-content">
-                        <h3 class="font-bold text-lg">${event.title}</h3>
-                        <p class="text-gray-700">${event.description}</p>
-                        <p class="text-sm text-gray-500">${event.location.city}</p>
-                        <a href="${event.path}" target="_blank" class="text-blue-500 hover:underline">Voir les conférences</a>
-                    </div>
-                `);
-                markers[event.title] = marker;
+
+            visibleData.forEach(item => {
+                item.events.forEach(event => {
+                    const marker = L.marker(event.location.coordinates).addTo(map);
+                    marker.bindPopup(`
+                        <div class="popup-content">
+                            <h3 class="font-bold text-lg">${item.title}</h3>
+                            <p class="text-gray-700">${item.description}</p>
+                            <p class="text-sm text-gray-500">${event.location.city}</p>
+                            <a href="${event.path}" target="_blank" class="text-blue-500 hover:underline">Voir les conférences</a>
+                        </div>
+                    `);
+                    markers[`${item.title}`] = marker;
+                });
             });
-            const bounds = L.latLngBounds(visibleData.map(event => L.latLng(event.location.coordinates)));
+
+            console.log("visibleData", visibleData);
+
+            const bounds = L.latLngBounds(
+                visibleData.flatMap(item =>
+                    item.events.map(event => L.latLng(event.location.coordinates))
+                )
+            );
             map.fitBounds(bounds);
         }
 
@@ -92,7 +144,6 @@ const visibleData = events.slice(startIndex, endIndex);
 
         function updatePageNumber() {
             document.getElementById('page-number').value = pageNumber;
-            document.getElementById('total-pages').textContent = Math.ceil(filteredEvents.length / itemsPerPage);
         }
 
         function mapData(visibleData) {
@@ -108,7 +159,7 @@ const visibleData = events.slice(startIndex, endIndex);
                         <h2 class="font-semibold">${d.title}</h2>
                         <p class="text-sm my-2 truncate">${d.description}</p>
                         <span class="bg-sky-100 text-sky-800 text-sm font-medium me-2 px-2.5 py-1 rounded">
-                            ${d.location.city}
+                            ${d.events.length} événements
                         </span>
                     </li>`;
                 listContainer.appendChild(list);
@@ -118,8 +169,8 @@ const visibleData = events.slice(startIndex, endIndex);
                 const card = document.createElement("div");
                 card.innerHTML = `<a href=${d.path}>
                     <div class="min-h-full flex flex-col items-center gap-4 border border-default bg-offset p-6 transition duration-300 ease-in-out hover:cursor-pointer hover:text-white hover:bg-sky-700">
-                        <p class="text-center font-extrabold text-xl">${ d.title }</p>
-                        <p class="text-center text-offset text-sm">${ d.description }</p>
+                        <p class="text-center font-extrabold text-xl">${d.title}</p>
+                        <p class="text-center text-offset text-sm">${d.description}</p>
                     </div>
                 </a>`;
                 cardContainer.appendChild(card);
@@ -170,45 +221,27 @@ const visibleData = events.slice(startIndex, endIndex);
             const input = document.getElementById('searchInput').value.toUpperCase();
             const city = document.getElementById('citySelect').value;
 
-            console.log(input, city);
-
-            filteredEvents = events.filter(d => {
+            filteredEvents = allEvents.filter(d => {
                 const matchesTitle = d.title.toUpperCase().includes(input);
-                const matchesCity = city === "" || d.location.city === city;
+                const matchesCity = city === "" || d.events.some(event => event.location.city === city);
                 return matchesTitle && matchesCity;
             });
 
             startIndex = 0;
             endIndex = itemsPerPage;
             pageNumber = 1;
-            updatePageNumber();
-
+            setupPagination();
             mapData(filteredEvents.slice(startIndex, endIndex));
         }
 
-        const toggleButton = document.getElementById("toggleButton");
-        const cardView = document.getElementById("cardView");
-        const mapView = document.getElementById("mapView");
-        const buttonText = document.getElementById("buttonText");
-
-        toggleButton.addEventListener("click", () => {
-            cardView.classList.toggle("hidden");
-            mapView.classList.toggle("hidden");
-
-            if (mapView.classList.contains("hidden")) {
-                buttonText.textContent = "Afficher avec la carte";
-            } else {
-                buttonText.textContent = "Afficher sans la carte";
-            }
-        });
-
         document.getElementById('prev').addEventListener('click', prevPage);
         document.getElementById('next').addEventListener('click', nextPage);
-        document.getElementById('searchInput').addEventListener('keyup', filterData);
-        document.getElementById('citySelect').addEventListener('change', filterData);
+        //document.getElementById('searchInput').addEventListener('keyup', filterData);
+        //document.getElementById('citySelect').addEventListener('change', filterData);
 
-        updatePageNumber();
-        mapData(filteredEvents.slice(startIndex, endIndex));
+        loadEvents();
     });
 </script>
+
+
 

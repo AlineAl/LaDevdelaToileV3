@@ -1,0 +1,25 @@
+---
+interface Props {
+    data: {
+        title: string;
+        description: string;
+        events: [{
+            location: {
+                city: string;
+            };
+        }]
+    };
+}
+
+const { data } = Astro.props;
+---
+
+<li data-marker={data.title} id={data.title} class="marker-item p-4 mb-4 m-4 bg-white border border-default transition-all hover:cursor-pointer hover:text-white hover:bg-sky-700">
+    <h2 class="font-semibold">{data.title}</h2>
+    <p class="text-sm my-2 truncate">{data.description}</p>
+    {data.events.map((event) => (
+        <span class="bg-sky-100 text-sky-800 text-sm font-medium me-2 px-2.5 py-1 rounded">
+            {event.location.city}
+        </span>
+    ))}
+</li>

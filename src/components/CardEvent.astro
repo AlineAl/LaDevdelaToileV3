@@ -1,0 +1,29 @@
+---
+interface Props {
+    description: string;
+    icon: string;
+    title: string;
+    events: [
+        {
+            path: string
+        }
+    ];
+}
+
+const { title, description, events } = Astro.props
+
+---
+
+<a>
+    <astro-card class="min-h-full flex flex-col items-center gap-4 border border-default bg-offset p-6 transition duration-300 ease-in-out hover:cursor-pointer hover:text-white hover:bg-sky-700">
+        <p class="text-center font-extrabold text-xl">
+            { title }
+        </p>
+        <p class="text-center text-offset text-sm">
+            { description }
+        </p>
+        {events.map((event) => (
+            <p>{event.path}</p>
+        ))}
+    </astro-card>
+</a>
