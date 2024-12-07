@@ -113,11 +113,13 @@ fetchData();
             const response = await fetch('/communities-events.json');
             const data = await response.json();
 
+            console.log(data)
             data.forEach(city => {
                 city.communities.forEach(community => {
                     const events = community.events.length > 0
                         ? community.events.map(event => ({
                             path: event.link,
+                            title: event.title,
                             location: {
                                 city: city.city,
                                 coordinates: [event.latitude, event.longitude]
@@ -128,6 +130,7 @@ fetchData();
                             const defaultCity = coordinatesCities.find(c => c.city === city.city);
                             return [{
                                 path: "#",
+                                title: "Aucun événement",
                                 location: {
                                     city: city.city,
                                     coordinates: defaultCity ? defaultCity.coordinates : [0, 0]
@@ -174,9 +177,17 @@ fetchData();
                     marker.bindPopup(`
                         <div class="popup-content">
                             <h3 class="font-bold text-lg">${item.title}</h3>
-                            <p class="text-gray-700">${item.description}</p>
                             <p class="text-sm text-gray-500">${event.location.city}</p>
-                            <a href="${event.path}" target="_blank" class="text-blue-500 hover:underline">En savoir plus</a>
+                            ${
+                                item.events.map(e => e.isNotEvent ? `
+                                    <p class="text-red-500">Aucun événement</p>
+                                    <a href="${getBasePath(event.path)}" target="_blank" class="text-blue-500 hover:underline">En savoir plus</a>
+                                ` : `
+                                    <p class="text-blue-500 hover:underline">
+                                        <a href="${e.path}" target="_blank">${e.title}</a>
+                                    </p>
+                                `).join('')
+                            }
                         </div>
                     `);
                     markers[`${item.title}`] = marker;
