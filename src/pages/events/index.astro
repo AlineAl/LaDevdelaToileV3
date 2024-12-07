@@ -1,17 +1,59 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import Footer from "../../components/Footer.astro"
-import { events } from "../../datas/events";
 import Pagination from "../../components/Pagination.astro";
 import InputAndFilter from "../../components/InputAndFilter.astro";
 import GetOrHideMapButton from "../../components/GetOrHideMapButton.astro";
 import CardEvent from "../../components/CardEvent.astro";
 import ListMapEvent from "../../components/ListMapEvent.astro";
 
+let events = [];
+
+async function loadEvents() {
+    try {
+        const response = await fetch('/communities-events.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        events = data.map(city => ({
+            title: city.city,
+            description: city.description || `Découvrez les événements à ${city.city}.`,
+            events: city.communities.flatMap(community =>
+                community.events.length > 0
+                    ? community.events.map(event => ({
+                        path: event.link,
+                        location: {
+                            city: city.city,
+                            coordinates: [event.latitude, event.longitude],
+                        },
+                    }))
+                    : []
+            ),
+        }));
+
+        return events;
+    } catch (error) {
+        console.error("Failed to load events:", error);
+        return [];
+    }
+}
+
+let allEvents = [];
+let visibleData = [];
+const itemsPerPage = 6;
 let startIndex = 0;
-let endIndex = 6;
 let pageNumber = 1;
-const visibleData = events.slice(startIndex, endIndex);
+let endIndex = itemsPerPage;
+
+async function fetchData() {
+    allEvents = await loadEvents();
+    visibleData = allEvents.slice(startIndex, endIndex);
+}
+
+fetchData();
 ---
 
 <Layout title="Événements">
@@ -50,6 +92,8 @@ const visibleData = events.slice(startIndex, endIndex);
 </Layout>
 
 <script>
+    import { coordinatesCities } from "../../datas/coordinatesCities";
+
     document.addEventListener('astro:page-load', async () => {
         if (window.location.pathname !== "/events") {
             return;
@@ -77,29 +121,41 @@ const visibleData = events.slice(startIndex, endIndex);
                             location: {
                                 city: city.city,
                                 coordinates: [event.latitude, event.longitude]
-                            }
+                            },
+                            isNotEvent: false
                         }))
-                        : [{
-                            path: "#",
-                            location: {
-                                city: city.city,
-                                coordinates: [48.8566, 2.3522]
-                            }
-                        }];
+                        : (() => {
+                            const defaultCity = coordinatesCities.find(c => c.city === city.city);
+                            return [{
+                                path: "#",
+                                location: {
+                                    city: city.city,
+                                    coordinates: defaultCity ? defaultCity.coordinates : [0, 0]
+                                },
+                                isNotEvent: true
+                            }];
+                        })();
 
                     allEvents.push({
                         title: community.name,
-                        description: community.description,
+                        description: community.description || `Ne manquez pas les événements de la communauté ${community.name}.`,
                         events
                     });
                 });
             });
 
-            console.log("data", data);
-
             filteredEvents = [...allEvents];
             setupPagination();
             mapData(filteredEvents.slice(startIndex, endIndex));
+        }
+
+        function getBasePath(path: string): string {
+            const segments = path.split('/');
+            const eventsIndex = segments.indexOf('events');
+            if (eventsIndex !== -1) {
+                return segments.slice(0, eventsIndex + 1).join('/');
+            }
+            return path;
         }
 
         function setupPagination() {
@@ -120,14 +176,12 @@ const visibleData = events.slice(startIndex, endIndex);
                             <h3 class="font-bold text-lg">${item.title}</h3>
                             <p class="text-gray-700">${item.description}</p>
                             <p class="text-sm text-gray-500">${event.location.city}</p>
-                            <a href="${event.path}" target="_blank" class="text-blue-500 hover:underline">Voir les conférences</a>
+                            <a href="${event.path}" target="_blank" class="text-blue-500 hover:underline">En savoir plus</a>
                         </div>
                     `);
                     markers[`${item.title}`] = marker;
                 });
             });
-
-            console.log("visibleData", visibleData);
 
             const bounds = L.latLngBounds(
                 visibleData.flatMap(item =>
@@ -154,12 +208,22 @@ const visibleData = events.slice(startIndex, endIndex);
 
             visibleData.forEach(d => {
                 const list = document.createElement("li");
+                const validEvents = d.events.filter(event => !event.isNotEvent);
+                const eventCount = validEvents.length;
+
+                const eventClass =
+                    eventCount === 0
+                        ? 'bg-red-100 text-red-800'
+                        : 'bg-sky-100 text-sky-800';
+
                 list.innerHTML = `
                     <li data-marker="${d.title}" class="marker-item p-4 mb-4 m-4 bg-white border border-default transition-all hover:cursor-pointer hover:text-white hover:bg-sky-700">
                         <h2 class="font-semibold">${d.title}</h2>
-                        <p class="text-sm my-2 truncate">${d.description}</p>
-                        <span class="bg-sky-100 text-sky-800 text-sm font-medium me-2 px-2.5 py-1 rounded">
-                            ${d.events.length} événements
+                        <p class="text-sm my-2">${d.description}</p>
+                        <span class="${eventClass} text-sm font-medium me-2 px-2.5 py-1 rounded">
+                           ${eventCount === 0
+                                ? 'Aucun événement'
+                                : `${eventCount} événement${eventCount > 1 ? 's' : ''}`}
                         </span>
                     </li>`;
                 listContainer.appendChild(list);
@@ -167,7 +231,9 @@ const visibleData = events.slice(startIndex, endIndex);
 
             visibleData.forEach(d => {
                 const card = document.createElement("div");
-                card.innerHTML = `<a href=${d.path}>
+                console.log(d)
+
+                card.innerHTML = `<a href=${getBasePath(d.events[0].path)}>
                     <div class="min-h-full flex flex-col items-center gap-4 border border-default bg-offset p-6 transition duration-300 ease-in-out hover:cursor-pointer hover:text-white hover:bg-sky-700">
                         <p class="text-center font-extrabold text-xl">${d.title}</p>
                         <p class="text-center text-offset text-sm">${d.description}</p>
@@ -233,6 +299,22 @@ const visibleData = events.slice(startIndex, endIndex);
             setupPagination();
             mapData(filteredEvents.slice(startIndex, endIndex));
         }
+
+        const toggleButton = document.getElementById("toggleButton");
+        const cardView = document.getElementById("cardView");
+        const mapView = document.getElementById("mapView");
+        const buttonText = document.getElementById("buttonText");
+
+        toggleButton.addEventListener("click", () => {
+            cardView.classList.toggle("hidden");
+            mapView.classList.toggle("hidden");
+
+            if (mapView.classList.contains("hidden")) {
+                buttonText.textContent = "Afficher avec la carte";
+            } else {
+                buttonText.textContent = "Afficher sans la carte";
+            }
+        });
 
         document.getElementById('prev').addEventListener('click', prevPage);
         document.getElementById('next').addEventListener('click', nextPage);
