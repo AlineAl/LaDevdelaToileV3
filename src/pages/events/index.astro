@@ -63,7 +63,7 @@ fetchData();
     </p>
 
     <GetOrHideMapButton />
-    {/*<InputAndFilter data={events} />*/}
+    <InputAndFilter />
 
     <ul id="cardView" class="m-4 hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 auto-rows-[1fr]">
         {visibleData.map((event) => (
@@ -113,7 +113,6 @@ fetchData();
             const response = await fetch('/communities-events.json');
             const data = await response.json();
 
-            console.log(data)
             data.forEach(city => {
                 city.communities.forEach(community => {
                     const events = community.events.length > 0
@@ -152,13 +151,16 @@ fetchData();
             mapData(filteredEvents.slice(startIndex, endIndex));
         }
 
-        function getBasePath(path: string): string {
-            const segments = path.split('/');
-            const eventsIndex = segments.indexOf('events');
-            if (eventsIndex !== -1) {
-                return segments.slice(0, eventsIndex + 1).join('/');
-            }
-            return path;
+        function generateSlug(title: string) {
+            return title
+                .toLowerCase()
+                .replace(/\s+/g, '-')
+                .replace(/[^\w\-]/g, '');
+        }
+
+        function generateDynamicUrl(baseUrl: string, title: string) {
+            const slug = generateSlug(title);
+            return baseUrl.replace(/\/[^/]+(?=\/events)/, `/${slug}`);
         }
 
         function setupPagination() {
@@ -181,7 +183,7 @@ fetchData();
                             ${
                                 item.events.map(e => e.isNotEvent ? `
                                     <p class="text-red-500">Aucun événement</p>
-                                    <a href="${getBasePath(event.path)}" target="_blank" class="text-blue-500 hover:underline">En savoir plus</a>
+                                    <a href="${generateDynamicUrl("https://www.meetup.com/humantalks-grenoble/events", item.title)}" target="_blank" class="text-blue-500 hover:underline">En savoir plus</a>
                                 ` : `
                                     <p class="text-blue-500 hover:underline">
                                         <a href="${e.path}" target="_blank">${e.title}</a>
@@ -242,14 +244,14 @@ fetchData();
 
             visibleData.forEach(d => {
                 const card = document.createElement("div");
-                console.log(d)
 
-                card.innerHTML = `<a href=${getBasePath(d.events[0].path)}>
+                card.innerHTML = `<a href="${generateDynamicUrl("https://www.meetup.com/humantalks-grenoble/events", d.title)}" target="_blank">
                     <div class="min-h-full flex flex-col items-center gap-4 border border-default bg-offset p-6 transition duration-300 ease-in-out hover:cursor-pointer hover:text-white hover:bg-sky-700">
                         <p class="text-center font-extrabold text-xl">${d.title}</p>
                         <p class="text-center text-offset text-sm">${d.description}</p>
                     </div>
                 </a>`;
+
                 cardContainer.appendChild(card);
             });
 
@@ -329,8 +331,8 @@ fetchData();
 
         document.getElementById('prev').addEventListener('click', prevPage);
         document.getElementById('next').addEventListener('click', nextPage);
-        //document.getElementById('searchInput').addEventListener('keyup', filterData);
-        //document.getElementById('citySelect').addEventListener('change', filterData);
+        document.getElementById('searchInput').addEventListener('keyup', filterData);
+        document.getElementById('citySelect').addEventListener('change', filterData);
 
         loadEvents();
     });
