@@ -100,5 +100,14 @@
         "platform": "meetup"
       }
     ]
+  },
+  {
+    "city": "Lyon",
+    "communities": [
+      {
+        "name": "lyonjs",
+        "platform": "meetup"
+      }
+    ]
   }
 ]
