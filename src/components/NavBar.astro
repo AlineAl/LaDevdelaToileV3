@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import logo from '../../public/logo-removebg.png';
 import { Icon } from 'astro-icon/components';
 ---
 
@@ -6,7 +8,7 @@ import { Icon } from 'astro-icon/components';
     <nav class="container-xl p-4 md:flex md:flex-nowrap md:items-center md:gap-6">
         <div class="flex items-center justify-between">
             <a href="/" class="block">
-                <img src='/logo-removebg.png' alt="Logo" class="w-20 h-20 md:w-32 md:h-32" />
+                <Image src={logo} alt="Logo du site LaDevdelaToile" class="w-20 h-20 md:w-32 md:h-32" />
             </a>
             <button id="menu-toggle" class="md:hidden focus:outline-none">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">

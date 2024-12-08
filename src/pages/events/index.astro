@@ -4,8 +4,6 @@ import Footer from "../../components/Footer.astro"
 import Pagination from "../../components/Pagination.astro";
 import InputAndFilter from "../../components/InputAndFilter.astro";
 import GetOrHideMapButton from "../../components/GetOrHideMapButton.astro";
-import CardEvent from "../../components/CardEvent.astro";
-import ListMapEvent from "../../components/ListMapEvent.astro";
 
 let events = [];
 
@@ -65,22 +63,10 @@ fetchData();
     <GetOrHideMapButton />
     <InputAndFilter />
 
-    <ul id="cardView" class="m-4 hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 auto-rows-[1fr]">
-        {visibleData.map((event) => (
-            <CardEvent
-                title={event.title}
-                description={event.description}
-                events={event.events}
-            />
-        ))}
-    </ul>
+    <ul id="cardView" class="m-4 hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 auto-rows-[1fr]"></ul>
 
     <div id="mapView" class="flex flex-wrap md:flex-nowrap">
-        <ul id="mapList" class="md:w-[50%] h-96 overflow-auto">
-            {visibleData.map((event) => (
-                    <ListMapEvent data={event} />
-            ))}
-        </ul>
+        <ul id="mapList" class="md:w-[50%] h-96 overflow-auto"></ul>
 
         <div class="m-4 map w-full md:w-[50%]">
             <div id="map" style="height: 400px;"></div>
@@ -119,6 +105,7 @@ fetchData();
                         ? community.events.map(event => ({
                             path: event.link,
                             title: event.title,
+                            date: event.date,
                             location: {
                                 city: city.city,
                                 coordinates: [event.latitude, event.longitude]
@@ -172,25 +159,42 @@ fetchData();
         function updateMap(visibleData) {
             Object.values(markers).forEach(marker => map.removeLayer(marker));
             markers = {};
-
+            console.log(visibleData);
             visibleData.forEach(item => {
                 item.events.forEach(event => {
                     const marker = L.marker(event.location.coordinates).addTo(map);
                     marker.bindPopup(`
-                        <div class="popup-content">
-                            <h3 class="font-bold text-lg">${item.title}</h3>
-                            <p class="text-sm text-gray-500">${event.location.city}</p>
-                            ${
-                                item.events.map(e => e.isNotEvent ? `
-                                    <p class="text-red-500">Aucun événement</p>
-                                    <a href="${generateDynamicUrl("https://www.meetup.com/humantalks-grenoble/events", item.title)}" target="_blank" class="text-blue-500 hover:underline">En savoir plus</a>
-                                ` : `
-                                    <p class="text-blue-500 hover:underline">
-                                        <a href="${e.path}" target="_blank">${e.title}</a>
-                                    </p>
-                                `).join('')
-                            }
-                        </div>
+                 <div class="popup-content">
+                    <h3 class="font-bold text-lg text-gray-800 mb-2">${item.title}</h3>
+                    <p class="text-sm text-gray-600 mb-4">
+                        📍 <span>${event.location.city}</span>
+                    </p>
+                    <div class="events-list space-y-2">
+                        ${
+                            item.events
+                                .filter(e => new Date(e.date) >= new Date())
+                                .sort((a, b) => new Date(a.date) - new Date(b.date))
+                                .slice(0, 2)
+                                .map(e => e.isNotEvent ? `
+                            <div class="event-item">
+                                <p class="bg-red-100 text-red-800 text-sm font-medium me-2 px-2.5 py-1 rounded">Aucun événement prévu</p>
+                                <a href="${generateDynamicUrl("https://www.meetup.com/humantalks-grenoble/events", item.title)}" target="_blank" class="text-blue-500 hover:underline font-medium">
+                                    En savoir plus
+                                </a>
+                            </div>
+                            ` : `
+                            <div class="event-item flex flex-col gap-1">
+                                <time datetime="${e.date}" class="text-gray-500 text-sm">
+                                    📅 ${new Date(e.date).toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+                                </time>
+                                <a href="${e.path}" target="_blank" class="text-blue-600 hover:underline font-semibold">
+                                    ${e.title}
+                                </a>
+                            </div>
+                            `).join('')
+                        }
+                    </div>
+                 </div>
                     `);
                     markers[`${item.title}`] = marker;
                 });
@@ -222,7 +226,8 @@ fetchData();
             visibleData.forEach(d => {
                 const list = document.createElement("li");
                 const validEvents = d.events.filter(event => !event.isNotEvent);
-                const eventCount = validEvents.length;
+                const eventPassed = validEvents.filter(e => new Date(e.date) >= new Date())
+                const eventCount = eventPassed.length;
 
                 const eventClass =
                     eventCount === 0
