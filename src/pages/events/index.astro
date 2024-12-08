@@ -34,7 +34,7 @@ async function loadEvents() {
 
         return events;
     } catch (error) {
-        console.error("Failed to load events:", error);
+        console.@error("Failed to load events:", error);
         return [];
     }
 }
@@ -159,7 +159,6 @@ fetchData();
         function updateMap(visibleData) {
             Object.values(markers).forEach(marker => map.removeLayer(marker));
             markers = {};
-            console.log(visibleData);
             visibleData.forEach(item => {
                 item.events.forEach(event => {
                     const marker = L.marker(event.location.coordinates).addTo(map);
