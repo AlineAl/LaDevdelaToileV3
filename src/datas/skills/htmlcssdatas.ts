@@ -33,5 +33,10 @@ export const htmlcssdatas = [
         title: 'CSS Battle',
         description: 'CSS Battle est une plateforme qui propose des défis pour améliorer ses compétences en CSS.',
         path: 'https://cssbattle.dev/'
+    },
+    {
+        title: 'Alsacréations',
+        description: 'Des cours, des tutoriels, des astuces pour apprendre ou s\'améliorer en HTML/CSS.',
+        path: 'https://www.alsacreations.com/'
     }
 ];
