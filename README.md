@@ -149,6 +149,24 @@ npm run dev
         path: 'Share the path of the notes here'
     },
 ```
+
+
+### Add your known **communities** links in the `public/communities.json` files
+- Go to the `public` folder
+- Click on the file `communities.json` and add your community and his event plateform in the file. If your city doesn't exist, you can add it : 
+```
+    [
+        {
+            "city": "Nantes",
+            "communities": [
+                {
+                    "name": "HumanTalks-Nantes",
+                    "platform": "meetup"
+                }
+        }
+    ]
+```
+
         
 ## To run the app as a service into a docker container
 - You need to have docker installed on your machine, please follow https://docs.docker.com/get-started/get-docker/
