@@ -15,7 +15,15 @@
         "platform": "meetup"
       },
       {
+        "name": "BordeauxJUG",
+        "platform": "meetup"
+      },
+      {
         "name": "human-talks-bordeaux",
+        "platform": "meetup"
+      },
+      {
+        "name": "women-in-tech-bordeaux",
         "platform": "meetup"
       }
     ]
@@ -54,6 +62,10 @@
       },
       {
         "name": "humantalks-lyon",
+        "platform": "meetup"
+      },
+      {
+        "name": "software-craftsmanship-lyon",
         "platform": "meetup"
       }
     ]
