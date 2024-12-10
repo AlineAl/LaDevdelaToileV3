@@ -57,11 +57,15 @@
     "city": "Lyon",
     "communities": [
       {
-        "name": "lyonjs",
+        "name": "cafe-devops-lyon",
         "platform": "meetup"
       },
       {
         "name": "humantalks-lyon",
+        "platform": "meetup"
+      },
+      {
+        "name": "lyonjs",
         "platform": "meetup"
       },
       {
