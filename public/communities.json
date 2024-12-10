@@ -1,12 +1,13 @@
-[{
-  "city": "Angers",
-  "communities": [
-    {
-      "name": "human-talks-angers",
-      "platform": "meetup"
-    }
-  ]
-},
+[
+  {
+    "city": "Angers",
+    "communities": [
+      {
+        "name": "human-talks-angers",
+        "platform": "meetup"
+      }
+    ]
+  },
   {
     "city": "Bordeaux",
     "communities": [
