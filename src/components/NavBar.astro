@@ -5,6 +5,28 @@ import { Icon } from 'astro-icon/components';
 ---
 
 <header class="surface-menu nav sticky top-0 z-50 bg-white border-b border-b-black-100">
+    <div role="banner" class="relative isolate flex items-center gap-x-6 overflow-hidden bg-gray-50 px-6 py-2.5 sm:px-3.5 sm:before:flex-1">
+        <div class="absolute left-[max(-7rem,calc(50%-52rem))] top-1/2 -z-10 -translate-y-1/2 transform-gpu blur-2xl" aria-hidden="true">
+            <div class="aspect-[577/310] w-[36.0625rem] bg-gradient-to-r from-[#0CA6E9] to-[#9089fc] opacity-30" style="clip-path: polygon(74.8% 41.9%, 97.2% 73.2%, 100% 34.9%, 92.5% 0.4%, 87.5% 0%, 75% 28.6%, 58.5% 54.6%, 50.1% 56.8%, 46.9% 44%, 48.3% 17.4%, 24.7% 53.9%, 0% 27.9%, 11.9% 74.2%, 24.9% 54.1%, 68.6% 100%, 74.8% 41.9%)"></div>
+        </div>
+        <div class="absolute left-[max(45rem,calc(50%+8rem))] top-1/2 -z-10 -translate-y-1/2 transform-gpu blur-2xl" aria-hidden="true">
+            <div class="aspect-[577/310] w-[36.0625rem] bg-gradient-to-r from-[#0CA6E9] to-[#9089fc] opacity-30" style="clip-path: polygon(74.8% 41.9%, 97.2% 73.2%, 100% 34.9%, 92.5% 0.4%, 87.5% 0%, 75% 28.6%, 58.5% 54.6%, 50.1% 56.8%, 46.9% 44%, 48.3% 17.4%, 24.7% 53.9%, 0% 27.9%, 11.9% 74.2%, 24.9% 54.1%, 68.6% 100%, 74.8% 41.9%)"></div>
+        </div>
+        <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <p class="text-sm/6 text-gray-900">
+                <strong class="font-semibold"></strong><svg viewBox="0 0 2 2" class="mx-2 inline size-0.5 fill-current" aria-hidden="true"><circle cx="1" cy="1" r="1" /></svg>
+            </p>
+        </div>
+        <div class="flex flex-1 justify-end">
+            <button type="button" class="-m-3 p-3 focus-visible:outline-offset-[-4px]">
+                <span class="sr-only">Dismiss</span>
+                <svg class="size-5 text-gray-900" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                    <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
     <nav class="container-xl p-4 md:flex md:flex-nowrap md:items-center md:gap-6">
         <div class="flex items-center justify-between">
             <a href="/" class="block">
@@ -36,8 +58,8 @@ import { Icon } from 'astro-icon/components';
         <ul id="nav-socials-links" class="nav-underline hidden md:flex ml-auto flex-nowrap items-center uppercase">
           <div class="flex justify-center">
                 <li class="w-fit">
-                    <a href="https://twitter.com/AlineLSMN" class="block py-3">
-                        <Icon class="w-8 h-8 text-sky-500" name="mdi:twitter" />
+                    <a href="https://bsky.app/profile/ladevdelatoile.bsky.social" class="block py-3">
+                        <Icon class="w-8 h-8 text-sky-500" name="mdi:butterfly" />
                     </a>
                 </li>
                 <li class="w-fit">
@@ -63,10 +85,95 @@ import { Icon } from 'astro-icon/components';
 <script>
     document.addEventListener('astro:page-load', () => {
         let lastScrollTop = 0;
+        let events = [];
+
         const navbar = document.querySelector('.nav');
         const menuToggle = document.getElementById('menu-toggle');
         const navLinks = document.getElementById('nav-links');
         const socialLinks = document.getElementById('nav-socials-links');
+        const banner = document.querySelector('.surface-menu div[role="banner"]');
+        const xButton = document.querySelector('.surface-menu button');
+        async function loadEvents() {
+            try {
+                const response = await fetch('./communities-events.json');
+                const data = await response.json();
+
+                events = data.flatMap(city =>
+                    city.communities.flatMap(community =>
+                        community.events.map(event => ({
+                            path: event.link,
+                            title: event.title,
+                            date: event.date,
+                        }))
+                    )
+                );
+
+                findMoreRecentEvents();
+            } catch (error) {
+                console.error('Error loading events:', error);
+            }
+        }
+
+        function checkBannerState() {
+            const isBannerHidden = localStorage.getItem('bannerHidden');
+            if (isBannerHidden === 'true' && banner) {
+                banner.classList.add('hidden');
+            }
+        }
+
+        function closeBanner() {
+            if (banner) {
+                banner.classList.add('hidden');
+                localStorage.setItem('bannerHidden', 'true');
+            }
+        }
+        function findMoreRecentEvents() {
+            const today = new Date();
+            const futureEvents = events.filter(event => new Date(event.date) >= today || new Date(event.date).toDateString() === today.toDateString());
+
+            if (futureEvents.length === 0) {
+                return;
+            }
+
+            const mostRecentEvent = futureEvents.reduce((closest, current) => {
+                return new Date(current.date) < new Date(closest.date) ? current : closest;
+            });
+
+            insertDataInBanner(mostRecentEvent);
+        }
+
+        function insertDataInBanner (mostRecentEvent) {
+            const banner = document.querySelector('.surface-menu');
+            const bannerContent = banner.querySelector('div[role="banner"]');
+            const bannerText = bannerContent.querySelector('p');
+
+            const eventDate = new Date(mostRecentEvent.date);
+            const today = new Date();
+
+            const isToday = eventDate.toDateString() === today.toDateString();
+
+            bannerText.innerHTML = `
+                 <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+                    <p class="text-sm/6 text-gray-900">
+                        <strong class="font-semibold">${mostRecentEvent.title}</strong>
+                        <svg viewBox="0 0 2 2" class="mx-2 inline size-0.5 fill-current" aria-hidden="true">
+                            <circle cx="1" cy="1" r="1" />
+                        </svg>
+                        ${
+                            isToday
+                                ? `Un événement a lieu aujourd'hui, ne manquez pas cette occasion !`
+                                : `Nous avons hâte de vous retrouver lors de cet événement le ${eventDate.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })} !`
+
+                        }
+                    </p>
+                    <a role="link" href="${mostRecentEvent.path}" class="flex-none rounded-full bg-gray-900 px-3.5 py-1 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900">
+                        Plus d'informations <span aria-hidden="true">&rarr;</span>
+                    </a>
+                </div>
+            `;
+        }
+
+        loadEvents();
 
         menuToggle.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
@@ -104,6 +211,10 @@ import { Icon } from 'astro-icon/components';
                 lastScrollTop = scrollTop;
             });
         }
+
+        checkBannerState();
+        xButton.addEventListener('click', closeBanner);
+        loadEvents();
     });
 </script>
 

@@ -170,18 +170,11 @@ fetchData();
                     </p>
                     <div class="events-list space-y-2">
                         ${
-                            item.events
-                                .filter(e => new Date(e.date) >= new Date())
-                                .sort((a, b) => new Date(a.date) - new Date(b.date))
-                                .slice(0, 2)
-                                .map(e => e.isNotEvent ? `
-                            <div class="event-item">
-                                <p class="bg-red-100 text-red-800 text-sm font-medium me-2 px-2.5 py-1 rounded">Aucun événement prévu</p>
-                                <a href="${generateDynamicUrl("https://www.meetup.com/humantalks-grenoble/events", item.title)}" target="_blank" class="text-blue-500 hover:underline font-medium">
-                                    En savoir plus
-                                </a>
-                            </div>
-                            ` : `
+                        item.events
+                            .filter(e => !e.isNotEvent && new Date(e.date) >= new Date() || new Date(e.date).toDateString() === new Date().toDateString())
+                            .sort((a, b) => new Date(a.date) - new Date(b.date))
+                            .slice(0, 2)
+                            .map(e => `
                             <div class="event-item flex flex-col gap-1">
                                 <time datetime="${e.date}" class="text-gray-500 text-sm">
                                     📅 ${new Date(e.date).toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
@@ -190,8 +183,16 @@ fetchData();
                                     ${e.title}
                                 </a>
                             </div>
-                            `).join('')
-                        }
+                        `).join('') ||
+                        `
+                        <div class="event-item">
+                            <p class="bg-red-100 text-red-800 text-sm font-medium me-2 px-2.5 py-1 rounded">Aucun événement prévu</p>
+                            <a href="${generateDynamicUrl("https://www.meetup.com/humantalks-grenoble/events", item.title)}" target="_blank" class="text-blue-500 hover:underline font-medium">
+                                En savoir plus
+                            </a>
+                        </div>
+                        `
+                    }
                     </div>
                  </div>
                     `);
@@ -225,7 +226,7 @@ fetchData();
             visibleData.forEach(d => {
                 const list = document.createElement("li");
                 const validEvents = d.events.filter(event => !event.isNotEvent);
-                const eventPassed = validEvents.filter(e => new Date(e.date) >= new Date())
+                const eventPassed = validEvents.filter(e => new Date(e.date) > new Date() || new Date(e.date).toDateString() === new Date().toDateString());
                 const eventCount = eventPassed.length;
 
                 const eventClass =
