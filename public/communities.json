@@ -1,4 +1,63 @@
-[
+[{
+  "city": "Angers",
+  "communities": [
+    {
+      "name": "human-talks-angers",
+      "platform": "meetup"
+    }
+  ]
+},
+  {
+    "city": "Bordeaux",
+    "communities": [
+      {
+        "name": "bordeauxjs",
+        "platform": "meetup"
+      },
+      {
+        "name": "human-talks-bordeaux",
+        "platform": "meetup"
+      }
+    ]
+  },
+  {
+    "city": "Grenoble",
+    "communities": [
+      {
+        "name": "alpescraft-coding-dojos",
+        "platform": "meetup"
+      },
+      {
+        "name": "Software-Craftsmanship-Grenoble",
+        "platform": "meetup"
+      },
+      {
+        "name": "humantalks-grenoble",
+        "platform": "meetup"
+      },
+      {
+        "name": "AlpesJUG",
+        "platform": "meetup"
+      },
+      {
+        "name": "grenoble-web-development-meetup-group",
+        "platform": "meetup"
+      }
+    ]
+  },
+  {
+    "city": "Lyon",
+    "communities": [
+      {
+        "name": "lyonjs",
+        "platform": "meetup"
+      },
+      {
+        "name": "humantalks-lyon",
+        "platform": "meetup"
+      }
+    ]
+  },
   {
     "city": "Nantes",
     "communities": [
@@ -72,40 +131,6 @@
       },
       {
         "name": "aws-nantes",
-        "platform": "meetup"
-      }
-    ]
-  },
-  {
-    "city": "Grenoble",
-    "communities": [
-      {
-        "name": "alpescraft-coding-dojos",
-        "platform": "meetup"
-      },
-      {
-        "name": "Software-Craftsmanship-Grenoble",
-        "platform": "meetup"
-      },
-      {
-        "name": "humantalks-grenoble",
-        "platform": "meetup"
-      },
-      {
-        "name": "AlpesJUG",
-        "platform": "meetup"
-      },
-      {
-        "name": "grenoble-web-development-meetup-group",
-        "platform": "meetup"
-      }
-    ]
-  },
-  {
-    "city": "Lyon",
-    "communities": [
-      {
-        "name": "lyonjs",
         "platform": "meetup"
       }
     ]
