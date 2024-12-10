@@ -99,6 +99,7 @@ fetchData();
             const response = await fetch('/communities-events.json');
             const data = await response.json();
 
+            console.log(data);
             data.forEach(city => {
                 city.communities.forEach(community => {
                     const events = community.events.length > 0

@@ -6,5 +6,9 @@ export const coordinatesCities = [
     {
         city: "Grenoble",
         coordinates: [45.188529, 5.724524]
+    },
+    {
+        city: "Lyon",
+        coordinates: [45.7578137, 4.8320114]
     }
 ];
