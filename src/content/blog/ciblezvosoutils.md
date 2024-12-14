@@ -5,13 +5,13 @@ description: Quels outils choisir pour progresser et apprendre ? Comment les cho
 
 <img class="w-full h-96 object-cover" src="/_c25b0c88-be4a-4181-a0ac-26d1450e7226.jpeg" alt="Furette de couleur chocolat tenant un crayon dans ses pattes pour prendre des notes" />
 
-Le talent n'existe pas. 
+Le talent n'existe pas.
 
 Il n’y a pas un outil qui soit forcément et nécessairement supérieur à un autre. Ce que vous lirez sur les avantages et les inconvénients de ces outils seront sans doute véridiques pour des personnes mais ne le seront pas pour d’autres.
 
 Alors ce que je vous conseille c’est que vous exploriez vous-mêmes les solutions qui vous conviennent le mieux. Et croyez-moi vous en avez pas mal à exploiter !
 
-## Comment choisir ses outils ? 
+## Comment choisir ses outils ?
 
 Je ne vais me targuer ici d’aucune spécialité mais je vais simplement me contenter de vous partager la façon dont j’en suis arrivée à choisir les miens. Je pense que pour choisir ses outils il est d’abord important de bien se comprendre soi-même.
 
@@ -31,7 +31,7 @@ Vous n’êtes même pas obligés d’avoir une organisation figée et rigide. A
 
 Notre cerveau fonctionne ainsi lui. Il fait des liens et des toiles entre les choses. Ranger dans comme dans des dossiers n’est pas forcément le plus optimal. Mais sur ça aussi tu es libre de faire comme tu le souhaites.
 
-Tout ne vaut pas pour tout le monde ! Prends juste le temps pour toi, expérimente et vois avec quoi tu t’amuses le plus. 
+Tout ne vaut pas pour tout le monde ! Prends juste le temps pour toi, expérimente et vois avec quoi tu t’amuses le plus.
 
 ## Mes outils
 
@@ -52,5 +52,3 @@ Le soir, dans la chambre, je vais plutôt privilégier l’écriture manuscrite 
 - L’ordinateur avec toute la panoplie d’applications permettant de prendre des notes comme tu veux ! L’avantage c’est qu’il n’y a pas besoin d’une organisation rigoureuse. Si tu veux retrouver ton écrit, un « CRTL+F » pourra t’aider
 
 Tout est possible ! À partir du moment où la façon de faire convient à tes besoins. Une fois que tu es armé de tout ce qu’il te faut, il n’y a plus qu’à faire !
-
-

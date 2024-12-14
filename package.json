@@ -7,7 +7,8 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "prettier": "prettier --write ./src"
   },
   "dependencies": {
     "@astrojs/netlify": "^5.5.2",
@@ -23,6 +24,7 @@
   "devDependencies": {
     "@iconify-json/mdi": "^1.1.66",
     "@iconify/json": "^2.2.199",
-    "@iconify/utils": "^2.1.22"
+    "@iconify/utils": "^2.1.22",
+    "prettier": "^3.4.2"
   }
 }

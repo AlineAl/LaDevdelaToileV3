@@ -19,32 +19,40 @@ La première chose à faire est de se poser et de réfléchir à ce que l’on v
 
 Si vous souhaitez creuser davantage, vous pouvez vous rendre sur le site <a target='blank' href="https://deviens.dev/">deviens.dev</a> qui vous donnera une idée !
 
-Il vous sera ensuite plus simple de cibler d’autres objectifs larges puis de plus petits objectifs pour aller vers ceux-ci. 
+Il vous sera ensuite plus simple de cibler d’autres objectifs larges puis de plus petits objectifs pour aller vers ceux-ci.
 
 Par exemple, vous êtes attiré·e·s par le métier de développeur·euse frontend et vous avez pris connaissance de tout ce qu’il y a à savoir. Pas de panique ! Il faudra procéder par étapes ! Vous pourriez procéder ainsi:
-1) Découverte des outils de travail
- - Git
- - Trouver son IDE…
-2) Découverte de l’algorithmique
- - Les variables
- - Les boucles
- - Les tableaux…
- 3) Comprendre le fonctionnement d’un site web
- - Notions de Client et Serveur
- - TCP/IP
- - DNS
- - Protocol HTTP…
- 4) Découverte du HTML
- 5) Découverte du CSS
- 6) Découverte du JavaScript …
 
-Et tout cela jusqu’à arriver à l’objectif final que vous vous êtes fixé·e·s. Bien sûr l’apprentissage dans le dev ne s’arrête jamais et le programme pourrait continuer ainsi indéfiniment. Cultivez votre curiosité tout au long de votre chemin à votre rythme. Le monde du dev évolue et le savoir y est immense. 
+1. Découverte des outils de travail
 
-## Créer son planning 
+- Git
+- Trouver son IDE…
+
+2. Découverte de l’algorithmique
+
+- Les variables
+- Les boucles
+- Les tableaux…
+
+3.  Comprendre le fonctionnement d’un site web
+
+- Notions de Client et Serveur
+- TCP/IP
+- DNS
+- Protocol HTTP…
+
+4.  Découverte du HTML
+5.  Découverte du CSS
+6.  Découverte du JavaScript …
+
+Et tout cela jusqu’à arriver à l’objectif final que vous vous êtes fixé·e·s. Bien sûr l’apprentissage dans le dev ne s’arrête jamais et le programme pourrait continuer ainsi indéfiniment. Cultivez votre curiosité tout au long de votre chemin à votre rythme. Le monde du dev évolue et le savoir y est immense.
+
+## Créer son planning
 
 Une fois que vous avez vos objectifs, il est temps de les organiser. Vous pouvez créer un planning pour vous aider à vous y retrouver.
 
-Vous pouvez utiliser pleins d'outils pour cela : 
+Vous pouvez utiliser pleins d'outils pour cela :
+
 - Un agenda papier
 - Un agenda numérique
 - Un bullet journal
@@ -57,13 +65,13 @@ Pour ma part je ne planifie que ce que j’ai peur d’oublier, quand j’ai plu
 
 Il faut savoir que chaque semaine n’a pas besoin d’être absolument identique. Vous pouvez choisir une méthode plus rigoureuse et disciplinaire si le coeur vous en dit, si vous le pouvez également mais ce n’est pas obligatoire. Il m’arrive que je sois parfois plus disposée à 18h sur une semaine, puis sur une autre période plus longue je vais préférer me consacrer à une tâche sur le midi, puis parfois le soir avant le dodo.
 
-Certaines personnes vont préférer avoir une planification plus stricte avec un horaire et un jour dédiés à des tâches précises. Encore une fois, tout fonctionne à partir du moment où c’est totalement ok pour vous. 
+Certaines personnes vont préférer avoir une planification plus stricte avec un horaire et un jour dédiés à des tâches précises. Encore une fois, tout fonctionne à partir du moment où c’est totalement ok pour vous.
 
 ## Bon d'accord, mais que mettre dans mon planning ?
 
 Dans votre planning, vous pouvez mettre des tâches à réaliser pour la semaine. Vous pouvez les organiser par ordre de priorité, par ordre de difficulté, par ordre de préférence. Vous pouvez aussi les organiser par jour, par demi-journée, par heure.
 
-Vous pouvez consacrer un temps à une habitude particulière. Par exemple, prendre une demi-heure pour effectuer une prise de notes sur Notion sur un article que vous avez repéré et qui vous intéresse.  Vous pouvez décider de planifier cette demi-heure tous les jours, tous les deux jours, une fois par semaine etc… À vous de voir la stratégie la plus simple pour vous afin d’en apprendre plus.
+Vous pouvez consacrer un temps à une habitude particulière. Par exemple, prendre une demi-heure pour effectuer une prise de notes sur Notion sur un article que vous avez repéré et qui vous intéresse. Vous pouvez décider de planifier cette demi-heure tous les jours, tous les deux jours, une fois par semaine etc… À vous de voir la stratégie la plus simple pour vous afin d’en apprendre plus.
 
 Cela peut aussi être mettre en place une routine de prise de notes autour d’un podcast, une conférence, une vidéo selon un rythme donné et à un moment donné dans la journée ou dans la semaine ou dans le mois.
 
