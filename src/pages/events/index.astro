@@ -1,6 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import Footer from "../../components/Footer.astro"
+import Footer from "../../components/Footer.astro";
 import Pagination from "../../components/Pagination.astro";
 import InputAndFilter from "../../components/InputAndFilter.astro";
 import GetOrHideMapButton from "../../components/GetOrHideMapButton.astro";
@@ -9,27 +9,27 @@ let events = [];
 
 async function loadEvents() {
     try {
-        const response = await fetch('/communities-events.json');
+        const response = await fetch("/communities-events.json");
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
         const data = await response.json();
 
-        events = data.map(city => ({
-            title: city.city,
-            description: city.description || `Découvrez les événements à ${city.city}.`,
-            events: city.communities.flatMap(community =>
+        events = data.map(community_event => ({
+            title: community_event.city,
+            description: community_event.description || `Découvrez les événements à ${community_event.city}.`,
+            events: community_event.communities.flatMap(community =>
                 community.events.length > 0
                     ? community.events.map(event => ({
-                        path: event.link,
-                        location: {
-                            city: city.city,
-                            coordinates: [event.latitude, event.longitude],
-                        },
-                    }))
+                          path: event.link,
+                          location: {
+                              city: community_event.city,
+                              coordinates: [event.latitude, event.longitude]
+                          }
+                      }))
                     : []
-            ),
+            )
         }));
 
         return events;
@@ -80,14 +80,14 @@ fetchData();
 <script>
     import { coordinatesCities } from "../../datas/coordinatesCities";
 
-    document.addEventListener('astro:page-load', async () => {
+    document.addEventListener("astro:page-load", async () => {
         if (window.location.pathname !== "/events") {
             return;
         }
 
-        const L = (await import('leaflet')).default;
-        const map = L.map('map').setView([48.866667, 2.333333], 10);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        const L = (await import("leaflet")).default;
+        const map = L.map("map").setView([48.866667, 2.333333], 10);
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
@@ -96,39 +96,44 @@ fetchData();
         let allEvents = [];
 
         async function loadEvents() {
-            const response = await fetch('/communities-events.json');
+            const response = await fetch("/communities-events.json");
             const data = await response.json();
 
             console.log(data);
             data.forEach(city => {
                 city.communities.forEach(community => {
-                    const events = community.events.length > 0
-                        ? community.events.map(event => ({
-                            path: event.link,
-                            title: event.title,
-                            date: event.date,
-                            location: {
-                                city: city.city,
-                                coordinates: [event.latitude, event.longitude]
-                            },
-                            isNotEvent: false
-                        }))
-                        : (() => {
-                            const defaultCity = coordinatesCities.find(c => c.city === city.city);
-                            return [{
-                                path: "#",
-                                title: "Aucun événement",
-                                location: {
-                                    city: city.city,
-                                    coordinates: defaultCity ? defaultCity.coordinates : [0, 0]
-                                },
-                                isNotEvent: true
-                            }];
-                        })();
+                    const events =
+                        community.events.length > 0
+                            ? community.events.map(event => ({
+                                  path: event.link,
+                                  title: event.title,
+                                  date: event.date,
+                                  location: {
+                                      city: city.city,
+                                      coordinates: [event.latitude, event.longitude]
+                                  },
+                                  isNotEvent: false
+                              }))
+                            : (() => {
+                                  const defaultCity = coordinatesCities.find(c => c.city === city.city);
+                                  return [
+                                      {
+                                          path: "#",
+                                          title: "Aucun événement",
+                                          location: {
+                                              city: city.city,
+                                              coordinates: defaultCity ? defaultCity.coordinates : [0, 0]
+                                          },
+                                          isNotEvent: true
+                                      }
+                                  ];
+                              })();
 
                     allEvents.push({
                         title: community.name,
-                        description: community.description || `Ne manquez pas les événements de la communauté ${community.name}.`,
+                        description:
+                            community.description ||
+                            `Ne manquez pas les événements de la communauté ${community.name}.`,
                         events
                     });
                 });
@@ -142,8 +147,8 @@ fetchData();
         function generateSlug(title: string) {
             return title
                 .toLowerCase()
-                .replace(/\s+/g, '-')
-                .replace(/[^\w\-]/g, '');
+                .replace(/\s+/g, "-")
+                .replace(/[^\w\-]/g, "");
         }
 
         function generateDynamicUrl(baseUrl: string, title: string) {
@@ -154,7 +159,7 @@ fetchData();
         function setupPagination() {
             updatePageNumber();
             const totalPages = Math.ceil(filteredEvents.length / itemsPerPage);
-            document.getElementById('total-pages').textContent = totalPages;
+            document.getElementById("total-pages").textContent = totalPages;
         }
 
         function updateMap(visibleData) {
@@ -171,21 +176,28 @@ fetchData();
                     </p>
                     <div class="events-list space-y-2">
                         ${
-                        item.events
-                            .filter(e => !e.isNotEvent && new Date(e.date) >= new Date() || new Date(e.date).toDateString() === new Date().toDateString())
-                            .sort((a, b) => new Date(a.date) - new Date(b.date))
-                            .slice(0, 2)
-                            .map(e => `
+                            item.events
+                                .filter(
+                                    e =>
+                                        (!e.isNotEvent && new Date(e.date) >= new Date()) ||
+                                        new Date(e.date).toDateString() === new Date().toDateString()
+                                )
+                                .sort((a, b) => new Date(a.date) - new Date(b.date))
+                                .slice(0, 2)
+                                .map(
+                                    e => `
                             <div class="event-item flex flex-col gap-1">
                                 <time datetime="${e.date}" class="text-gray-500 text-sm">
-                                    📅 ${new Date(e.date).toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+                                    📅 ${new Date(e.date).toLocaleDateString("fr-FR", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
                                 </time>
                                 <a href="${e.path}" target="_blank" class="text-blue-600 hover:underline font-semibold">
                                     ${e.title}
                                 </a>
                             </div>
-                        `).join('') ||
                         `
+                                )
+                                .join("") ||
+                            `
                         <div class="event-item">
                             <p class="bg-red-100 text-red-800 text-sm font-medium me-2 px-2.5 py-1 rounded">Aucun événement prévu</p>
                             <a href="${generateDynamicUrl("https://www.meetup.com/humantalks-grenoble/events", item.title)}" target="_blank" class="text-blue-500 hover:underline font-medium">
@@ -193,7 +205,7 @@ fetchData();
                             </a>
                         </div>
                         `
-                    }
+                        }
                     </div>
                  </div>
                     `);
@@ -202,9 +214,7 @@ fetchData();
             });
 
             const bounds = L.latLngBounds(
-                visibleData.flatMap(item =>
-                    item.events.map(event => L.latLng(event.location.coordinates))
-                )
+                visibleData.flatMap(item => item.events.map(event => L.latLng(event.location.coordinates)))
             );
             map.fitBounds(bounds);
         }
@@ -215,7 +225,7 @@ fetchData();
         let pageNumber = 1;
 
         function updatePageNumber() {
-            document.getElementById('page-number').value = pageNumber;
+            document.getElementById("page-number").value = pageNumber;
         }
 
         function mapData(visibleData) {
@@ -227,22 +237,23 @@ fetchData();
             visibleData.forEach(d => {
                 const list = document.createElement("li");
                 const validEvents = d.events.filter(event => !event.isNotEvent);
-                const eventPassed = validEvents.filter(e => new Date(e.date) > new Date() || new Date(e.date).toDateString() === new Date().toDateString());
+                const eventPassed = validEvents.filter(
+                    e => new Date(e.date) > new Date() || new Date(e.date).toDateString() === new Date().toDateString()
+                );
                 const eventCount = eventPassed.length;
 
-                const eventClass =
-                    eventCount === 0
-                        ? 'bg-red-100 text-red-800'
-                        : 'bg-sky-100 text-sky-800';
+                const eventClass = eventCount === 0 ? "bg-red-100 text-red-800" : "bg-sky-100 text-sky-800";
 
                 list.innerHTML = `
                     <li data-marker="${d.title}" class="marker-item p-4 mb-4 m-4 bg-white border border-default transition-all hover:cursor-pointer hover:text-white hover:bg-sky-700">
                         <h2 class="font-semibold">${d.title}</h2>
                         <p class="text-sm my-2">${d.description}</p>
                         <span class="${eventClass} text-sm font-medium me-2 px-2.5 py-1 rounded">
-                           ${eventCount === 0
-                                ? 'Aucun événement'
-                                : `${eventCount} événement${eventCount > 1 ? 's' : ''}`}
+                           ${
+                               eventCount === 0
+                                   ? "Aucun événement"
+                                   : `${eventCount} événement${eventCount > 1 ? "s" : ""}`
+                           }
                         </span>
                     </li>`;
                 listContainer.appendChild(list);
@@ -266,8 +277,8 @@ fetchData();
             const allItems = document.querySelectorAll(".marker-item");
 
             allItems.forEach(item => {
-                item.addEventListener('click', () => {
-                    const markerTitle = item.getAttribute('data-marker');
+                item.addEventListener("click", () => {
+                    const markerTitle = item.getAttribute("data-marker");
                     const marker = markers[markerTitle];
 
                     if (marker) {
@@ -303,8 +314,8 @@ fetchData();
         }
 
         function filterData() {
-            const input = document.getElementById('searchInput').value.toUpperCase();
-            const city = document.getElementById('citySelect').value;
+            const input = document.getElementById("searchInput").value.toUpperCase();
+            const city = document.getElementById("citySelect").value;
 
             filteredEvents = allEvents.filter(d => {
                 const matchesTitle = d.title.toUpperCase().includes(input);
@@ -335,14 +346,11 @@ fetchData();
             }
         });
 
-        document.getElementById('prev').addEventListener('click', prevPage);
-        document.getElementById('next').addEventListener('click', nextPage);
-        document.getElementById('searchInput').addEventListener('keyup', filterData);
-        document.getElementById('citySelect').addEventListener('change', filterData);
+        document.getElementById("prev").addEventListener("click", prevPage);
+        document.getElementById("next").addEventListener("click", nextPage);
+        document.getElementById("searchInput").addEventListener("keyup", filterData);
+        document.getElementById("citySelect").addEventListener("change", filterData);
 
         loadEvents();
     });
 </script>
-
-
-

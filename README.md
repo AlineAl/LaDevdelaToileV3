@@ -26,10 +26,12 @@ npm run dev
 ## Great ! Now you can start coding 🎉
 
 ### Add your resources or known resources in the `src/datas` folder
+
 - Go to the `datas` folder
 - Inside `datas` folder, go to the `skills` folder
 - Click on the file that you want to edit
 - Add your resources in the file with the following format:
+
 ```
     {
         title: 'Write title of the resource here',
@@ -39,9 +41,11 @@ npm run dev
 ```
 
 ### Add your known **events** links in the `src/datas` folder
+
 - Go to the `datas` folder
 - Click on the `events.ts` file
 - Add your event in the file with the following format:
+
 ```
     {
         title: 'Write title of the meetup here',
@@ -55,9 +59,11 @@ npm run dev
 ```
 
 ### Add your known **podcasts** links in the `src/datas` folder
+
 - Go to the `datas` folder
 - Click on the `podcasts.ts` file
 - Add your podcasts in the file with the following format:
+
 ```
     {
         title: 'Write title of the podcast here',
@@ -67,10 +73,12 @@ npm run dev
 ```
 
 ### Add your known **conferences** links in the `src/datas` folder
+
 - Go to the `datas` folder
 - Go to the `conferences` folder
 - Go to the folder of the event that you want to add a conference
 - Click on the file of the event that you want to add a conference with the following format:
+
 ```
     {
         title: 'Write title of the conference here',
@@ -85,14 +93,17 @@ npm run dev
 ```
 
 ### Add your known **events around web development with conferences** links in the `src/datas` folder
+
 /!\ Create an event around web development with conferences ONLY IF NOT EXISTS
 
 1 - First, you need to create a folder
+
 - Go to the `datas` folder
 - Go to the `conferences` folder
 - Create a new folder with the name of the conference. For example, if you want to add a new conference for AFUP, create a folder named `AFUP`
 - Inside the folder, create, for example for AFUP, a file named `AFUPconferences.ts`
 - Add in the file your conferences concerned by AFUP with the following format:
+
 ```
     {
         title: 'Write title of the conference here',
@@ -107,9 +118,11 @@ npm run dev
 ```
 
 2 - Second, you need to create a page
+
 - Go to the `pages` folder
 - Go to the `conferences` folder
 - Create a new file with the following format. For example, if you want to add a new conference for AFUP, create a file named `AFUP.astro`:
+
 ```
     ---
     import Layout from "../../layouts/Layout.astro";
@@ -124,9 +137,11 @@ npm run dev
 ```
 
 ## Add a book in the `src/datas` folder
+
 - Go to the `datas` folder
 - Click on the `books.ts` file
 - Add your books in the file with the following format:
+
 ```
     {
         title: 'Write title of the book here',
@@ -135,12 +150,15 @@ npm run dev
         path: 'Share the path of the book here'
     },
 ```
+
 /!\ The `imagePath` is the path of the image of the book and I only want FERRET :D. You can less me to choose illustration. If you want to choose it, you need to add the image in the `public` folder and share the path of the image in the `imagePath` key. /!\
 
 ## Add your notes link in the `src/datas` folder
+
 - Go to the `datas` folder
 - Click on the `notes.ts` file
 - Add your notes in the file with the following format:
+
 ```
     {
         title: 'Write title of the notes here',
@@ -150,10 +168,11 @@ npm run dev
     },
 ```
 
-
 ### Add your known **communities** links in the `public/communities.json` files
+
 - Go to the `public` folder
-- Click on the file `communities.json` and add your community and his event plateform in the file. If your city doesn't exist, you can add it : 
+- Click on the file `communities.json` and add your community and his event plateform in the file. If your city doesn't exist, you can add it :
+
 ```
     [
         {
@@ -167,15 +186,18 @@ npm run dev
     ]
 ```
 
-        
 ## To run the app as a service into a docker container
+
 - You need to have docker installed on your machine, please follow https://docs.docker.com/get-started/get-docker/
+
 ```
 docker build -t ladevdelatoile:latest .
 docker run --name ladevdelatoile -p 4321:4321 ladevdelatoile:latest
 ```
+
 - You can now access the application in your browser at: http://localhost:4321
 - If you want to stop the container, please use:
+
 ```
 docker stop ladevdelatoile
 ```

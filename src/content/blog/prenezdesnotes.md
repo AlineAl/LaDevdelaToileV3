@@ -16,12 +16,14 @@ L’important ici ce n’est pas de savoir si des outils sont mieux que les autr
 Il y a mille et une manière de prendre des notes. A chacun·e de trouver la façon de faire qui lui est propre. Mais ne vous inquiétez pas, je vais vous présenter quelques exemples pour vous aider !
 
 Avant cela, quelques éléments à savoir:
+
 - La prise de notes est une action rapide
 - En effet, elle doit être concise et ne reprendre que l’essentiel
 - Il ne s’agit pas de « recopier » ou « réécrire » mais juste résumer ce que l’on a compris du contenu
-- Et surtout l’essentiel n’est pas de bien comprendre tout, tout de suite donc aucun souci si dans la prise de notes il y a quelques erreurs et incompréhensions 
+- Et surtout l’essentiel n’est pas de bien comprendre tout, tout de suite donc aucun souci si dans la prise de notes il y a quelques erreurs et incompréhensions
 
 Autre chose encore:
+
 - Ne cherchez pas à organiser vos notes
 - Le cerveau ne range pas les informations dans une case et hop ! Au contraire une case est reliée à une autre, puis à une autre etc... jusqu'à former une toile d'informations liées ensemble
 - Alors vous pouvez en prendre à tout moment, n’importe où, sur n’importe quel support. Vos connexions d'apprentissage se feront d'elles-mêmes.
@@ -34,7 +36,7 @@ Pour ma part, j’utilise la prise de notes en deux colonnes comme sur l’image
 
 ![Prise de notes en deux colonnes avec comme exemple un podcast sur le fonctionnement de React](/public/prisedenotesendeuxcolonnes.png)
 
-Cela consiste à résumer en un titre dans la première colonne ce que l’on va mettre en contenu dans la seconde colonne. 
+Cela consiste à résumer en un titre dans la première colonne ce que l’on va mettre en contenu dans la seconde colonne.
 
 2. **La prise de notes en carte mentale**
 
