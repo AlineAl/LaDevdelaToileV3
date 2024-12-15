@@ -95,7 +95,7 @@ import { Icon } from 'astro-icon/components';
         const xButton = document.querySelector('.surface-menu button');
         async function loadEvents() {
             try {
-                const response = await fetch('./communities-events.json');
+                const response = await fetch('/communities-events.json');
                 const data = await response.json();
 
                 events = data.flatMap(city =>
