@@ -34,7 +34,7 @@ Autre chose encore:
 
 Pour ma part, j’utilise la prise de notes en deux colonnes comme sur l’image ci-dessous. C’est une méthode dont je me suis inspirée dans _Apprendre vite et bien - Les meilleures techniques des neurosciences pour booster son cerveau_ de Barbara Oakley et Olav Schewe. Cela fait référence à la méthode Cornell pensée dans les années 1940.
 
-![Prise de notes en deux colonnes avec comme exemple un podcast sur le fonctionnement de React](/public/prisedenotesendeuxcolonnes.png)
+<img src="/prisedenotesendeuxcolonnes.png" alt="Prise de notes en deux colonnes avec comme exemple un podcast sur le fonctionnement de React">
 
 Cela consiste à résumer en un titre dans la première colonne ce que l’on va mettre en contenu dans la seconde colonne.
 
@@ -44,7 +44,7 @@ Créer des cartes mentales est une autre manière de prendre de notes qui peut �
 
 Et des cartes mentales, vous pouvez en imaginer de plusieurs façons ! Le tout est de cibler le sujet principal et de faire graviter autour les idées qui lui sont liées. Ce qui est intéressant c'est que l'on peut se retrouver à la fin avec une toile de connexions correspondant davantage à la façon de fonctionner de notre cerveau.
 
-<img src="/public/mindmap2.png" alt="exemple de carte mentale illustrée">
+<img src="/mindmap2.png" alt="exemple de carte mentale illustrée">
 
 3. **La prise de notes en sketchnote**
 
