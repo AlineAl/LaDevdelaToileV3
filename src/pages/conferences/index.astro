@@ -145,7 +145,7 @@ const visibleData = conferences.slice(startIndex, endIndex);
 
                         const markerLatLng = marker.getLatLng();
 
-                        const offsetLatLng = L.latLng(markerLatLng.lat + 0.05, markerLatLng.lng);
+                        const offsetLatLng = latLng(markerLatLng.lat + 0.05, markerLatLng.lng);
                         conferenceMap.setView(offsetLatLng, 11, { animate: true });
                     }
                 });
