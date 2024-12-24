@@ -47,7 +47,9 @@ const visibleData = conferences.slice(startIndex, endIndex);
 
 
 <script>
+    import { Marker } from "leaflet";
     import { conferences } from "../../datas/conferences";
+    import type { Conference } from "../../utils/types/Conference";
 
     document.addEventListener('astro:page-load', async () => {
         if (window.location.pathname !== "/conferences") {
@@ -60,10 +62,10 @@ const visibleData = conferences.slice(startIndex, endIndex);
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        let markers = {};
+        let markers: Record<string, Marker> = {};
         let filteredConferences = [...conferences];
 
-        function updateMap(visibleData) {
+        function updateMap(visibleData: Conference[]) {
             Object.values(markers).forEach(marker => map.removeLayer(marker));
             markers = {};
             visibleData.forEach(conference => {
@@ -92,9 +94,14 @@ const visibleData = conferences.slice(startIndex, endIndex);
             document.getElementById('total-pages').textContent = Math.ceil(filteredConferences.length / itemsPerPage);
         }
 
-        function mapData(visibleData) {
+        function mapData(visibleData: Conference[]) {
             const listContainer = document.getElementById("mapList");
             const cardContainer = document.getElementById("cardView");
+
+            if(!listContainer || !cardContainer) {
+                return;
+            }
+
             listContainer.innerHTML = "";
             cardContainer.innerHTML = "";
 
@@ -129,6 +136,9 @@ const visibleData = conferences.slice(startIndex, endIndex);
             allItems.forEach(item => {
                 item.addEventListener('click', () => {
                     const markerTitle = item.getAttribute('data-marker');
+                    if (!markerTitle) {
+                        return;
+                    }
                     const marker = markers[markerTitle];
 
                     if (marker) {
@@ -164,12 +174,19 @@ const visibleData = conferences.slice(startIndex, endIndex);
         }
 
         function filterData() {
-            const input = document.getElementById('searchInput').value.toUpperCase();
-            const city = document.getElementById('citySelect').value;
+            const searchInput = document.getElementById('searchInput');
+            const selectedCity = document.getElementById('citySelect');
+
+            if(!searchInput || !selectedCity) {
+                return;
+            }
+            
+            const searchValue = (searchInput as  HTMLInputElement).value.toUpperCase();
+            const cityValue = (selectedCity as HTMLInputElement).value;
 
             filteredConferences = conferences.filter(d => {
-                const matchesTitle = d.title.toUpperCase().includes(input);
-                const matchesCity = city === "" || d.location.city === city;
+                const matchesTitle = d.title.toUpperCase().includes(searchValue);
+                const matchesCity = cityValue === "" || d.location.city === cityValue;
                 return matchesTitle && matchesCity;
             });
 
@@ -186,7 +203,7 @@ const visibleData = conferences.slice(startIndex, endIndex);
         const mapView = document.getElementById("mapView");
         const buttonText = document.getElementById("buttonText");
 
-        toggleButton.addEventListener("click", () => {
+        toggleButton?.addEventListener("click", () => {
             cardView.classList.toggle("hidden");
             mapView.classList.toggle("hidden");
 

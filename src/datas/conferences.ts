@@ -1,6 +1,6 @@
-import type { Event } from "../utils/types/Event.ts";
+import type { Conference } from "../utils/types/Conference.ts";
 
-export const conferences: Event[] = [
+export const conferences: Conference[] = [
     {
         title: "Paris Web",
         description:
