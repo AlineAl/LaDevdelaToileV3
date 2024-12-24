@@ -47,7 +47,7 @@ const visibleData = conferences.slice(startIndex, endIndex);
 
 
 <script>
-    import { Marker } from "leaflet";
+    import { map,marker, Marker, tileLayer, latLngBounds, latLng } from "leaflet";
     import { conferences } from "../../datas/conferences";
     import type { Conference } from "../../utils/types/Conference";
 
@@ -56,21 +56,20 @@ const visibleData = conferences.slice(startIndex, endIndex);
             return;
         }
 
-        const L = (await import('leaflet')).default;
-        const map = L.map('map').setView([48.866667, 2.333333], 10);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        const conferenceMap = map('map').setView([48.866667, 2.333333], 10);
+        tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
+        }).addTo(conferenceMap);
 
         let markers: Record<string, Marker> = {};
         let filteredConferences = [...conferences];
 
         function updateMap(visibleData: Conference[]) {
-            Object.values(markers).forEach(marker => map.removeLayer(marker));
+            Object.values(markers).forEach(marker => conferenceMap.removeLayer(marker));
             markers = {};
             visibleData.forEach(conference => {
-                const marker = L.marker(conference.location.coordinates).addTo(map);
-                marker.bindPopup(`
+                const conferenceMarker = marker(conference.location.coordinates).addTo(conferenceMap);
+                conferenceMarker.bindPopup(`
                     <div class="popup-content">
                         <h3 class="font-bold text-lg">${conference.title}</h3>
                         <p class="text-gray-700">${conference.description}</p>
@@ -78,10 +77,10 @@ const visibleData = conferences.slice(startIndex, endIndex);
                         <a href="${conference.path}" target="_blank" class="text-blue-500 hover:underline">Voir les conférences</a>
                     </div>
                 `);
-                markers[conference.title] = marker;
+                markers[conference.title] = conferenceMarker;
             });
-            const bounds = L.latLngBounds(visibleData.map(conference => L.latLng(conference.location.coordinates)));
-            map.fitBounds(bounds);
+            const bounds = latLngBounds(visibleData.map(conference => latLng(conference.location.coordinates)));
+            conferenceMap.fitBounds(bounds);
         }
 
         const itemsPerPage = 6;
@@ -147,7 +146,7 @@ const visibleData = conferences.slice(startIndex, endIndex);
                         const markerLatLng = marker.getLatLng();
 
                         const offsetLatLng = L.latLng(markerLatLng.lat + 0.05, markerLatLng.lng);
-                        map.setView(offsetLatLng, 11, { animate: true });
+                        conferenceMap.setView(offsetLatLng, 11, { animate: true });
                     }
                 });
             });
