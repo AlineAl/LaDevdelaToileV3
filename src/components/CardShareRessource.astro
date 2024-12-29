@@ -1,28 +1,50 @@
 ---
+import { tagCategories } from "../datas/tags";
+
 interface Props {
     title: string;
     author: string;
     description: string;
     path: string;
+    img: string;
+    tags: string[];
 }
 
-const { title, author, description, path } = Astro.props;
+const { title, author, description, path, img, tags } = Astro.props;
+
+const tagColors = tagCategories.reduce((acc, category) => {
+    const key = Object.keys(category)[0];
+    const { color, tags } = category[key];
+    tags.forEach((tag) => {
+        acc[tag] = color;
+    });
+    return acc;
+}, {} as Record<string, string>);
 
 ---
-<a
-        href={path}
-        class="mt-4 group shadow-2xl before:hover:scale-95 before:hover:h-72 before:hover:w-80 before:hover:rounded-b-2xl before:transition-all before:duration-500 before:content-[''] before:w-80 before:h-24 before:rounded-t-2xl before:bg-gradient-to-bl from-[#E8DAB2] via-[#B09F63] to-[#6F5E32] before:absolute before:top-0 w-80 h-72 relative bg-slate-50 flex flex-col items-center justify-center gap-2 text-center rounded-2xl overflow-hidden"
->
-    <div class="w-28 h-28 rounded-full border-4 border-slate-50 z-10 group-hover:scale-150 group-hover:-translate-x-24 group-hover:-translate-y-20 transition-all duration-500 overflow-hidden">
-        <img
-                src="../../public/photo_5814457851685487570_x.jpg"
-                alt=""
-                class="w-full h-full object-cover rounded-full"
-        />
-    </div>
-    <div class="z-10 group-hover:-translate-y-5 transition-all duration-500">
-        <span class="text-2xl font-semibold group-hover:text-white">{author}</span>
-        <p class="group-hover:text-white">{title}</p>
-        <p class="text-sm group-hover:text-white">{description}</p>
+
+<a href={path} class="block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
+    <img src={img} alt={title} class="w-full h-64 object-cover object-center mb-6 rounded-lg" />
+    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+        {title}
+    </h5>
+    <p class="mb-2 text-sm italic text-gray-700">
+        {author}
+    </p>
+    <p class="font-normal text-gray-700 dark:text-gray-400">
+        {description}
+    </p>
+    <div class="flex flex-wrap mt-2">
+        {tags.map((tag) => (
+            <span
+                class="text-xs m-1 font-medium rounded px-2 py-1 me-2"
+                style={{
+                    backgroundColor: `${tagColors[tag] || '#1e293b'}`,
+                    color: '#fff',
+                }}
+            >
+                {tag}
+            </span>
+        ))}
     </div>
 </a>

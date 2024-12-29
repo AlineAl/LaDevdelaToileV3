@@ -1,0 +1,51 @@
+---
+import { tagCategories } from "../datas/tags";
+interface Props {
+    title: string;
+    author: string;
+    description: string;
+    path: string;
+    img: string;
+    tags: string[];
+}
+
+const { title, author, description, path, img, tags } = Astro.props;
+
+const tagColors = tagCategories.reduce((acc, category) => {
+    const key = Object.keys(category)[0];
+    const { color, tags } = category[key];
+    tags.forEach((tag) => {
+        acc[tag] = color;
+    });
+    return acc;
+}, {} as Record<string, string>);
+
+---
+
+<li class="py-3 sm:py-4 hover:bg-gray-100 cursor-pointer">
+    <a href={path}>
+        <div class="flex items-center space-x-4 rtl:space-x-reverse">
+            <div class="flex-shrink-0 p-2">
+                <img class="w-20 h-20 rounded-full object-cover" src={img} alt={`${title} image`}>
+            </div>
+            <div class="flex-1">
+                <p class="font-bold text-gray-900">{title}</p>
+                <p class="text-sm text-gray-500">{author}</p>
+                <p class="text-sm text-black">{description}</p>
+                <div class="flex flex-wrap mt-2">
+                    {tags.map((tag) => (
+                        <span
+                            class="text-xs m-1 font-medium rounded px-2 py-1 me-2"
+                            style={{
+                                backgroundColor: `${tagColors[tag] || '#1e293b'}`,
+                                color: '#fff',
+                            }}
+                        >
+                            {tag}
+                        </span>
+                    ))}
+                </div>
+            </div>
+        </div>
+    </a>
+</li>

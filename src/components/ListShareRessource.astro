@@ -1,5 +1,7 @@
 ---
 import CardShareRessource from "./CardShareRessource.astro";
+import ListViewShareRessource from "./ListViewShareRessource.astro";
+import { tagCategories } from "../datas/tags";
 
 interface Props {
     title: string;
@@ -8,22 +10,176 @@ interface Props {
         author: string;
         description: string;
         path: string;
+        img: string;
+        tags: string[];
     }[];
 }
 
 const { title, data } = Astro.props;
 
+const tags = tagCategories.flatMap((category) => {
+    const categoryData = Object.values(category)[0];
+    return categoryData.tags;
+});
 ---
+
 <div class="container mx-auto px-4 py-8">
     <h1 class="text-3xl font-bold text-center">{title}</h1>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-        {data.map((d) => (
-                <CardShareRessource
-                        title={d.title}
-                        author={d.author}
-                        description={d.description}
-                        path={d.path}
-                />
-        ))}
+    <label role="checkbox" class="inline-flex items-center cursor-pointer mt-8">
+        <input id="toggle" type="checkbox" value="" class="sr-only peer" checked>
+        <span class="me-3 text-base font-medium text-gray-900">Vue en cartes</span>
+        <div class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-[#0CA6E9] peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#0CA6E9]"></div>
+        <span class="ms-3 text-base font-medium text-gray-900">Vue en liste</span>
+    </label>
+
+    <div class="mt-4 relative">
+        <button
+            id="dropdownDefault"
+            data-dropdown-toggle="dropdown"
+            class="text-white bg-[#0CA6E9] hover:bg-[#0CA6E9] focus:ring-4 focus:outline-none focus:ring-[#0CA6E9] font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center"
+            type="button"
+            aria-roledescription="dropdown"
+        >
+            Filtrer par tag
+            <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+        </button>
+
+        <div id="dropdown" class="z-10 mt-2 absolute hidden w-56 p-3 bg-white rounded-lg shadow ">
+            <h6 class="mb-3 text-sm font-medium text-gray-900">
+                Tags
+            </h6>
+            <ul class="space-y-2 text-sm h-72 overflow-auto" aria-labelledby="dropdownDefault">
+                {tags.map((tag) =>
+                    <li class="flex items-center">
+                        <input
+                            id={`tag-${tag}`}
+                            value={tag}
+                            type="checkbox"
+                            class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 "
+                        />
+
+                        <label for={`tag-${tag}`} class="ml-2 text-sm font-mediumtext-gray-900">
+                            {tag}
+                        </label>
+                    </li>
+                )}
+            </ul>
+        </div>
     </div>
+
+    <div id="view-container" class="hidden container mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {data.map((d) => (
+                <CardShareRessource
+                    title={d.title}
+                    author={d.author}
+                    description={d.description}
+                    path={d.path}
+                    img={d.img}
+                    tags={d.tags}
+                />
+            ))}
+        </div>
+    </div>
+
+    <ul id="list-container" class="divide-y divide-gray-200 mt-8">
+        {data.map((d) => (
+           <ListViewShareRessource
+               title={d.title}
+               author={d.author}
+               description={d.description}
+               path={d.path}
+               img={d.img}
+               tags={d.tags}
+           />
+        ))}
+    </ul>
 </div>
+
+<script define:vars={{ data }}>
+    document.addEventListener('astro:page-load', () => {
+        const toggle = document.getElementById('toggle');
+        const viewContainer = document.getElementById('view-container');
+        const listContainer = document.getElementById('list-container');
+        const dropdownButton = document.querySelector('[data-dropdown-toggle="dropdown"]');
+        const dropdown = document.getElementById('dropdown');
+        let isListView = false;
+        let selectedTags = new Set();
+
+        dropdownButton.addEventListener('click', () => {
+            dropdown.classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!dropdownButton.contains(event.target) && !dropdown.contains(event.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!dropdownButton.contains(event.target) && !dropdown.contains(event.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+
+        toggle.addEventListener('click', () => {
+            isListView = !isListView;
+
+            if (!isListView) {
+                viewContainer.classList.add('hidden');
+                listContainer.classList.remove('hidden');
+            } else {
+                viewContainer.classList.remove('hidden');
+                listContainer.classList.add('hidden');
+            }
+        });
+
+        function updateVisibleItems() {
+            const allItems = document.querySelectorAll('[data-path]');
+
+            allItems.forEach(item => {
+                const itemTags = item.getAttribute('data-tags')
+                    .split(',')
+                    .map(tag => tag.trim().toLowerCase());
+
+                if (selectedTags.size === 0) {
+                    item.classList.remove('hidden');
+                    return;
+                }
+
+                const normalizedSelectedTags = new Set(
+                    [...selectedTags].map(tag => tag.toLowerCase())
+                );
+
+                const hasSelectedTag = itemTags.some(tag =>
+                    normalizedSelectedTags.has(tag)
+                );
+
+                if (hasSelectedTag) {
+                    item.classList.remove('hidden');
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+        }
+
+        const tagCheckboxes = document.querySelectorAll('input[type="checkbox"][id^="tag-"]');
+        tagCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                const tag = checkbox.value;
+                if (checkbox.checked) {
+                    selectedTags.add(tag);
+                } else {
+                    selectedTags.delete(tag);
+                }
+                console.log(selectedTags);
+                updateVisibleItems();
+            });
+        });
+    });
+</script>
+
+
