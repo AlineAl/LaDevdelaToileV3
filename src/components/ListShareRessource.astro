@@ -21,6 +21,17 @@ const tags = tagCategories.flatMap((category) => {
     const categoryData = Object.values(category)[0];
     return categoryData.tags;
 });
+
+const tagColors = tagCategories.reduce((acc, category) => {
+    const key = Object.keys(category)[0];
+    const { color, tags } = category[key];
+    tags.forEach((tag) => {
+        acc[tag] = color;
+    });
+    return acc;
+}, {});
+
+
 ---
 
 <div class="container mx-auto px-4 py-8">
@@ -60,7 +71,6 @@ const tags = tagCategories.flatMap((category) => {
                             type="checkbox"
                             class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 "
                         />
-
                         <label for={`tag-${tag}`} class="ml-2 text-sm font-mediumtext-gray-900">
                             {tag}
                         </label>
@@ -73,33 +83,28 @@ const tags = tagCategories.flatMap((category) => {
     <div id="view-container" class="hidden container mx-auto px-4 py-8">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {data.map((d) => (
-                <CardShareRessource
-                    title={d.title}
-                    author={d.author}
-                    description={d.description}
-                    path={d.path}
-                    img={d.img}
-                    tags={d.tags}
-                />
+                <div class="resource-item" data-tags={d.tags.join(',')}>
+                    <CardShareRessource
+                        title={d.title}
+                        author={d.author}
+                        description={d.description}
+                        path={d.path}
+                        img={d.img}
+                        tags={d.tags}
+                    />
+                </div>
             ))}
         </div>
     </div>
 
     <ul id="list-container" class="divide-y divide-gray-200 mt-8">
         {data.map((d) => (
-           <ListViewShareRessource
-               title={d.title}
-               author={d.author}
-               description={d.description}
-               path={d.path}
-               img={d.img}
-               tags={d.tags}
-           />
+            <li class="resource-item" data-tags={d.tags.join(',')} />
         ))}
     </ul>
 </div>
 
-<script define:vars={{ data }}>
+<script define:vars={{ data, tagColors }}>
     document.addEventListener('astro:page-load', () => {
         const toggle = document.getElementById('toggle');
         const viewContainer = document.getElementById('view-container');
@@ -110,11 +115,9 @@ const tags = tagCategories.flatMap((category) => {
         let selectedTags = new Set();
 
         dropdownButton.addEventListener('click', () => {
-            dropdown.classList.toggle('hidden');
-        });
-
-        document.addEventListener('click', (event) => {
-            if (!dropdownButton.contains(event.target) && !dropdown.contains(event.target)) {
+            if(dropdown.classList.contains('hidden')) {
+                dropdown.classList.remove('hidden');
+            } else {
                 dropdown.classList.add('hidden');
             }
         });
@@ -127,43 +130,54 @@ const tags = tagCategories.flatMap((category) => {
 
         toggle.addEventListener('click', () => {
             isListView = !isListView;
-
-            if (!isListView) {
-                viewContainer.classList.add('hidden');
-                listContainer.classList.remove('hidden');
-            } else {
-                viewContainer.classList.remove('hidden');
-                listContainer.classList.add('hidden');
-            }
+            viewContainer.classList.toggle('hidden');
+            listContainer.classList.toggle('hidden');
         });
 
-        function updateVisibleItems() {
-            const allItems = document.querySelectorAll('[data-path]');
-
-            allItems.forEach(item => {
-                const itemTags = item.getAttribute('data-tags')
-                    .split(',')
-                    .map(tag => tag.trim().toLowerCase());
-
-                if (selectedTags.size === 0) {
-                    item.classList.remove('hidden');
-                    return;
-                }
-
-                const normalizedSelectedTags = new Set(
-                    [...selectedTags].map(tag => tag.toLowerCase())
+        function filterAndUpdateDisplay(selectedTagsArray) {
+            const filteredData = data.filter(item => {
+                if (selectedTagsArray.length === 0) return true;
+                return selectedTagsArray.some(selectedTag =>
+                    item.tags.some(itemTag =>
+                        itemTag.toLowerCase() === selectedTag.toLowerCase()
+                    )
                 );
-
-                const hasSelectedTag = itemTags.some(tag =>
-                    normalizedSelectedTags.has(tag)
-                );
-
-                if (hasSelectedTag) {
-                    item.classList.remove('hidden');
-                } else {
-                    item.classList.add('hidden');
-                }
             });
+
+            listContainer.innerHTML = `
+                ${filteredData.map(d => `
+                    <li class="py-3 sm:py-4 hover:bg-gray-100 cursor-pointer">
+                        <a href="${d.path}">
+                            <div class="flex items-center space-x-4 rtl:space-x-reverse">
+                                <div class="flex-shrink-0 p-2">
+                                    <img class="w-20 h-20 rounded-full object-cover" src="${d.img}" alt="${d.title} image">
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-bold text-gray-900">${d.title}</p>
+                                    <p class="text-sm text-gray-500">${d.author}</p>
+                                    <p class="text-sm text-black">${d.description}</p>
+                                    <div class="flex flex-wrap mt-2">
+                                        ${d.tags.map(tag => `
+                                            <span
+                                                class="text-xs m-1 font-medium rounded px-2 py-1 me-2"
+                                                style="background-color: ${tagColors[tag] || '#1e293b'}; color: #fff;"
+                                            >
+                                                ${tag}
+                                            </span>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                `).join('')}
+            `;
+
+            const filterCount = selectedTagsArray.length;
+            const dropdownSvg = dropdownButton.querySelector('svg').outerHTML;
+            dropdownButton.innerHTML = filterCount > 0
+                ? `Filtres actifs (${filterCount}) ${dropdownSvg}`
+                : `Filtrer par tag ${dropdownSvg}`;
         }
 
         const tagCheckboxes = document.querySelectorAll('input[type="checkbox"][id^="tag-"]');
@@ -175,11 +189,12 @@ const tags = tagCategories.flatMap((category) => {
                 } else {
                     selectedTags.delete(tag);
                 }
-                console.log(selectedTags);
-                updateVisibleItems();
+
+                const selectedTagsArray = Array.from(selectedTags);
+                filterAndUpdateDisplay(selectedTagsArray);
             });
         });
+
+        filterAndUpdateDisplay([]);
     });
 </script>
-
-
