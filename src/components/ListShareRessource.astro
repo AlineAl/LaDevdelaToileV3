@@ -1,6 +1,5 @@
 ---
 import CardShareRessource from "./CardShareRessource.astro";
-import ListViewShareRessource from "./ListViewShareRessource.astro";
 import { tagCategories } from "../datas/tags";
 
 interface Props {
@@ -30,7 +29,6 @@ const tagColors = tagCategories.reduce((acc, category) => {
     });
     return acc;
 }, {});
-
 
 ---
 
@@ -105,12 +103,13 @@ const tagColors = tagCategories.reduce((acc, category) => {
 </div>
 
 <script define:vars={{ data, tagColors }}>
-    document.addEventListener('astro:page-load', () => {
-        const toggle = document.getElementById('toggle');
-        const viewContainer = document.getElementById('view-container');
-        const listContainer = document.getElementById('list-container');
-        const dropdownButton = document.querySelector('[data-dropdown-toggle="dropdown"]');
-        const dropdown = document.getElementById('dropdown');
+    const toggle = document.getElementById('toggle');
+    const viewContainer = document.getElementById('view-container');
+    const listContainer = document.getElementById('list-container');
+    const dropdownButton = document.querySelector('[data-dropdown-toggle="dropdown"]');
+    const dropdown = document.getElementById('dropdown');
+
+    document.addEventListener('astro:page-load', async () => {
         let isListView = false;
         let selectedTags = new Set();
 
@@ -171,6 +170,37 @@ const tagColors = tagCategories.reduce((acc, category) => {
                         </a>
                     </li>
                 `).join('')}
+            `;
+
+            viewContainer.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    ${filteredData.map(d => `
+                        <div class="resource-item" data-tags="${d.tags.join(',')}">
+                            <a href=${d.path} class="block h-full p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
+                                <img src=${d.img} alt=${d.title} class="w-full h-64 object-cover object-center mb-6 rounded-lg" />
+                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                                    ${d.title}
+                                </h5>
+                                <p class="mb-2 text-sm italic text-gray-700">
+                                    ${d.author}
+                                </p>
+                                <p class="font-normal text-gray-700 dark:text-gray-400">
+                                    ${d.description}
+                                </p>
+                                <div class="flex flex-wrap mt-2">
+                                   ${d.tags.map(tag => `
+                                        <span
+                                            class="text-xs m-1 font-medium rounded px-2 py-1 me-2"
+                                            style="background-color: ${tagColors[tag] || '#1e293b'}; color: #fff;"
+                                        >
+                                            ${tag}
+                                        </span>
+                                    `).join('')}
+                                </div>
+                            </a>
+                        </div>
+                    `).join('')}
+                </div>
             `;
 
             const filterCount = selectedTagsArray.length;

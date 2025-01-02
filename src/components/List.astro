@@ -66,7 +66,7 @@ const visibleData = data.slice(startIndex, endIndex);
     </div>
 </div>
 
-<script define:vars={{ data }}>
+<script define:vars={{ data }} is:inline>
     document.addEventListener('astro:page-load', () => {
         const itemsPerPage = 4;
         let startIndex = 0;
@@ -74,14 +74,8 @@ const visibleData = data.slice(startIndex, endIndex);
         let pageNumber = 1;
         const totalItems = data.length;
 
-        // Map data to the UI
         function mapData(visibleData) {
             const cardContainer = document.getElementById("cardContainer");
-            if (!cardContainer) {
-                console.error("Card container not found");
-                return;
-            }
-
             cardContainer.innerHTML = "";
 
             visibleData.forEach(d => {
