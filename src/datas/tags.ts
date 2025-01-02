@@ -1,4 +1,5 @@
 import type { TagCategory } from "../utils/types/TagCategory.ts";
+
 export const tagCategories: TagCategory[] = [
     {
         learning: {
@@ -41,7 +42,14 @@ export const tagCategories: TagCategory[] = [
                 "code propre",
                 "programmation",
                 "bonnes pratiques",
-                "développement web"
+                "développement web",
+                "code hérité",
+                "tests",
+                "optimisation",
+                "conception logicielle",
+                "architecture logicielle",
+                "modularité",
+                "complexité"
             ]
         }
     },
@@ -66,6 +74,18 @@ export const tagCategories: TagCategory[] = [
                 "structures de données",
                 "bases",
                 "langages de programmation"
+            ]
+        }
+    },
+    {
+        entrepreneurship: {
+            color: "#e63946",
+            tags: [
+                "entrepreneuriat",
+                "création d'entreprise",
+                "innovation",
+                "succès",
+                "développement personnel"
             ]
         }
     }
