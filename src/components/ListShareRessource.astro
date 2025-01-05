@@ -34,7 +34,7 @@ const tagColors = tagCategories.reduce((acc, category) => {
 
 <div class="container mx-auto px-4 py-8">
     <h1 class="text-3xl font-bold text-center">{title}</h1>
-    <label role="checkbox" class="inline-flex items-center cursor-pointer mt-8">
+    <label role="checkbox" aria-checked="false" class="inline-flex items-center cursor-pointer mt-8">
         <input id="toggle" type="checkbox" value="" class="sr-only peer" checked>
         <span class="me-3 text-base font-medium text-gray-900">Vue en cartes</span>
         <div class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-[#0CA6E9] peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#0CA6E9]"></div>

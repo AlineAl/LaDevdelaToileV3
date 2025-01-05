@@ -4,13 +4,7 @@ export const tagCategories: TagCategory[] = [
     {
         learning: {
             color: "#155e75",
-            tags: [
-                "apprentissage",
-                "efficacité",
-                "neurosciences",
-                "pédagogie",
-                "méthodologie"
-            ]
+            tags: ["apprentissage", "efficacité", "neurosciences", "pédagogie", "méthodologie"]
         }
     },
     {
@@ -22,19 +16,14 @@ export const tagCategories: TagCategory[] = [
                 "talent",
                 "intelligence",
                 "réussite",
-                "psychologie cognitive",
+                "psychologie cognitive"
             ]
         }
     },
     {
         science: {
             color: "#075985",
-            tags: [
-                "mathématiques",
-                "science",
-                "informatique",
-                "technologies",
-            ]
+            tags: ["mathématiques", "science", "informatique", "technologies"]
         }
     },
     {
@@ -78,7 +67,7 @@ export const tagCategories: TagCategory[] = [
                 "scalabilité",
                 "architecture hexagonale",
                 "flexibilité",
-                "méthodologies",
+                "méthodologies"
             ]
         }
     },
@@ -99,13 +88,7 @@ export const tagCategories: TagCategory[] = [
     {
         entrepreneurship: {
             color: "#e63946",
-            tags: [
-                "entrepreneuriat",
-                "création d'entreprise",
-                "innovation",
-                "succès",
-                "développement personnel"
-            ]
+            tags: ["entrepreneuriat", "création d'entreprise", "innovation", "succès", "développement personnel"]
         }
     },
     {
@@ -138,10 +121,7 @@ export const tagCategories: TagCategory[] = [
     {
         management: {
             color: "#f3722c",
-            tags: [
-                "efficacité",
-                "gestion"
-            ]
+            tags: ["efficacité", "gestion"]
         }
     }
 ];
