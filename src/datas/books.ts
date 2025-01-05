@@ -88,5 +88,69 @@ export const books = [
         path: "https://www.amazon.fr/Mission-Lhistoire-m%C3%A9thodes-ph%C3%A9nom%C3%A8ne-Blablacar/dp/2416003542/ref=sr_1_1?crid=34JDD03YBSR9&dib=eyJ2IjoiMSJ9.eHAlh09GxFn9fGpOIlzIWVTVabzN8Op9ZOgnrn1Tm3AsY4a42K2HX_c_6Yb_FFOs.xTmEtGpIRldNtKqnPj8Zhw_anz7mRoN8b-wnkSPBbrU&dib_tag=se&keywords=mission+blablacar&nsdOptOutParam=true&qid=1735861580&sprefix=Mission+Blabl%2Caps%2C89&sr=8-1",
         img: "https://m.media-amazon.com/images/I/61r5iLV7eLL._SL1400_.jpg",
         tags: ["entrepreneuriat", "création d'entreprise", "innovation", "développement personnel", "succès"]
+    },
+    {
+        title: "Structure and interpretation of computer programs (SICP)",
+        author: "Harold Abelson, Gerald Jay Sussman, Julie Sussman",
+        description: "Il s'agit d'un livre influent en informatique, révisé pour inclure de nouveaux thèmes sur la gestion du temps en programmation, des exemples et exercices enrichis, ainsi que des programmes compatibles avec la norme IEEE Scheme.",
+        path: "https://web.mit.edu/6.001/6.037/sicp.pdf",
+        img: "https://m.media-amazon.com/images/I/71BBXQnykuL._SL1500_.jpg",
+        tags: ["informatique", "algorithmes", "structures de données", "langages de programmation", "bases"]
+    },
+    {
+        title: "Tête la première : Design Patterns",
+        author: "Eric Freeman, Elisabeth Freeman, Bert Bates, Kathy Sierra",
+        description: "Un guide ludique pour maîtriser les design patterns, améliorer vos conceptions logicielles et créer des architectures flexibles et maintenables.",
+        path: "https://www.amazon.fr/Design-patterns-Eric-Freeman/dp/2841773507/ref=sr_1_1?dib=eyJ2IjoiMSJ9.7b3h6JhIIv82RU4fmmDpae8IMQZZiYjv7_Xwyyi1iS0I7cREqUYwC6nva4dE1MiaYBghscP6sFGP33NyZaWDI4YE5exKSMm9Bxsekmw6VrAY1QaXWyTwv2vPyg6XeVhpTuii0uzjdKIz3BGJmfCn0yTXDCk87ZPUM1UUh87SwpHhPA0XAi6H4YF1Xzendxol.i0neKNuUFbw4zTLnG6VvLe-Wc0zuZFZppiIgMfQs9KE&dib_tag=se&keywords=Design+patterns+t%C3%AAte+la+premi%C3%A8re&nsdOptOutParam=true&qid=1736034132&sr=8-1",
+        img: "https://m.media-amazon.com/images/I/51uxqAzBOVL.jpg",
+        tags: ["design patterns", "architecture logicielle", "conception logicielle", "maintenabilité", "flexibilité"]
+    },
+    {
+        title: "Cracking the Coding Interview",
+        author: "Gayle Laakmann McDowell",
+        description: "C'est un guide pratique pour réussir les entretiens techniques, avec 189 questions réelles, des astuces pour résoudre des problèmes, et des révisions des concepts clés en informatique, basé sur l'expérience d'un ingénieur logiciel.",
+        path: "https://www.amazon.fr/Cracking-Coding-Interview-6th-Programming/dp/0984782850/ref=sr_1_1?adgrpid=58912341831&dib=eyJ2IjoiMSJ9.YvREDvNErjyaHbzaM58D3d9Bv8pRbp_V9YRGjw2whZrIO4pjuReAcoTCT52nkz2B9ju2qMPx8r3IXDPZhtD7fcEJj2nEl8GH66p03T_DMk2y8hN8n4mcHxYORloruWik0HD-MJfjMQJh-pxQkBR1wdY6F6hSPB61FNOCxJJpJkV2CaZuETap0gF7QQSkdA_A7Puvq2Wxvol34qy9qG38LB8f8-LfPGBZb3Rdz4K0sMF2HNum_J-c2WzZXZeL9rkOzI2jLvj0qEL2dLUApM0Kr4pu2gO0xD-xU88ldkpWUlSTiplL7QS4WxEh1pRRpqNPf_Y-cpAxGAYM9wvgEumu9R81mvqQLaQb4gkxeVuBYWwARfV4EViXYJnsi9M-jbaAggQfqsuhq-Cyf_1Km1sI5YCS_uMj8xfJIBvCRq3Ra8-SxrBMxv_lB_Ec2iWx7qhe.UvrIzG0TGGI4RQzKvvVorzV74DF_gOrW0ES_B4FY8Vc&dib_tag=se&hvadid=601498101544&hvdev=c&hvlocphy=9056343&hvnetw=g&hvqmt=e&hvrand=5114496003158821426&hvtargid=kwd-297264693965&hydadcr=21315_2278831&keywords=cracking+the+coding+interview&nsdOptOutParam=true&qid=1736034332&sr=8-1",
+        img: "https://m.media-amazon.com/images/I/61mIq2iJUXL._SL1360_.jpg",
+        tags: ["entretiens techniques", "algorithmes", "structures de données", "programmation", "informatique"]
+    },
+    {
+        title: "Designing Data–Intensive Applications",
+        author: "Martin Kleppmann",
+        description: "Un guide pratique pour comprendre les principes fondamentaux des systèmes de données, comparer les technologies, et concevoir des applications modernes efficaces et fiables.",
+        path: "https://www.amazon.fr/Designing-Data-Intensive-Applications-Martin-Kleppmann/dp/1449373321/ref=sr_1_1?adgrpid=136877653346&dib=eyJ2IjoiMSJ9.i7NBgoRKGkdSZYzT4kChAFmOJoEuYVAVWBkG_ivK03JAfREv6GimZuEpZXKXaXLWGYTJBf1kYjHxM4fvACwXaOBTNNwgav-UqbrR_mJwlvm0VhV1guWF8yGwycexdkmavOnOmJnnDqXOhhPBHdwcJkASr_PHh3qMLf-fo9kL72jxoxAuo-vptbyXVs1_Ht6NwKjnwPdi56rMnBFmquTpdt44z-mCG5w0vnsVFJmJ8q3Bx_IcFrl92Ysn0T6myGnZvm2NjjBVr-5JkOb56BThPF_sh0MhXKzLDqr8kbUfB0fzMGC2Cl5oJV386WccVOZr21Fns7H1N1odHlhM44CFvrCby7had0-HWalqHbp4ZWFe-s-DiaCPpoUXuzqjakGnZWgDWsD7eJEWnyFMkESJchc6rWM1fdskIdpaKU50zJnbZZuCMwhNBjxv_WXFgJ38.bwfXoRS0cxLEKzc0VuUIIjQwEsidDH7ZDJFG6ZOA3Gw&dib_tag=se&hvadid=601445140209&hvdev=c&hvlocphy=9056343&hvnetw=g&hvqmt=e&hvrand=1588858201596052040&hvtargid=kwd-297835422134&hydadcr=21286_2278845&keywords=designing+data+intensive+applications&nsdOptOutParam=true&qid=1736034497&sr=8-1",
+        img: "https://m.media-amazon.com/images/I/91YfNb49PLL._SL1500_.jpg",
+        tags: ["systèmes de données", "applications modernes", "technologies", "conception", "bases"]
+    },
+    {
+        title: "Ecoconception web : les 115 bonnes pratiques",
+        author: "Frédéric Bordage",
+        description: "Un guide pratique pour réduire l'impact environnemental du Web grâce à 115 bonnes pratiques d'écoconception, élaborées par des experts et validées par des institutions reconnues.",
+        path: "https://www.amazon.fr/Ecoconception-web-pratiques-empreinte-%C3%A9cologique/dp/2416006274/ref=sr_1_1?adgrpid=70732130399&dib=eyJ2IjoiMSJ9.7y1Jd7NdL5m03_kmujovuiHNXrjCkAI04Mq-nQlsptTL--Pjek0iwHNe5rjPIJe4ozooJiZ1_p_Lq4KNDyAHCsf_pRL-A8aBdAwKiH6y93HXGOPwzD6P8m3T7t4V3c4YEUKn93gqWiQ0ohbt_3jbcEH2uwmtLHOK6orXMm3fekS9fNT7WlTpmHwqQfdEF4lU.4eJDFqqHCTsaSD9Ck5hZpivyD3-dBT5iDlSY37VVkVA&dib_tag=se&hvadid=702264482593&hvdev=c&hvlocphy=9056343&hvnetw=g&hvqmt=e&hvrand=18236800458612921951&hvtargid=kwd-840539384561&hydadcr=10619_2233409&keywords=ecoconception+web&nsdOptOutParam=true&qid=1736034670&sr=8-1",
+        img: "https://m.media-amazon.com/images/I/617WOsC4fWL._SL1500_.jpg",
+        tags: ["écoconception", "web", "bonnes pratiques", "empreinte écologique", "impact environnemental"]
+    },
+    {
+        title: "Living Documentation: Continuous Knowledge Sharing by Design",
+        author: "Cyrille Martraire",
+        description: "Ce guide présente la \"documentation vivante\", une approche évolutive alignée sur le développement logiciel, combinant automatisation et concepts de domain-driven design pour créer une documentation utile, dynamique et de haute qualité.",
+        path: "https://www.amazon.fr/Living-Documentation-Cyrille-Martraire/dp/0134689321",
+        img: "https://m.media-amazon.com/images/I/61Mgx-lQTgL.jpg",
+        tags: ["documentation", "domain-driven design", "développement logiciel", "automatisation", "qualité"]
+    },
+    {
+        title: "The Design Of Everyday Things",
+        author: "Don Norman",
+        description: "The Design of Everyday Things explore les principes fondamentaux du design centré sur l'utilisateur, montrant comment des produits bien conçus simplifient l'expérience, tandis que d'autres frustrent par leur complexité. Ce livre propose des règles simples pour créer des objets pratiques et intuitifs en exploitant la psychologie cognitive.",
+        path: "https://www.amazon.fr/Design-Everyday-Things-Revised-Expanded/dp/0465050654/ref=sr_1_2?adgrpid=59964125241&dib=eyJ2IjoiMSJ9.jKdyAxykPenb6JZ_zctSYeNz7o9VGgprOIqiG8opa7Vh9DhPpw-J4ubMntFXaM0iy0FOUjXKE1ubRcJ7HXv83yVqZG_v2Q-F8gWne_X41YAt1ms3kPVk7T2_da7qcMPnByGE4WlKsQjgJqaZDSnWqKw2yvKXGkLbXPzNk2ZJUTjFwwwMOop7CYUAEB9RwpAY4IXUR5FRephAqpxyHmzzn4kzFCZ6VC3iuwDyPXaNfutAu1WEn-et_XMMGZkC8PqAMwv4vPD1jJ9QiR4qvWjzBh8XD6Bu1_BCwe_H1cyOiKc5OHHA9fbJLlyinh0ftpR5MR6bgQgpAhWm1Plp7L8EMMxe9fpmnU9gfZjN4D-0NvJEKH5AYZuf1N51nOM9j6hYB7GaJs56TwpmyBIoH9XBNA7lBRL4KgNu55TA6vixb_-TLK36WjJ6DuHfRjFSVtec.t3wmErEibftQSE1_8krOiFRc-z-m1iKUxp_jHDPe21s&dib_tag=se&hvadid=601532985982&hvdev=c&hvlocphy=9056343&hvnetw=g&hvqmt=e&hvrand=15048921127278473002&hvtargid=kwd-299957662242&hydadcr=19775_2266498&keywords=the+design+of+everyday+things&nsdOptOutParam=true&qid=1736034998&sr=8-2",
+        img: "https://m.media-amazon.com/images/I/619ncDeLijL._SL1500_.jpg",
+        tags: ["design", "psychologie cognitive", "expérience utilisateur", "simplicité", "intuitivité"]
+    },
+    {
+        title: "The Principles of Product Development Flow",
+        author: "Donald G. Reinertsen",
+        description: "propose une refonte radicale de la gestion du développement produit, identifiant les files d'attente invisibles comme la cause principale des inefficacités. Avec 175 principes pratiques, le livre offre des outils pour améliorer la prise de décision, gérer les flux et accélérer le développement grâce à des approches inspirées du lean, des réseaux et autres disciplines.",
+        path: "https://www.amazon.fr/Principles-Product-Development-Flow-Generation-ebook/dp/B00K7OWG7O",
+        img: "https://m.media-amazon.com/images/I/91sh+QdzfCL._SL1500_.jpg",
+        tags: ["développement produit", "gestion", "efficacité", "files d'attente"]
     }
 ];

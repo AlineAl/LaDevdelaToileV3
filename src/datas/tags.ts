@@ -21,7 +21,8 @@ export const tagCategories: TagCategory[] = [
                 "psychologie",
                 "talent",
                 "intelligence",
-                "réussite"
+                "réussite",
+                "psychologie cognitive",
             ]
         }
     },
@@ -30,7 +31,9 @@ export const tagCategories: TagCategory[] = [
             color: "#075985",
             tags: [
                 "mathématiques",
-                "science"
+                "science",
+                "informatique",
+                "technologies",
             ]
         }
     },
@@ -39,6 +42,7 @@ export const tagCategories: TagCategory[] = [
             color: "#9d174d",
             tags: [
                 "développement logiciel",
+                "développement produit",
                 "code propre",
                 "programmation",
                 "bonnes pratiques",
@@ -49,7 +53,9 @@ export const tagCategories: TagCategory[] = [
                 "conception logicielle",
                 "architecture logicielle",
                 "modularité",
-                "complexité"
+                "complexité",
+                "web",
+                "conception"
             ]
         }
     },
@@ -58,10 +64,21 @@ export const tagCategories: TagCategory[] = [
             color: "#701a75",
             tags: [
                 "Domain-Driven Design",
+                "domain-driven design",
+                "documentation",
                 "DDD",
                 "architecture logicielle",
                 "modélisation",
-                "refactorisation"
+                "refactorisation",
+                "automatisation",
+                "qualité",
+                "design patterns",
+                "files d'attente",
+                "maintenabilité",
+                "scalabilité",
+                "architecture hexagonale",
+                "flexibilité",
+                "méthodologies",
             ]
         }
     },
@@ -73,7 +90,9 @@ export const tagCategories: TagCategory[] = [
                 "algorithmes",
                 "structures de données",
                 "bases",
-                "langages de programmation"
+                "langages de programmation",
+                "systèmes de données",
+                "applications modernes"
             ]
         }
     },
@@ -86,6 +105,42 @@ export const tagCategories: TagCategory[] = [
                 "innovation",
                 "succès",
                 "développement personnel"
+            ]
+        }
+    },
+    {
+        design: {
+            color: "#f72585",
+            tags: [
+                "design",
+                "UX",
+                "UI",
+                "ergonomie",
+                "accessibilité",
+                "expérience utilisateur",
+                "simplicité",
+                "intuitivité"
+            ]
+        }
+    },
+    {
+        ecoconception: {
+            color: "#2b9348",
+            tags: [
+                "écoconception",
+                "développement durable",
+                "écologie",
+                "empreinte écologique",
+                "impact environnemental"
+            ]
+        }
+    },
+    {
+        management: {
+            color: "#f3722c",
+            tags: [
+                "efficacité",
+                "gestion"
             ]
         }
     }
