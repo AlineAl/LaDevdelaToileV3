@@ -1,5 +1,6 @@
 ---
 import CardShareRessource from "./CardShareRessource.astro";
+import { tagCategories } from "../datas/tags";
 
 interface Props {
     title: string;
@@ -8,22 +9,222 @@ interface Props {
         author: string;
         description: string;
         path: string;
+        img: string;
+        tags: string[];
     }[];
 }
 
 const { title, data } = Astro.props;
 
+const tags = tagCategories.flatMap((category) => {
+    const categoryData = Object.values(category)[0];
+    return categoryData.tags;
+});
+
+const tagColors = tagCategories.reduce((acc, category) => {
+    const key = Object.keys(category)[0];
+    const { color, tags } = category[key];
+    tags.forEach((tag) => {
+        acc[tag] = color;
+    });
+    return acc;
+}, {});
+
 ---
+
 <div class="container mx-auto px-4 py-8">
     <h1 class="text-3xl font-bold text-center">{title}</h1>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-        {data.map((d) => (
-                <CardShareRessource
+    <label role="checkbox" aria-checked="false" class="inline-flex items-center cursor-pointer mt-8">
+        <input id="toggle" type="checkbox" value="" class="sr-only peer" checked>
+        <span class="me-3 text-base font-medium text-gray-900">Vue en cartes</span>
+        <div class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-[#0CA6E9] peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#0CA6E9]"></div>
+        <span class="ms-3 text-base font-medium text-gray-900">Vue en liste</span>
+    </label>
+
+    <div class="mt-4 relative">
+        <button
+            id="dropdownDefault"
+            data-dropdown-toggle="dropdown"
+            class="text-white bg-[#0CA6E9] hover:bg-[#0CA6E9] focus:ring-4 focus:outline-none focus:ring-[#0CA6E9] font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center"
+            type="button"
+            aria-roledescription="dropdown"
+        >
+            Filtrer par tag
+            <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+        </button>
+
+        <div id="dropdown" class="z-10 mt-2 absolute hidden w-56 p-3 bg-white rounded-lg shadow ">
+            <h6 class="mb-3 text-sm font-medium text-gray-900">
+                Tags
+            </h6>
+            <ul class="space-y-2 text-sm h-72 overflow-auto" aria-labelledby="dropdownDefault">
+                {tags.map((tag) =>
+                    <li class="flex items-center">
+                        <input
+                            id={`tag-${tag}`}
+                            value={tag}
+                            type="checkbox"
+                            class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 "
+                        />
+                        <label for={`tag-${tag}`} class="ml-2 text-sm font-mediumtext-gray-900">
+                            {tag}
+                        </label>
+                    </li>
+                )}
+            </ul>
+        </div>
+    </div>
+
+    <div id="view-container" class="hidden container mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {data.map((d) => (
+                <div class="resource-item" data-tags={d.tags.join(',')}>
+                    <CardShareRessource
                         title={d.title}
                         author={d.author}
                         description={d.description}
                         path={d.path}
-                />
-        ))}
+                        img={d.img}
+                        tags={d.tags}
+                    />
+                </div>
+            ))}
+        </div>
     </div>
+
+    <ul id="list-container" class="divide-y divide-gray-200 mt-8">
+        {data.map((d) => (
+            <li class="resource-item" data-tags={d.tags.join(',')} />
+        ))}
+    </ul>
 </div>
+
+<script define:vars={{ data, tagColors }}>
+    const toggle = document.getElementById('toggle');
+    const viewContainer = document.getElementById('view-container');
+    const listContainer = document.getElementById('list-container');
+    const dropdownButton = document.querySelector('[data-dropdown-toggle="dropdown"]');
+    const dropdown = document.getElementById('dropdown');
+
+    document.addEventListener('astro:page-load', async () => {
+        let isListView = false;
+        let selectedTags = new Set();
+
+        dropdownButton.addEventListener('click', () => {
+            if(dropdown.classList.contains('hidden')) {
+                dropdown.classList.remove('hidden');
+            } else {
+                dropdown.classList.add('hidden');
+            }
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!dropdownButton.contains(event.target) && !dropdown.contains(event.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+
+        toggle.addEventListener('click', () => {
+            isListView = !isListView;
+            viewContainer.classList.toggle('hidden');
+            listContainer.classList.toggle('hidden');
+        });
+
+        function filterAndUpdateDisplay(selectedTagsArray) {
+            const filteredData = data.filter(item => {
+                if (selectedTagsArray.length === 0) return true;
+                return selectedTagsArray.some(selectedTag =>
+                    item.tags.some(itemTag =>
+                        itemTag.toLowerCase() === selectedTag.toLowerCase()
+                    )
+                );
+            });
+
+            listContainer.innerHTML = `
+                ${filteredData.map(d => `
+                    <li class="py-3 sm:py-4 hover:bg-gray-100 cursor-pointer">
+                        <a href="${d.path}">
+                            <div class="flex items-center space-x-4 rtl:space-x-reverse">
+                                <div class="flex-shrink-0 p-2">
+                                    <img class="w-20 h-20 rounded-full object-cover" src="${d.img}" alt="${d.title} image">
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-bold text-gray-900">${d.title}</p>
+                                    <p class="text-sm text-gray-500">${d.author}</p>
+                                    <p class="text-sm text-black">${d.description}</p>
+                                    <div class="flex flex-wrap mt-2">
+                                        ${d.tags.map(tag => `
+                                            <span
+                                                class="text-xs m-1 font-medium rounded px-2 py-1 me-2"
+                                                style="background-color: ${tagColors[tag] || '#1e293b'}; color: #fff;"
+                                            >
+                                                ${tag}
+                                            </span>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                `).join('')}
+            `;
+
+            viewContainer.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    ${filteredData.map(d => `
+                        <div class="resource-item" data-tags="${d.tags.join(',')}">
+                            <a href=${d.path} class="block h-full p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
+                                <img src=${d.img} alt=${d.title} class="w-full h-64 object-cover object-center mb-6 rounded-lg" />
+                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                                    ${d.title}
+                                </h5>
+                                <p class="mb-2 text-sm italic text-gray-700">
+                                    ${d.author}
+                                </p>
+                                <p class="font-normal text-gray-700 dark:text-gray-400">
+                                    ${d.description}
+                                </p>
+                                <div class="flex flex-wrap mt-2">
+                                   ${d.tags.map(tag => `
+                                        <span
+                                            class="text-xs m-1 font-medium rounded px-2 py-1 me-2"
+                                            style="background-color: ${tagColors[tag] || '#1e293b'}; color: #fff;"
+                                        >
+                                            ${tag}
+                                        </span>
+                                    `).join('')}
+                                </div>
+                            </a>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            const filterCount = selectedTagsArray.length;
+            const dropdownSvg = dropdownButton.querySelector('svg').outerHTML;
+            dropdownButton.innerHTML = filterCount > 0
+                ? `Filtres actifs (${filterCount}) ${dropdownSvg}`
+                : `Filtrer par tag ${dropdownSvg}`;
+        }
+
+        const tagCheckboxes = document.querySelectorAll('input[type="checkbox"][id^="tag-"]');
+        tagCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                const tag = checkbox.value;
+                if (checkbox.checked) {
+                    selectedTags.add(tag);
+                } else {
+                    selectedTags.delete(tag);
+                }
+
+                const selectedTagsArray = Array.from(selectedTags);
+                filterAndUpdateDisplay(selectedTagsArray);
+            });
+        });
+
+        filterAndUpdateDisplay([]);
+    });
+</script>

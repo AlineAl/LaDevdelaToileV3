@@ -14,5 +14,17 @@ export const coordinatesCities = [
     {
         city: "Bordeaux",
         coordinates: [44.833328, -0.56667]
+    },
+    {
+        city: "Paris",
+        coordinates: [48.8566969, 2.3514616]
+    },
+    {
+        city: "Lille",
+        coordinates: [50.62925, 3.057256]
+    },
+    {
+        city: "Angers",
+        coordinates: [47.478419, -0.563166]
     }
 ];
