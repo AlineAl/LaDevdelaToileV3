@@ -152,6 +152,9 @@ import { Icon } from 'astro-icon/components';
 
             const isToday = eventDate.toDateString() === today.toDateString();
 
+            const isExternal = mostRecentEvent.path.startsWith('http');
+            const targetAttr = isExternal ? 'target="_blank" rel="noopener noreferrer"' : '';
+
             bannerText.innerHTML = `
                  <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
                     <p class="text-sm/6 text-gray-900">
@@ -166,7 +169,7 @@ import { Icon } from 'astro-icon/components';
 
                         }
                     </p>
-                    <a role="link" href="${mostRecentEvent.path}" class="flex-none rounded-full bg-gray-900 px-3.5 py-1 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900">
+                    <a role="link" href="${mostRecentEvent.path}" ${targetAttr} class="flex-none rounded-full bg-gray-900 px-3.5 py-1 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900">
                         Plus d'informations <span aria-hidden="true">&rarr;</span>
                     </a>
                 </div>
