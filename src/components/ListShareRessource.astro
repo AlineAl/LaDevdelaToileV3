@@ -144,9 +144,12 @@ const tagColors = tagCategories.reduce((acc, category) => {
             });
 
             listContainer.innerHTML = `
-                ${filteredData.map(d => `
+                ${filteredData.map(d => {
+                    const isExternal = d.path.startsWith('http');
+                    const targetAttr = isExternal ? 'target="_blank" rel="noopener noreferrer"' : '';
+                    return `
                     <li class="py-3 sm:py-4 hover:bg-gray-100 cursor-pointer">
-                        <a href="${d.path}">
+                        <a href="${d.path}" ${targetAttr}>
                             <div class="flex items-center space-x-4 rtl:space-x-reverse">
                                 <div class="flex-shrink-0 p-2">
                                     <img class="w-20 h-20 rounded-full object-cover" src="${d.img}" alt="${d.title} image">
@@ -169,7 +172,8 @@ const tagColors = tagCategories.reduce((acc, category) => {
                             </div>
                         </a>
                     </li>
-                `).join('')}
+                    `;
+                }).join('')}
             `;
 
             viewContainer.innerHTML = `

@@ -58,22 +58,22 @@ import { Icon } from 'astro-icon/components';
         <ul id="nav-socials-links" class="nav-underline hidden md:flex ml-auto flex-nowrap items-center uppercase">
           <div class="flex justify-center">
                 <li class="w-fit">
-                    <a href="https://bsky.app/profile/ladevdelatoile.bsky.social" class="block py-3">
+                    <a href="https://bsky.app/profile/ladevdelatoile.bsky.social" target="_blank" rel="noopener noreferrer" class="block py-3">
                         <Icon class="w-8 h-8 text-sky-500" name="mdi:butterfly" />
                     </a>
                 </li>
                 <li class="w-fit">
-                    <a href="https://www.linkedin.com/in/ladevdelatoile/" class="block py-3">
+                    <a href="https://www.linkedin.com/in/ladevdelatoile/" target="_blank" rel="noopener noreferrer"class="block py-3">
                         <Icon class="w-8 h-8 text-sky-500" name="mdi:linkedin" />
                     </a>
                 </li>
                 <li class="w-fit">
-                    <a href="https://github.com/AlineAl" class="block py-3">
+                    <a href="https://github.com/AlineAl" target="_blank" rel="noopener noreferrer" class="block py-3">
                         <Icon class="w-8 h-8 text-sky-500" name="mdi:github" />
                     </a>
                 </li>
                 <li class="w-fit">
-                    <a href="https://www.youtube.com/channel/UCXIQ74jh19FjnSsOf97NIzg" class="block py-3">
+                    <a href="https://www.youtube.com/channel/UCXIQ74jh19FjnSsOf97NIzg" target="_blank" rel="noopener noreferrer" class="block py-3">
                         <Icon class="w-8 h-8 text-sky-500" name="mdi:youtube" />
                     </a>
                 </li>
@@ -152,6 +152,9 @@ import { Icon } from 'astro-icon/components';
 
             const isToday = eventDate.toDateString() === today.toDateString();
 
+            const isExternal = mostRecentEvent.path.startsWith('http');
+            const targetAttr = isExternal ? 'target="_blank" rel="noopener noreferrer"' : '';
+
             bannerText.innerHTML = `
                  <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
                     <p class="text-sm/6 text-gray-900">
@@ -166,7 +169,7 @@ import { Icon } from 'astro-icon/components';
 
                         }
                     </p>
-                    <a role="link" href="${mostRecentEvent.path}" class="flex-none rounded-full bg-gray-900 px-3.5 py-1 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900">
+                    <a role="link" href="${mostRecentEvent.path}" ${targetAttr} class="flex-none rounded-full bg-gray-900 px-3.5 py-1 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900">
                         Plus d'informations <span aria-hidden="true">&rarr;</span>
                     </a>
                 </div>
