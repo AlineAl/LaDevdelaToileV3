@@ -147,7 +147,9 @@ npm run dev
         title: 'Write title of the book here',
         author: 'Write author of the book here',
         description: 'Add a low description',
-        path: 'Share the path of the book here'
+        path: 'Share the path of the book here',
+        img: 'Share the path of image here',
+        tags: [] (Add tags here, you can see tags to 'src/datas/tags')
     },
 ```
 
