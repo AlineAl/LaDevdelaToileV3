@@ -207,9 +207,7 @@ docker run --name ladevdelatoile -p 4321:4321 ladevdelatoile:latest
 docker stop ladevdelatoile
 ```
 
-## 🔥 Contributors
-
-Thank you for contributing every day to making this project even better!
+## 🔥 Thank you for contributing every day to making this project even better!
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
