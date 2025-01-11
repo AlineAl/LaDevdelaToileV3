@@ -214,6 +214,7 @@ docker stop ladevdelatoile
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://jeanphi-baconnais.gitlab.io/"><img src="https://avatars.githubusercontent.com/u/32639372?v=4?s=100" width="100px;" alt="Jean-Phi Baconnais"/><br /><sub><b>Jean-Phi Baconnais</b></sub></a><br /><a href="https://github.com/AlineAl/LaDevdelaToileV3/commits?author=jeanphi-baconnais" title="Documentation">📖</a></td>
       <td align="center" valign="top" width="14.28%"><a href="http://laraveljutsu.net"><img src="https://avatars.githubusercontent.com/u/36139526?v=4?s=100" width="100px;" alt="Ludovic Guénet"/><br /><sub><b>Ludovic Guénet</b></sub></a><br /><a href="https://github.com/AlineAl/LaDevdelaToileV3/commits?author=ludoguenet" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.mouclepatrick.com"><img src="https://avatars.githubusercontent.com/u/20593460?v=4?s=100" width="100px;" alt=" Patrick Sheron Moucle"/><br /><sub><b> Patrick Sheron Moucle</b></sub></a><br /><a href="https://github.com/AlineAl/LaDevdelaToileV3/commits?author=shelbon" title="Documentation">📖</a></td>
     </tr>
   </tbody>
 </table>
