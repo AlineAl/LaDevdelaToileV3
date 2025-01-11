@@ -69,6 +69,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "ventustyl",
+      "name": "Eric Venturino",
+      "avatar_url": "https://avatars.githubusercontent.com/u/34771970?v=4",
+      "profile": "https://venturino.site",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
