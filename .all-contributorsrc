@@ -51,6 +51,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "hectormarchand",
+      "name": "Hector Marchand",
+      "avatar_url": "https://avatars.githubusercontent.com/u/105730133?v=4",
+      "profile": "https://github.com/hectormarchand",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
