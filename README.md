@@ -227,6 +227,7 @@ docker stop ladevdelatoile
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/sbnh1"><img src="https://avatars.githubusercontent.com/u/186596675?v=4?s=100" width="100px;" alt="sbnh1"/><br /><sub><b>sbnh1</b></sub></a><br /><a href="https://github.com/AlineAl/LaDevdelaToileV3/commits?author=sbnh1" title="Documentation">📖</a></td>
       <td align="center" valign="top" width="14.28%"><a href="http://bento.me/lucasts"><img src="https://avatars.githubusercontent.com/u/86970433?v=4?s=100" width="100px;" alt="Lucas"/><br /><sub><b>Lucas</b></sub></a><br /><a href="https://github.com/AlineAl/LaDevdelaToileV3/commits?author=LucasOtw" title="Documentation">📖</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://felixfale-portfolio.vercel.app/"><img src="https://avatars.githubusercontent.com/u/101950698?v=4?s=100" width="100px;" alt="Felix Fale"/><br /><sub><b>Felix Fale</b></sub></a><br /><a href="https://github.com/AlineAl/LaDevdelaToileV3/commits?author=Felix-fale" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/ludovicdean"><img src="https://avatars.githubusercontent.com/u/65154985?v=4?s=100" width="100px;" alt="ludovicdean"/><br /><sub><b>ludovicdean</b></sub></a><br /><a href="https://github.com/AlineAl/LaDevdelaToileV3/commits?author=ludovicdean" title="Documentation">📖</a></td>
     </tr>
   </tbody>
 </table>
