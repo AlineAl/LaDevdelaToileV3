@@ -224,6 +224,7 @@ docker stop ladevdelatoile
       <td align="center" valign="top" width="14.28%"><a href="https://venturino.site"><img src="https://avatars.githubusercontent.com/u/34771970?v=4?s=100" width="100px;" alt="Eric Venturino"/><br /><sub><b>Eric Venturino</b></sub></a><br /><a href="https://github.com/AlineAl/LaDevdelaToileV3/commits?author=ventustyl" title="Documentation">📖</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/D-Sriver"><img src="https://avatars.githubusercontent.com/u/112690493?v=4?s=100" width="100px;" alt="D.Sriver"/><br /><sub><b>D.Sriver</b></sub></a><br /><a href="https://github.com/AlineAl/LaDevdelaToileV3/commits?author=D-Sriver" title="Documentation">📖</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/MickaelSuard"><img src="https://avatars.githubusercontent.com/u/87171726?v=4?s=100" width="100px;" alt="MickaelSuard"/><br /><sub><b>MickaelSuard</b></sub></a><br /><a href="https://github.com/AlineAl/LaDevdelaToileV3/commits?author=MickaelSuard" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/sbnh1"><img src="https://avatars.githubusercontent.com/u/186596675?v=4?s=100" width="100px;" alt="sbnh1"/><br /><sub><b>sbnh1</b></sub></a><br /><a href="https://github.com/AlineAl/LaDevdelaToileV3/commits?author=sbnh1" title="Documentation">📖</a></td>
     </tr>
   </tbody>
 </table>
