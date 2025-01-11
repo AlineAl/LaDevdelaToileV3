@@ -217,6 +217,7 @@ docker stop ladevdelatoile
       <td align="center" valign="top" width="14.28%"><a href="https://www.mouclepatrick.com"><img src="https://avatars.githubusercontent.com/u/20593460?v=4?s=100" width="100px;" alt=" Patrick Sheron Moucle"/><br /><sub><b> Patrick Sheron Moucle</b></sub></a><br /><a href="https://github.com/AlineAl/LaDevdelaToileV3/commits?author=shelbon" title="Documentation">📖</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/frontcodelover"><img src="https://avatars.githubusercontent.com/u/98742791?v=4?s=100" width="100px;" alt="Nicolas"/><br /><sub><b>Nicolas</b></sub></a><br /><a href="https://github.com/AlineAl/LaDevdelaToileV3/commits?author=frontcodelover" title="Documentation">📖</a></td>
       <td align="center" valign="top" width="14.28%"><a href="http://arnaudban.me"><img src="https://avatars.githubusercontent.com/u/1626370?v=4?s=100" width="100px;" alt="Arnaud Banvillet"/><br /><sub><b>Arnaud Banvillet</b></sub></a><br /><a href="https://github.com/AlineAl/LaDevdelaToileV3/commits?author=ArnaudBan" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/hectormarchand"><img src="https://avatars.githubusercontent.com/u/105730133?v=4?s=100" width="100px;" alt="Hector Marchand"/><br /><sub><b>Hector Marchand</b></sub></a><br /><a href="https://github.com/AlineAl/LaDevdelaToileV3/commits?author=hectormarchand" title="Documentation">📖</a></td>
     </tr>
   </tbody>
 </table>
