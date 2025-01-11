@@ -207,9 +207,7 @@ docker run --name ladevdelatoile -p 4321:4321 ladevdelatoile:latest
 docker stop ladevdelatoile
 ```
 
-## 🔥 Contributors
-
-Thank you for contributing every day to making this project even better!
+## 🔥 Thank you for contributing every day to making this project even better!
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
@@ -218,6 +216,7 @@ Thank you for contributing every day to making this project even better!
   <tbody>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://jeanphi-baconnais.gitlab.io/"><img src="https://avatars.githubusercontent.com/u/32639372?v=4?s=100" width="100px;" alt="Jean-Phi Baconnais"/><br /><sub><b>Jean-Phi Baconnais</b></sub></a><br /><a href="https://github.com/AlineAl/LaDevdelaToileV3/commits?author=jeanphi-baconnais" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://laraveljutsu.net"><img src="https://avatars.githubusercontent.com/u/36139526?v=4?s=100" width="100px;" alt="Ludovic Guénet"/><br /><sub><b>Ludovic Guénet</b></sub></a><br /><a href="https://github.com/AlineAl/LaDevdelaToileV3/commits?author=ludoguenet" title="Documentation">📖</a></td>
     </tr>
   </tbody>
 </table>

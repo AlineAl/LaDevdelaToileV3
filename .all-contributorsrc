@@ -15,7 +15,16 @@
       "contributions": [
         "doc"
       ]
-    }
+    },
+    {
+      "login": "ludoguenet",
+      "name": "Ludovic Guénet",
+      "avatar_url": "https://avatars.githubusercontent.com/u/36139526?v=4",
+      "profile": "http://laraveljutsu.net",
+      "contributions": [
+        "doc"
+      ]
+    },
   ],
   "contributorsPerLine": 7,
   "skipCi": true,
