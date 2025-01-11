@@ -12,19 +12,16 @@
       "name": "Jean-Phi Baconnais",
       "avatar_url": "https://avatars.githubusercontent.com/u/32639372?v=4",
       "profile": "https://jeanphi-baconnais.gitlab.io/",
-      "contributions": [
-        "doc"
-      ]
     },
     {
       "login": "ludoguenet",
       "name": "Ludovic Guénet",
       "avatar_url": "https://avatars.githubusercontent.com/u/36139526?v=4",
       "profile": "http://laraveljutsu.net",
-      "contributions": [
-        "doc"
-      ]
     },
+    "contributions": [
+      "doc"
+    ]
   ],
   "contributorsPerLine": 7,
   "skipCi": true,
