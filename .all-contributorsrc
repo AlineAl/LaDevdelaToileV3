@@ -114,6 +114,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "Felix-fale",
+      "name": "Felix Fale",
+      "avatar_url": "https://avatars.githubusercontent.com/u/101950698?v=4",
+      "profile": "https://felixfale-portfolio.vercel.app/",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
