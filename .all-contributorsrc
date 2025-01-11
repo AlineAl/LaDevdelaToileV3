@@ -105,6 +105,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "LucasOtw",
+      "name": "Lucas",
+      "avatar_url": "https://avatars.githubusercontent.com/u/86970433?v=4",
+      "profile": "http://bento.me/lucasts",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
