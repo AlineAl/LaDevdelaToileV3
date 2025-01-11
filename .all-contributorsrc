@@ -24,7 +24,7 @@
       "contributions": [
         "doc"
       ]
-    },
+    }
   ],
   "contributorsPerLine": 7,
   "skipCi": true,
