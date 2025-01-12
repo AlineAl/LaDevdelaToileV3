@@ -141,6 +141,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "dkp-consult",
+      "name": "dkp-consult",
+      "avatar_url": "https://avatars.githubusercontent.com/u/96497744?v=4",
+      "profile": "http://dkp-consult.be",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,

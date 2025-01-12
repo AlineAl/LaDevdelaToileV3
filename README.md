@@ -231,6 +231,7 @@ docker stop ladevdelatoile
     </tr>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/abenoit"><img src="https://avatars.githubusercontent.com/u/4036546?v=4?s=100" width="100px;" alt="Amélie"/><br /><sub><b>Amélie</b></sub></a><br /><a href="https://github.com/AlineAl/LaDevdelaToileV3/commits?author=abenoit" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://dkp-consult.be"><img src="https://avatars.githubusercontent.com/u/96497744?v=4?s=100" width="100px;" alt="dkp-consult"/><br /><sub><b>dkp-consult</b></sub></a><br /><a href="https://github.com/AlineAl/LaDevdelaToileV3/commits?author=dkp-consult" title="Documentation">📖</a></td>
     </tr>
   </tbody>
 </table>
