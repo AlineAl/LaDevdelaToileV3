@@ -229,6 +229,9 @@ docker stop ladevdelatoile
       <td align="center" valign="top" width="14.28%"><a href="https://felixfale-portfolio.vercel.app/"><img src="https://avatars.githubusercontent.com/u/101950698?v=4?s=100" width="100px;" alt="Felix Fale"/><br /><sub><b>Felix Fale</b></sub></a><br /><a href="https://github.com/AlineAl/LaDevdelaToileV3/commits?author=Felix-fale" title="Documentation">📖</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/ludovicdean"><img src="https://avatars.githubusercontent.com/u/65154985?v=4?s=100" width="100px;" alt="ludovicdean"/><br /><sub><b>ludovicdean</b></sub></a><br /><a href="https://github.com/AlineAl/LaDevdelaToileV3/commits?author=ludovicdean" title="Documentation">📖</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/abenoit"><img src="https://avatars.githubusercontent.com/u/4036546?v=4?s=100" width="100px;" alt="Amélie"/><br /><sub><b>Amélie</b></sub></a><br /><a href="https://github.com/AlineAl/LaDevdelaToileV3/commits?author=abenoit" title="Documentation">📖</a></td>
+    </tr>
   </tbody>
 </table>
 
