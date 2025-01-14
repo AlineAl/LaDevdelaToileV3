@@ -1,5 +1,4 @@
 ---
-import CardShareRessource from "./CardShareRessource.astro";
 import { tagCategories } from "../datas/tags";
 
 interface Props {
@@ -79,20 +78,7 @@ const tagColors = tagCategories.reduce((acc, category) => {
     </div>
 
     <div id="view-container" class="hidden container mx-auto px-4 py-8">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {data.map((d) => (
-                <div class="resource-item" data-tags={d.tags.join(',')}>
-                    <CardShareRessource
-                        title={d.title}
-                        author={d.author}
-                        description={d.description}
-                        path={d.path}
-                        img={d.img}
-                        tags={d.tags}
-                    />
-                </div>
-            ))}
-        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" />
     </div>
 
     <ul id="list-container" class="divide-y divide-gray-200 mt-8">
@@ -103,132 +89,179 @@ const tagColors = tagCategories.reduce((acc, category) => {
 </div>
 
 <script define:vars={{ data, tagColors }}>
-    const toggle = document.getElementById('toggle');
-    const viewContainer = document.getElementById('view-container');
-    const listContainer = document.getElementById('list-container');
-    const dropdownButton = document.querySelector('[data-dropdown-toggle="dropdown"]');
-    const dropdown = document.getElementById('dropdown');
+    let isListView = false;
+    let isDropdownVisible = false;
+    let selectedTags = new Set();
 
-    document.addEventListener('astro:page-load', async () => {
-        let isListView = false;
-        let selectedTags = new Set();
+    function handleDropdownToggle() {
+        const dropdown = document.getElementById('dropdown');
 
-        dropdownButton.addEventListener('click', () => {
-            if(dropdown.classList.contains('hidden')) {
-                dropdown.classList.remove('hidden');
-            } else {
-                dropdown.classList.add('hidden');
-            }
-        });
-
-        document.addEventListener('click', (event) => {
-            if (!dropdownButton.contains(event.target) && !dropdown.contains(event.target)) {
-                dropdown.classList.add('hidden');
-            }
-        });
-
-        toggle.addEventListener('click', () => {
-            isListView = !isListView;
-            viewContainer.classList.toggle('hidden');
-            listContainer.classList.toggle('hidden');
-        });
-
-        function filterAndUpdateDisplay(selectedTagsArray) {
-            const filteredData = data.filter(item => {
-                if (selectedTagsArray.length === 0) return true;
-                return selectedTagsArray.some(selectedTag =>
-                    item.tags.some(itemTag =>
-                        itemTag.toLowerCase() === selectedTag.toLowerCase()
-                    )
-                );
-            });
-
-            listContainer.innerHTML = `
-                ${filteredData.map(d => {
-                    const isExternal = d.path.startsWith('http');
-                    const targetAttr = isExternal ? 'target="_blank" rel="noopener noreferrer"' : '';
-                    return `
-                    <li class="py-3 sm:py-4 hover:bg-gray-100 cursor-pointer">
-                        <a href="${d.path}" ${targetAttr}>
-                            <div class="flex items-center space-x-4 rtl:space-x-reverse">
-                                <div class="flex-shrink-0 p-2">
-                                    <img class="w-20 h-20 rounded-full object-cover" src="${d.img}" alt="${d.title} image">
-                                </div>
-                                <div class="flex-1">
-                                    <p class="font-bold text-gray-900">${d.title}</p>
-                                    <p class="text-sm text-gray-500">${d.author}</p>
-                                    <p class="text-sm text-black">${d.description}</p>
-                                    <div class="flex flex-wrap mt-2">
-                                        ${d.tags.map(tag => `
-                                            <span
-                                                class="text-xs m-1 font-medium rounded px-2 py-1 me-2"
-                                                style="background-color: ${tagColors[tag] || '#1e293b'}; color: #fff;"
-                                            >
-                                                ${tag}
-                                            </span>
-                                        `).join('')}
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    `;
-                }).join('')}
-            `;
-
-            viewContainer.innerHTML = `
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    ${filteredData.map(d => `
-                        <div class="resource-item" data-tags="${d.tags.join(',')}">
-                            <a href=${d.path} class="block h-full p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
-                                <img src=${d.img} alt=${d.title} class="w-full h-64 object-cover object-center mb-6 rounded-lg" />
-                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                                    ${d.title}
-                                </h5>
-                                <p class="mb-2 text-sm italic text-gray-700">
-                                    ${d.author}
-                                </p>
-                                <p class="font-normal text-gray-700 dark:text-gray-400">
-                                    ${d.description}
-                                </p>
-                                <div class="flex flex-wrap mt-2">
-                                   ${d.tags.map(tag => `
-                                        <span
-                                            class="text-xs m-1 font-medium rounded px-2 py-1 me-2"
-                                            style="background-color: ${tagColors[tag] || '#1e293b'}; color: #fff;"
-                                        >
-                                            ${tag}
-                                        </span>
-                                    `).join('')}
-                                </div>
-                            </a>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-
-            const filterCount = selectedTagsArray.length;
-            const dropdownSvg = dropdownButton.querySelector('svg').outerHTML;
-            dropdownButton.innerHTML = filterCount > 0
-                ? `Filtres actifs (${filterCount}) ${dropdownSvg}`
-                : `Filtrer par tag ${dropdownSvg}`;
+        if (!isDropdownVisible) {
+            dropdown.classList.remove('hidden');
+            isDropdownVisible = true;
+        } else {
+            dropdown.classList.add('hidden');
+            isDropdownVisible = false;
         }
+    }
 
+    function handleDropdownClickOutside(event) {
+        const dropdownButton = document.querySelector('[data-dropdown-toggle="dropdown"]');
+        const dropdown = document.getElementById('dropdown');
+
+        if (
+            !dropdownButton.contains(event.target) &&
+            !dropdown.contains(event.target) &&
+            isDropdownVisible
+        ) {
+            dropdown.classList.add('hidden');
+            isDropdownVisible = false;
+        }
+    }
+
+    function handleToggle() {
+        isListView = !isListView;
+
+        const viewContainer = document.getElementById('view-container');
+        const listContainer = document.getElementById('list-container');
+        viewContainer.classList.toggle('hidden', !isListView);
+        listContainer.classList.toggle('hidden', isListView);
+    }
+
+    function handleTagChange(event) {
+        const tag = event.target.value;
+        if (event.target.checked) {
+            selectedTags.add(tag);
+        } else {
+            selectedTags.delete(tag);
+        }
+        filterAndUpdateDisplay(Array.from(selectedTags));
+    }
+
+    function filterAndUpdateDisplay(selectedTagsArray) {
+        const filteredData = data.filter(item => {
+            if (selectedTagsArray.length === 0) return true;
+            return selectedTagsArray.some(selectedTag =>
+                item.tags.some(itemTag =>
+                    itemTag.toLowerCase() === selectedTag.toLowerCase()
+                )
+            );
+        });
+
+        const listContainer = document.getElementById('list-container');
+        const viewContainer = document.getElementById('view-container');
+
+        listContainer.innerHTML = `
+        ${filteredData.map(d => {
+            const isExternal = d.path.startsWith('http');
+            const targetAttr = isExternal ? 'target="_blank" rel="noopener noreferrer"' : '';
+            return `
+            <li class="py-3 sm:py-4 hover:bg-gray-100 cursor-pointer">
+                <a href="${d.path}" ${targetAttr}>
+                    <div class="flex items-center space-x-4 rtl:space-x-reverse">
+                        <div class="flex-shrink-0 p-2">
+                            <img class="w-20 h-20 rounded-full object-cover" src="${d.img}" alt="${d.title} image">
+                        </div>
+                        <div class="flex-1">
+                            <p class="font-bold text-gray-900">${d.title}</p>
+                            <p class="text-sm text-gray-500">${d.author}</p>
+                            <p class="text-sm text-black">${d.description}</p>
+                            <div class="flex flex-wrap mt-2">
+                                ${d.tags.map(tag => `
+                                    <span
+                                        class="text-xs m-1 font-medium rounded px-2 py-1 me-2"
+                                        style="background-color: ${tagColors[tag] || '#1e293b'}; color: #fff;"
+                                    >
+                                        ${tag}
+                                    </span>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            `;
+        }).join('')}
+    `;
+
+        viewContainer.innerHTML = `
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            ${filteredData.map(d => `
+                <div class="resource-item" data-tags="${d.tags.join(',')}">
+                    <a href=${d.path} class="block h-full p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
+                        <img src=${d.img} alt=${d.title} class="w-full h-64 object-cover object-center mb-6 rounded-lg" />
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            ${d.title}
+                        </h5>
+                        <p class="mb-2 text-sm italic text-gray-700">
+                            ${d.author}
+                        </p>
+                        <p class="font-normal text-gray-700 dark:text-gray-400">
+                            ${d.description}
+                        </p>
+                        <div class="flex flex-wrap mt-2">
+                            ${d.tags.map(tag => `
+                                <span
+                                    class="text-xs m-1 font-medium rounded px-2 py-1 me-2"
+                                    style="background-color: ${tagColors[tag] || '#1e293b'}; color: #fff;"
+                                >
+                                    ${tag}
+                                </span>
+                            `).join('')}
+                        </div>
+                    </a>
+                </div>
+            `).join('')}
+        </div>
+    `;
+    }
+
+    function cleanupView() {
+        document.getElementById('toggle')?.removeEventListener('click', handleToggle);
+        document.querySelector('[data-dropdown-toggle="dropdown"]')?.removeEventListener('click', handleDropdownToggle);
+        document.removeEventListener('click', handleDropdownClickOutside);
+        document.querySelectorAll('input[type="checkbox"][id^="tag-"]').forEach(checkbox => {
+            checkbox.removeEventListener('change', handleTagChange);
+        });
+
+        const dropdown = document.getElementById('dropdown');
+        const viewContainer = document.getElementById('view-container');
+        const listContainer = document.getElementById('list-container');
+        const dropdownButton = document.querySelector('[data-dropdown-toggle="dropdown"]');
+
+        selectedTags.clear();
+        isListView = false;
+
+        dropdown.classList.add('hidden');
+        viewContainer.classList.add('hidden');
+        listContainer.classList.remove('hidden');
+
+        dropdownButton.innerHTML = `Filtrer par tag <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>`;
+    }
+
+    function initializeView() {
+        const toggle = document.getElementById('toggle');
+        const dropdownButton = document.querySelector('[data-dropdown-toggle="dropdown"]');
         const tagCheckboxes = document.querySelectorAll('input[type="checkbox"][id^="tag-"]');
-        tagCheckboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', () => {
-                const tag = checkbox.value;
-                if (checkbox.checked) {
-                    selectedTags.add(tag);
-                } else {
-                    selectedTags.delete(tag);
-                }
 
-                const selectedTagsArray = Array.from(selectedTags);
-                filterAndUpdateDisplay(selectedTagsArray);
-            });
+        if (toggle) toggle.addEventListener('click', handleToggle);
+        if (dropdownButton) dropdownButton.addEventListener('click', handleDropdownToggle);
+        document.addEventListener('click', handleDropdownClickOutside);
+
+        tagCheckboxes.forEach((checkbox) => {
+            checkbox.addEventListener('change', handleTagChange);
         });
 
         filterAndUpdateDisplay([]);
+    }
+
+    document.addEventListener('astro:page-load', () => {
+        cleanupView();
+        initializeView();
+    });
+    document.addEventListener('astro:after-swap', () => {
+        cleanupView();
+        initializeView();
     });
 </script>
+
