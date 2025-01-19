@@ -1,26 +1,48 @@
 ---
 import { Icon } from "astro-icon/components";
-import type { Conference } from "../utils/types/Conference";
+import { Page } from "astro";
 
 interface Props {
-    data: Conference[];
-    pageNumber: number;
+    page: Page;
+    currentPage: number;
+    totalPages: number;
 }
 
-const { data, pageNumber } = Astro.props;
+const { page, currentPage, totalPages } = Astro.props;
 ---
 
+<nav aria-label="pagination" class="flex items-center justify-center mt-4">
+    {page.url.prev ? (
+        <a href={page.url.prev}
+           class="flex items-center justify-center px-3 h-12 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700">
+            <Icon class="size-8" name="mdi:chevron-left" />
+        </a>
+    ) : (
+        <button disabled class="flex items-center justify-center px-3 h-12 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg opacity-50">
+            <Icon class="size-8" name="mdi:chevron-left" />
+        </button>
+    )}
 
-<div class="flex items-center justify-center mt-4">
-    <button id="prev" class="flex items-center justify-center px-3 h-12 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700">
-        <Icon class="size-8" name="mdi:chevron-left" />
-    </button>
-    <input disabled id="page-number" class="w-12 h-12 px-4 flex items-center justify-center leading-tight text-gray-500 bg-white border border-gray-300 border-r-0" value={pageNumber} />
-    <span class="flex items-center justify-center text-gray-500 border border-gray-300 border-x-0 h-12">/</span>
-    <span id="total-pages" class="w-12 flex items-center justify-center text-gray-500 border border-gray-300 border-x-0 h-12">
-            { Math.ceil(data.length / 6) }
+    <span class="flex items-center gap-1 border border-gray-300 border-r-0">
+            <input
+                disabled
+                class="w-12 h-12 px-4 flex items-center justify-center leading-tight text-gray-500 bg-white"
+                value={currentPage}
+            />
+            <span class="text-gray-500">/</span>
+            <span class="w-12 flex items-center justify-center text-gray-500">
+                {totalPages}
+            </span>
         </span>
-    <button id="next" class="flex items-center justify-center px-3 h-12 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700">
-        <Icon class="size-8" name="mdi:chevron-right" />
-    </button>
-</div>
+
+    {page.url.next ? (
+        <a href={page.url.next}
+           class="flex items-center justify-center px-3 h-12 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700">
+            <Icon class="size-8" name="mdi:chevron-right" />
+        </a>
+    ) : (
+        <button disabled class="flex items-center justify-center px-3 h-12 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700">
+            <Icon class="size-8" name="mdi:chevron-right" />
+        </button>
+    )}
+</nav>

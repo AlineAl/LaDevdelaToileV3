@@ -40,7 +40,7 @@ import { Icon } from 'astro-icon/components';
         </div>
 
         <ul class="nav-underline hidden md:flex relative flex-nowrap pl-4 uppercase tracking-wide before:absolute before:inset-y-4 before:left-0 before:border-l-2 before:border-primary before:border-opacity-50">
-            <li class="hover:font-bold"><a href="/conferences" class="block py-3">Conférences</a></li>
+            <li class="hover:font-bold"><a href="/conferences/1" class="block py-3">Conférences</a></li>
             <li class="hover:font-bold"><a href="/events" class="block py-3">Événements</a></li>
             <li class="hover:font-bold"><a href="/podcasts" class="block py-3">Podcasts</a></li>
             {/*<li class="hover:font-bold"><a href="/notes" class="block py-3">Notes</a></li>*/}
@@ -48,7 +48,7 @@ import { Icon } from 'astro-icon/components';
         </ul>
 
         <ul id="nav-links" class="hidden text-center flex-col mt-8 items-center uppercase md:hidden">
-            <li><a href="/conferences" class="block py-3">Conférences</a></li>
+            <li><a href="/conferences/1" class="block py-3">Conférences</a></li>
             <li><a href="/events" class="block py-3">Événements</a></li>
             <li><a href="/podcasts" class="block py-3">Podcasts</a></li>
             {/*<li><a href="/notes" class="block py-3">Notes</a></li>*/}
@@ -81,7 +81,7 @@ import { Icon } from 'astro-icon/components';
         </ul>
     </nav>
 </header>
-		
+
 <script>
     document.addEventListener('astro:page-load', () => {
         let lastScrollTop = 0;
