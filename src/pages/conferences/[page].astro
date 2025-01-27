@@ -7,7 +7,7 @@ import ListMap from "../../components/ListMap.astro";
 import Pagination from "../../components/Pagination.astro";
 import InputAndFilter from "../../components/InputAndFilter.astro";
 import GetOrHideMapButton from "../../components/GetOrHideMapButton.astro";
-import { Conference } from "../../utils/types/Conference";
+import type { Conference } from "../../utils/types/Conference";
 
 export const prerender = true;
 
@@ -50,7 +50,6 @@ const totalPages = page.lastPage;
     <Pagination page={page} currentPage={currentPage} totalPages={totalPages} />
     <Footer />
 </Layout>
-
 
 <script>
     import { map, marker, Marker, tileLayer, latLngBounds, latLng } from "leaflet";
@@ -235,7 +234,7 @@ const totalPages = page.lastPage;
 
         document.getElementById('searchInput')?.addEventListener('keyup', filterData);
         document.getElementById('citySelect')?.addEventListener('change', filterData);
-    });
+    }, );
 </script>
 
 

@@ -1,57 +1,8 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import Footer from "../../components/Footer.astro";
-import Pagination from "../../components/Pagination.astro";
 import InputAndFilter from "../../components/InputAndFilter.astro";
 import GetOrHideMapButton from "../../components/GetOrHideMapButton.astro";
-
-let events = [];
-
-async function loadEvents() {
-    try {
-        const response = await fetch("/communities-events.json");
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        events = data.map(community_event => ({
-            title: community_event.city,
-            description: community_event.description || `Découvrez les événements à ${community_event.city}.`,
-            events: community_event.communities.flatMap(community =>
-                community.events.length > 0
-                    ? community.events.map(event => ({
-                        path: event.link,
-                        location: {
-                            city: community_event.city,
-                            coordinates: [event.latitude, event.longitude]
-                        }
-                    }))
-                    : []
-            )
-        }));
-
-        return events;
-    } catch (error) {
-        console.error("Failed to load events:", error);
-        return [];
-    }
-}
-
-let allEvents = [];
-let visibleData = [];
-const itemsPerPage = 6;
-let startIndex = 0;
-let pageNumber = 1;
-let endIndex = itemsPerPage;
-
-async function fetchData() {
-    allEvents = await loadEvents();
-    visibleData = allEvents.slice(startIndex, endIndex);
-}
-
-fetchData();
 ---
 
 <Layout title="Événements">
@@ -73,25 +24,17 @@ fetchData();
         </div>
     </div>
 
-    <Pagination data={events} pageNumber={pageNumber} />
     <Footer />
 </Layout>
 
 <script>
+    import { map, marker, Marker, tileLayer, latLngBounds, latLng } from "leaflet";
     import { coordinatesCities } from "../../datas/coordinatesCities";
 
     document.addEventListener("astro:page-load", async () => {
-        if (window.location.pathname !== "/events") {
-            return;
-        }
+        let markers: Record<string, Marker> = {};
+        let eventMap: L.Map;
 
-        const L = (await import("leaflet")).default;
-        const map = L.map("map").setView([48.866667, 2.333333], 10);
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-
-        let markers = {};
         let filteredEvents = [];
         let allEvents = [];
 
@@ -139,8 +82,7 @@ fetchData();
             });
 
             filteredEvents = [...allEvents];
-            setupPagination();
-            mapData(filteredEvents.slice(startIndex, endIndex));
+            mapData(filteredEvents);
         }
 
         function generateSlug(title: string) {
@@ -155,79 +97,85 @@ fetchData();
             return baseUrl.replace(/\/[^/]+(?=\/events)/, `/${slug}`);
         }
 
-        function setupPagination() {
-            updatePageNumber();
-            const totalPages = Math.ceil(filteredEvents.length / itemsPerPage);
-            document.getElementById("total-pages").textContent = totalPages;
-        }
-
         function updateMap(visibleData) {
             Object.values(markers).forEach(marker => map.removeLayer(marker));
             markers = {};
+
             visibleData.forEach(item => {
                 item.events.forEach(event => {
-                    const marker = L.marker(event.location.coordinates).addTo(map);
-                    marker.bindPopup(`
-                 <div class="popup-content">
-                    <h3 class="font-bold text-lg text-gray-800 mb-2">${item.title}</h3>
-                    <p class="text-sm text-gray-600 mb-4">
-                        📍 <span>${event.location.city}</span>
-                    </p>
-                    <div class="events-list space-y-2">
-                        ${
-                        item.events
-                            .filter(
-                                e =>
-                                    (!e.isNotEvent && new Date(e.date) >= new Date()) ||
-                                    new Date(e.date).toDateString() === new Date().toDateString()
-                            )
-                            .sort((a, b) => new Date(a.date) - new Date(b.date))
-                            .slice(0, 2)
-                            .map(
-                                e => `
-                            <div class="event-item flex flex-col gap-1">
-                                <time datetime="${e.date}" class="text-gray-500 text-sm">
-                                    📅 ${new Date(e.date).toLocaleDateString("fr-FR", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
-                                </time>
-                                <a href="${e.path}" target="_blank" class="text-blue-600 hover:underline font-semibold">
-                                    ${e.title}
-                                </a>
+                    const eventMarker = marker(event.location.coordinates).addTo(eventMap);
+                    eventMarker.bindPopup(`
+                         <div class="popup-content">
+                            <h3 class="font-bold text-lg text-gray-800 mb-2">${item.title}</h3>
+                            <p class="text-sm text-gray-600 mb-4">
+                                📍 <span>${event.location.city}</span>
+                            </p>
+                            <div class="events-list space-y-2">
+                                ${
+                                item.events
+                                    .filter(
+                                        e =>
+                                            (!e.isNotEvent && new Date(e.date) >= new Date()) ||
+                                            new Date(e.date).toDateString() === new Date().toDateString()
+                                    )
+                                    .sort((a, b) => new Date(a.date) - new Date(b.date))
+                                    .slice(0, 2)
+                                    .map(
+                                        e => `
+                                    <div class="event-item flex flex-col gap-1">
+                                        <time datetime="${e.date}" class="text-gray-500 text-sm">
+                                            📅 ${new Date(e.date).toLocaleDateString("fr-FR", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
+                                        </time>
+                                        <a href="${e.path}" target="_blank" class="text-blue-600 hover:underline font-semibold">
+                                            ${e.title}
+                                        </a>
+                                    </div>
+                                `
+                                    )
+                                    .join("") ||
+                                `
+                                <div class="event-item">
+                                    <p class="bg-red-100 text-red-800 text-sm font-medium me-2 px-2.5 py-1 rounded">Aucun événement prévu</p>
+                                    <a href="${generateDynamicUrl("https://www.meetup.com/humantalks-grenoble/events", item.title)}" target="_blank" class="text-blue-500 hover:underline font-medium">
+                                        En savoir plus
+                                    </a>
+                                </div>
+                                `
+                            }
                             </div>
-                        `
-                            )
-                            .join("") ||
-                        `
-                        <div class="event-item">
-                            <p class="bg-red-100 text-red-800 text-sm font-medium me-2 px-2.5 py-1 rounded">Aucun événement prévu</p>
-                            <a href="${generateDynamicUrl("https://www.meetup.com/humantalks-grenoble/events", item.title)}" target="_blank" class="text-blue-500 hover:underline font-medium">
-                                En savoir plus
-                            </a>
-                        </div>
-                        `
-                    }
-                    </div>
-                 </div>
+                         </div>
                     `);
                     markers[`${item.title}`] = marker;
                 });
             });
 
-            const bounds = L.latLngBounds(
-                visibleData.flatMap(item => item.events.map(event => L.latLng(event.location.coordinates)))
-            );
-            map.fitBounds(bounds);
-        }
+            if (visibleData.length > 0) {
+                const validLocations = visibleData
+                    .flatMap(item => item.events)
+                    .filter(event => event.location && Array.isArray(event.location.coordinates) &&
+                        event.location.coordinates.length === 2 &&
+                        event.location.coordinates.every(coord => typeof coord === "number"));
 
-        const itemsPerPage = 6;
-        let startIndex = 0;
-        let endIndex = itemsPerPage;
-        let pageNumber = 1;
-
-        function updatePageNumber() {
-            document.getElementById("page-number").value = pageNumber;
+                if (validLocations.length > 0) {
+                    const bounds = latLngBounds(validLocations.map(event =>
+                        latLng(event.location.coordinates)
+                    ));
+                    eventMap.flyToBounds(bounds, {
+                        padding: [50, 50],
+                        duration: 0.5
+                    });
+                } else {
+                    console.warn("No valid locations to display on the map.");
+                }
+            }
         }
 
         function mapData(visibleData) {
+            eventMap = map('map').setView([48.866667, 2.333333], 10);
+            tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(eventMap);
+
             const listContainer = document.getElementById("mapList");
             const cardContainer = document.getElementById("cardView");
             listContainer.innerHTML = "";
@@ -255,7 +203,7 @@ fetchData();
                 }
                         </span>
                     </li>`;
-                listContainer.appendChild(list);
+                listContainer?.appendChild(list);
             });
 
             visibleData.forEach(d => {
@@ -268,7 +216,7 @@ fetchData();
                     </div>
                 </a>`;
 
-                cardContainer.appendChild(card);
+                cardContainer?.appendChild(card);
             });
 
             updateMap(visibleData);
@@ -276,57 +224,24 @@ fetchData();
             const allItems = document.querySelectorAll(".marker-item");
 
             allItems.forEach(item => {
-                item.addEventListener("click", () => {
-                    const markerTitle = item.getAttribute("data-marker");
+                item.addEventListener('click', () => {
+                    const markerTitle = item.getAttribute('data-marker');
+                    if (!markerTitle) {
+                        return;
+                    }
                     const marker = markers[markerTitle];
 
                     if (marker) {
+                        console.log(marker);
                         marker.openPopup();
-
                         const markerLatLng = marker.getLatLng();
-
-                        const offsetLatLng = L.latLng(markerLatLng.lat + 0.05, markerLatLng.lng);
-                        map.setView(offsetLatLng, 11, { animate: true });
+                        const offsetLatLng = latLng(markerLatLng.lat + 0.05, markerLatLng.lng);
+                        eventMap.flyTo(offsetLatLng, 11, {
+                            duration: 0.5
+                        });
                     }
                 });
             });
-        }
-
-        function prevPage() {
-            if (startIndex > 0) {
-                startIndex -= itemsPerPage;
-                endIndex -= itemsPerPage;
-                pageNumber -= 1;
-                updatePageNumber();
-                mapData(filteredEvents.slice(startIndex, endIndex));
-            }
-        }
-
-        function nextPage() {
-            if (endIndex < filteredEvents.length) {
-                startIndex += itemsPerPage;
-                endIndex += itemsPerPage;
-                pageNumber += 1;
-                updatePageNumber();
-                mapData(filteredEvents.slice(startIndex, endIndex));
-            }
-        }
-
-        function filterData() {
-            const input = document.getElementById("searchInput").value.toUpperCase();
-            const city = document.getElementById("citySelect").value;
-
-            filteredEvents = allEvents.filter(d => {
-                const matchesTitle = d.title.toUpperCase().includes(input);
-                const matchesCity = city === "" || d.events.some(event => event.location.city === city);
-                return matchesTitle && matchesCity;
-            });
-
-            startIndex = 0;
-            endIndex = itemsPerPage;
-            pageNumber = 1;
-            setupPagination();
-            mapData(filteredEvents.slice(startIndex, endIndex));
         }
 
         const toggleButton = document.getElementById("toggleButton");
@@ -334,22 +249,17 @@ fetchData();
         const mapView = document.getElementById("mapView");
         const buttonText = document.getElementById("buttonText");
 
-        toggleButton.addEventListener("click", () => {
-            cardView.classList.toggle("hidden");
-            mapView.classList.toggle("hidden");
+        toggleButton?.addEventListener("click", () => {
+            cardView?.classList.toggle("hidden");
+            mapView?.classList.toggle("hidden");
 
-            if (mapView.classList.contains("hidden")) {
+            if (mapView?.classList.contains("hidden")) {
                 buttonText.textContent = "Afficher avec la carte";
             } else {
                 buttonText.textContent = "Afficher sans la carte";
             }
         });
 
-        document.getElementById("prev").addEventListener("click", prevPage);
-        document.getElementById("next").addEventListener("click", nextPage);
-        document.getElementById("searchInput").addEventListener("keyup", filterData);
-        document.getElementById("citySelect").addEventListener("change", filterData);
-
-        loadEvents();
+        await loadEvents();
     });
 </script>
