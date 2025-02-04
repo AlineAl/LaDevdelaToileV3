@@ -30,6 +30,15 @@
     ]
   },
   {
+    "city": "Brest",
+    "communities": [
+      {
+        "name": "finistdevs",
+        "platform": "meetup"
+      }
+    ]
+  },
+  {
     "city": "Grenoble",
     "communities": [
       {
@@ -50,6 +59,27 @@
       },
       {
         "name": "grenoble-web-development-meetup-group",
+        "platform": "meetup"
+      }
+    ]
+  },
+  {
+    "city": "Lille",
+    "communities": [
+      {
+        "name": "frontendbeers",
+        "platform": "meetup"
+      },
+      {
+        "name": "chtijug",
+        "platform": "meetup"
+      },
+      {
+        "name": "frenchproduit-nord",
+        "platform": "meetup"
+      },
+      {
+        "name": "software-craftsmanship-lille",
         "platform": "meetup"
       }
     ]
@@ -82,6 +112,10 @@
   {
     "city": "Nantes",
     "communities": [
+      {
+        "name": "aws-nantes",
+        "platform": "meetup"
+      },
       {
         "name": "HumanTalks-Nantes",
         "platform": "meetup"
@@ -149,9 +183,26 @@
       {
         "name": "gdg_nantes_android",
         "platform": "meetup"
+      }
+    ]
+  },
+  {
+    "city": "Rennes",
+    "communities": [
+      {
+        "name": "generative-ai-rennes",
+        "platform": "meetup"
       },
       {
-        "name": "aws-nantes",
+        "name": "breizhjug",
+        "platform": "meetup"
+      },
+      {
+        "name": "software-crafters-rennes",
+        "platform": "meetup"
+      },
+      {
+        "name": "rennes-devops",
         "platform": "meetup"
       }
     ]
