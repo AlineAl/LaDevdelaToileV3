@@ -9,7 +9,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "prettier": "prettier --write ./src",
-    "lint": "eslint \"./src/**/*.{js,astro}\""
+    "lint": "eslint \"./src/**/*.{js,astro,json}\""
   },
   "dependencies": {
     "@astrojs/netlify": "^5.5.2",
