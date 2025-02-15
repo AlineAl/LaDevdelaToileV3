@@ -1,16 +1,15 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import Footer from "../../components/Footer.astro";
-import InputAndFilter from "../../components/InputAndFilter.astro";
-import GetOrHideMapButton from "../../components/GetOrHideMapButton.astro";
 import { getCollection } from "astro:content";
 import Pagination from "../../components/Pagination.astro";
+import { coordinatesCities } from "../../datas/coordinatesCities";
 
 export const prerender = true;
 
 export async function getStaticPaths({ paginate }) {
     const eventsData = await getCollection("events");
-    return paginate(eventsData, { pageSize: 3 });
+    return paginate(eventsData, { pageSize: 2 });
 }
 
 const { page } = Astro.props;
@@ -19,13 +18,14 @@ const totalPages = page.lastPage;
 ---
 
 <Layout title="Événements">
-    <h1 class="text-4xl text-center font-bold mt-8">Événements</h1>
-    <p class="text-center text-lg mt-4 mx-4">
-        Retrouvez ici une liste non-exhaustive de nombreux événements et communautés dev.
-    </p>
-
-    <GetOrHideMapButton />
-    <InputAndFilter />
+    <form class="max-w-sm md:max-w-xl mx-auto mt-4">
+        <label for="countries_disabled" class="block mb-2 text-lg font-medium">Sélectionnez une ville</label>
+        <select id="countries_disabled" class="border border-gray-300 rounded-lg text-lg block w-full p-2.5 outline-none">
+            {coordinatesCities.map((d, i) => (
+                <option key={i} value={d.city}>{d.city}</option>
+            ))}
+        </select>
+    </form>
 
     <ul>
         {page.data.map((event, eventIndex) => (
@@ -56,3 +56,17 @@ const totalPages = page.lastPage;
 
     <Footer />
 </Layout>
+
+<script>
+    document.addEventListener('astro:page-load', () => {
+        const select = document.getElementById('countries_disabled');
+        select?.addEventListener('change', (e) => {
+            const target = e.target as HTMLSelectElement;
+            const selectedCity = target.value;
+
+            const url = new URL(window.location.href);
+            url.searchParams.set('city', selectedCity);
+            window.location.href = url.toString();
+        });
+    });
+</script>
