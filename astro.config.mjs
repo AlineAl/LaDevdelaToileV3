@@ -4,9 +4,11 @@ import icon from "astro-icon";
 
 import netlify from "@astrojs/netlify";
 
+import react from "@astrojs/react";
+
 // https://astro.build/config
 export default defineConfig({
-    integrations: [tailwind(), icon()],
+    integrations: [tailwind(), icon(), react()],
     experimental: { contentLayer: true },
     output: "server",
     adapter: netlify()

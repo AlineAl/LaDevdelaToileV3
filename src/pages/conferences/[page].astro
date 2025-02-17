@@ -8,6 +8,7 @@ import Pagination from "../../components/Pagination.astro";
 import InputAndFilter from "../../components/InputAndFilter.astro";
 import GetOrHideMapButton from "../../components/GetOrHideMapButton.astro";
 import type { Conference } from "../../utils/types/Conference";
+import type { Page } from "astro";
 
 export const prerender = true;
 
@@ -15,7 +16,7 @@ export async function getStaticPaths({ paginate }) {
     return paginate(conferences, { pageSize: 6 });
 }
 
-const { page } = Astro.props;
+const { page }: Page = Astro.props;
 const currentPage = page.currentPage;
 const totalPages = page.lastPage;
 

@@ -2,71 +2,29 @@
 import Layout from "../../layouts/Layout.astro";
 import Footer from "../../components/Footer.astro";
 import { getCollection } from "astro:content";
-import Pagination from "../../components/Pagination.astro";
-import { coordinatesCities } from "../../datas/coordinatesCities";
+import { EventListComponent } from "../../components/List/Event/EventListComponent";
+import type { Page, PaginateFunction } from "astro";
+import type { CollectionEntry } from "astro:content";
+
+type Props = {
+    page: Page<CollectionEntry<'events'>>;
+};
 
 export const prerender = true;
 
-export async function getStaticPaths({ paginate }) {
+export async function getStaticPaths({ paginate }: { paginate: PaginateFunction }) {
     const eventsData = await getCollection("events");
-    return paginate(eventsData, { pageSize: 2 });
+    return paginate(eventsData);
 }
 
 const { page } = Astro.props;
-const currentPage = page.currentPage;
-const totalPages = page.lastPage;
 ---
 
 <Layout title="Événements">
-    <form class="max-w-sm md:max-w-xl mx-auto mt-4">
-        <label for="countries_disabled" class="block mb-2 text-lg font-medium">Sélectionnez une ville</label>
-        <select id="countries_disabled" class="border border-gray-300 rounded-lg text-lg block w-full p-2.5 outline-none">
-            {coordinatesCities.map((d, i) => (
-                <option key={i} value={d.city}>{d.city}</option>
-            ))}
-        </select>
-    </form>
-
-    <ul>
-        {page.data.map((event, eventIndex) => (
-            <li key={eventIndex}>
-                {event.data.communities.map((community, communityIndex) => (
-                    <ul key={communityIndex}>
-                        {community.events.map((d, i) => (
-                            <li key={i}>
-                                <a
-                                    href={d.link}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    <div class="min-h-full flex flex-col items-center gap-4 border border-default bg-offset p-6 transition duration-300 ease-in-out hover:cursor-pointer hover:text-white hover:bg-sky-700">
-                                        <p class="text-center font-extrabold text-xl">{d.title}</p>
-                                        <p class="text-center text-offset text-sm">{d.organizationName}</p>
-                                    </div>
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
-                ))}
-            </li>
-        ))}
-    </ul>
-
-    <Pagination page={page} currentPage={currentPage} totalPages={totalPages} />
-
+    <EventListComponent
+        client:only="react"
+        events={page.data}
+        page={page}
+    />
     <Footer />
 </Layout>
-
-<script>
-    document.addEventListener('astro:page-load', () => {
-        const select = document.getElementById('countries_disabled');
-        select?.addEventListener('change', (e) => {
-            const target = e.target as HTMLSelectElement;
-            const selectedCity = target.value;
-
-            const url = new URL(window.location.href);
-            url.searchParams.set('city', selectedCity);
-            window.location.href = url.toString();
-        });
-    });
-</script>
