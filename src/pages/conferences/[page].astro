@@ -1,0 +1,243 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Footer from "../../components/Footer.astro";
+import { conferences } from "../../datas/conferences";
+import Card from "../../components/Card.astro";
+import ListMap from "../../components/ListMap.astro";
+import Pagination from "../../components/Pagination.astro";
+import InputAndFilter from "../../components/InputAndFilter.astro";
+import GetOrHideMapButton from "../../components/GetOrHideMapButton.astro";
+import type { Conference } from "../../utils/types/Conference";
+import type { Page } from "astro";
+
+export const prerender = true;
+
+export async function getStaticPaths({ paginate }) {
+    return paginate(conferences, { pageSize: 6 });
+}
+
+const { page }: Page = Astro.props;
+const currentPage = page.currentPage;
+const totalPages = page.lastPage;
+
+---
+<Layout title="Conférences">
+    <h1 class="text-4xl text-center font-bold mt-8">Conférences</h1>
+    <p class="text-center text-lg mt-4 mx-4">
+        Retrouvez ici une liste non-exhaustive de nombreuses conférences tech qui vous en apprendront davantage sur le monde du développement.
+    </p>
+
+    <GetOrHideMapButton />
+    <InputAndFilter data={conferences} />
+
+    <ul id="cardView" class="m-4 hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 auto-rows-[1fr]">
+        {page.data.map((conference: Conference) => (
+            <Card title={conference.title} description={conference.description} path={conference.path} />
+        ))}
+    </ul>
+
+    <div id="mapView" class="flex flex-wrap md:flex-nowrap">
+        <ul id="mapList" class="md:w-[50%] h-96 overflow-auto">
+            {page.data.map((conference) => (
+                <ListMap data={conference} />
+            ))}
+        </ul>
+
+        <div class="m-4 map w-full md:w-[50%]">
+            <div id="map" style="height: 400px;" data-conferences={JSON.stringify(page.data)}></div>
+        </div>
+    </div>
+
+    <Pagination page={page} currentPage={currentPage} totalPages={totalPages} />
+    <Footer />
+</Layout>
+
+<script>
+    import { map, marker, Marker, tileLayer, latLngBounds, latLng } from "leaflet";
+    import { conferences } from "../../datas/conferences";
+    import type { Conference } from "../../utils/types/Conference";
+
+    document.addEventListener('astro:page-load', async () => {
+        const initialData = document.getElementById('map')?.dataset.conferences
+            ? JSON.parse(document.getElementById('map')?.dataset.conferences || '[]')
+            : [];
+
+        let filteredConferences = [...initialData];
+        let markers: Record<string, Marker> = {};
+        let conferenceMap: L.Map;
+
+        function initializeMap() {
+            conferenceMap = map('map').setView([48.866667, 2.333333], 10);
+            tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(conferenceMap);
+
+            conferences.forEach(conference => {
+                const conferenceMarker = marker(conference.location.coordinates).addTo(conferenceMap);
+                conferenceMarker.bindPopup(`
+                <div class="popup-content">
+                    <h3 class="font-bold text-lg">${conference.title}</h3>
+                    <p class="text-gray-700">${conference.description}</p>
+                    <p class="text-sm text-gray-500">${conference.location.address}</p>
+                    <a href="${conference.path}" target="_blank" class="text-blue-500 hover:underline">Voir les conférences</a>
+                </div>
+            `);
+                markers[conference.title] = conferenceMarker;
+            });
+
+            const bounds = latLngBounds(conferences.map(conference =>
+                latLng(conference.location.coordinates)
+            ));
+            conferenceMap.fitBounds(bounds);
+        }
+        function updateMapMarkers(visibleData: Conference[]) {
+            const visibleTitles = new Set(visibleData.map(conf => conf.title));
+
+            Object.entries(markers).forEach(([title, marker]) => {
+                if (visibleTitles.has(title)) {
+                    marker.getElement()?.classList.remove('hidden');
+                    conferenceMap.addLayer(marker);
+                } else {
+                    marker.getElement()?.classList.add('hidden');
+                    conferenceMap.removeLayer(marker);
+                }
+            });
+
+            if (visibleData.length > 0) {
+                const bounds = latLngBounds(visibleData.map(conference =>
+                    latLng(conference.location.coordinates)
+                ));
+                conferenceMap.flyToBounds(bounds, {
+                    padding: [50, 50],
+                    duration: 0.5
+                });
+            }
+        }
+
+        function mapData(visibleData: Conference[]) {
+            const listContainer = document.getElementById("mapList");
+            const cardContainer = document.getElementById("cardView");
+
+            if(!listContainer || !cardContainer) {
+                return;
+            }
+
+            listContainer.innerHTML = "";
+            cardContainer.innerHTML = "";
+
+            visibleData.forEach(d => {
+                const list = document.createElement("li");
+                list.innerHTML = `
+                <li data-marker="${d.title}" class="marker-item p-4 mb-4 m-4 bg-white border border-default transition-all hover:cursor-pointer hover:text-white hover:bg-sky-700">
+                    <h2 class="font-semibold">${d.title}</h2>
+                    <p class="text-sm my-2 truncate">${d.description}</p>
+                    <span class="bg-sky-100 text-sky-800 text-sm font-medium me-2 px-2.5 py-1 rounded">
+                        ${d.location.city}
+                    </span>
+                </li>`;
+                listContainer.appendChild(list);
+            });
+
+            visibleData.forEach(d => {
+                const card = document.createElement("div");
+                card.innerHTML = `<a href=${d.path}>
+                <div class="min-h-full flex flex-col items-center gap-4 border border-default bg-offset p-6 transition duration-300 ease-in-out hover:cursor-pointer hover:text-white hover:bg-sky-700">
+                    <p class="text-center font-extrabold text-xl">${d.title}</p>
+                    <p class="text-center text-offset text-sm">${d.description}</p>
+                </div>
+            </a>`;
+                cardContainer.appendChild(card);
+            });
+
+            updateMapMarkers(visibleData);
+
+            const allItems = document.querySelectorAll(".marker-item");
+
+            allItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const markerTitle = item.getAttribute('data-marker');
+                    if (!markerTitle) {
+                        return;
+                    }
+                    const marker = markers[markerTitle];
+
+                    if (marker) {
+                        marker.openPopup();
+                        const markerLatLng = marker.getLatLng();
+                        const offsetLatLng = latLng(markerLatLng.lat + 0.05, markerLatLng.lng);
+                        conferenceMap.flyTo(offsetLatLng, 11, {
+                            duration: 0.5
+                        });
+                    }
+                });
+            });
+        }
+        function filterData() {
+            const searchInput = document.getElementById('searchInput');
+            const selectedCity = document.getElementById('citySelect');
+
+            if(!searchInput || !selectedCity) {
+                return;
+            }
+
+            const searchValue = (searchInput as HTMLInputElement).value.toUpperCase();
+            const cityValue = (selectedCity as HTMLInputElement).value;
+
+            filteredConferences = conferences.filter(d => {
+                const matchesTitle = d.title.toUpperCase().includes(searchValue);
+                const matchesCity = cityValue === "" || d.location.city === cityValue;
+                return matchesTitle && matchesCity;
+            });
+
+            mapData(filteredConferences);
+        }
+
+        function handlePagination() {
+            const page = document.getElementById('page-number');
+            const totalPages = document.getElementById('total-pages');
+
+            if(!page || !totalPages) {
+                return;
+            }
+
+            const currentPage = parseInt((page as HTMLInputElement).value);
+            const total = parseInt((totalPages as HTMLInputElement).textContent);
+
+            if (currentPage > total) {
+                (page as HTMLInputElement).value = total.toString();
+            }
+
+            if (currentPage < 1) {
+                (page as HTMLInputElement).value = "1";
+            }
+        }
+
+        handlePagination();
+        initializeMap();
+        mapData(filteredConferences);
+
+        const toggleButton = document.getElementById("toggleButton");
+        const cardView = document.getElementById("cardView");
+        const mapView = document.getElementById("mapView");
+        const buttonText = document.getElementById("buttonText");
+
+        toggleButton?.addEventListener("click", () => {
+            cardView?.classList.toggle("hidden");
+            mapView?.classList.toggle("hidden");
+
+            if (mapView?.classList.contains("hidden")) {
+                buttonText.textContent = "Afficher avec la carte";
+            } else {
+                buttonText.textContent = "Afficher sans la carte";
+                conferenceMap.invalidateSize();
+            }
+        });
+
+        document.getElementById('searchInput')?.addEventListener('keyup', filterData);
+        document.getElementById('citySelect')?.addEventListener('change', filterData);
+    }, );
+</script>
+
+
+
+
