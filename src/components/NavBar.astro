@@ -30,7 +30,7 @@ import { Icon } from 'astro-icon/components';
     <nav class="container-xl p-4 md:flex md:flex-nowrap md:items-center md:gap-6">
         <div class="flex items-center justify-between">
             <a href="/" class="block">
-                <Image src={logo} alt="Logo du site LaDevdelaToile" class="w-20 h-20 md:w-32 md:h-32" />
+                <Image src={logo} alt="Logo du site LaDevdelaToile" class="w-14 h-14 md:w-20 md:h-20" />
             </a>
             <button id="menu-toggle" class="md:hidden focus:outline-none">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -41,7 +41,7 @@ import { Icon } from 'astro-icon/components';
 
         <ul class="nav-underline hidden md:flex relative flex-nowrap pl-4 uppercase tracking-wide before:absolute before:inset-y-4 before:left-0 before:border-l-2 before:border-primary before:border-opacity-50">
             <li class="hover:font-bold"><a href="/conferences/1" class="block py-3">Conférences</a></li>
-            <li class="hover:font-bold"><a href="/events/1" class="block py-3">Événements</a></li>
+            <li class="hover:font-bold"><a href="/events" class="block py-3">Événements</a></li>
             <li class="hover:font-bold"><a href="/podcasts" class="block py-3">Podcasts</a></li>
             {/*<li class="hover:font-bold"><a href="/notes" class="block py-3">Notes</a></li>*/}
             <li class="hover:font-bold"><a href="/books" class="block py-3">Ouvrages</a></li>
@@ -49,7 +49,7 @@ import { Icon } from 'astro-icon/components';
 
         <ul id="nav-links" class="hidden text-center flex-col mt-8 items-center uppercase md:hidden">
             <li><a href="/conferences/1" class="block py-3">Conférences</a></li>
-            <li><a href="/events/[page]" class="block py-3">Événements</a></li>
+            <li><a href="/events" class="block py-3">Événements</a></li>
             <li><a href="/podcasts" class="block py-3">Podcasts</a></li>
             {/*<li><a href="/notes" class="block py-3">Notes</a></li>*/}
             <li><a href="/books" class="block py-3">Ouvrages</a></li>

@@ -2,25 +2,49 @@ import { coordinatesCities } from "../../../datas/coordinatesCities.ts";
 import React, { useMemo, useState } from "react";
 import type { CollectionEntry } from "astro:content";
 import { Pagination } from "../../Pagination.tsx";
-import type { Page } from "astro";
 import { CardCommunity } from "../../Card/Community/CardCommunity.tsx";
 
 interface IEventListComponent {
     events: CollectionEntry<"events">[];
-    page: Page;
 }
-export const EventListComponent = ({ events, page }: IEventListComponent) => {
+
+export const EventListComponent = ({ events }: IEventListComponent) => {
     const [selectedCity, setSelectedCity] = useState("Toutes les villes");
+    const [currentPage, setCurrentPage] = useState(1);
+    const communitiesPerPage = 4;
 
     const handleSelectCity = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedCity(e.target.value);
+        setCurrentPage(1);
     };
 
     const filteredEvents = useMemo(() => {
-        return selectedCity === "Toutes les villes" ? events : events.filter(event => event.data.city === selectedCity);
+        return selectedCity === "Toutes les villes"
+            ? events
+            : events.filter(event => event.data.city === selectedCity);
     }, [events, selectedCity]);
 
-    console.log(filteredEvents);
+    const allCommunities = useMemo(() => {
+        return filteredEvents.flatMap(event =>
+            event.data.communities.map(community => ({
+                ...community,
+                eventId: event.id
+            }))
+        );
+    }, [filteredEvents]);
+
+    const totalPages = Math.ceil(allCommunities.length / communitiesPerPage);
+
+    const paginatedCommunities = useMemo(() => {
+        const startIndex = (currentPage - 1) * communitiesPerPage;
+        return allCommunities.slice(startIndex, startIndex + communitiesPerPage);
+    }, [allCommunities, currentPage]);
+
+    const handlePageChange = (newPage: number) => {
+        if (newPage >= 1 && newPage <= totalPages) {
+            setCurrentPage(newPage);
+        }
+    };
 
     return (
         <section role="list" className="flex flex-col">
@@ -43,19 +67,26 @@ export const EventListComponent = ({ events, page }: IEventListComponent) => {
                 </select>
             </form>
 
-            {filteredEvents.length > 0 ? (
+            {paginatedCommunities.length > 0 ? (
                 <>
                     <ul className="m-4 grid grid-cols-1 gap-2">
-                        {filteredEvents.map(event =>
-                            event.data.communities.map(community => (
-                                <CardCommunity key={event.id} community={community} />
-                            ))
-                        )}
+                        {paginatedCommunities.map(community => (
+                            <CardCommunity
+                                key={`${community.eventId}-${community.id}`}
+                                community={community}
+                            />
+                        ))}
                     </ul>
-                    {/*<Pagination page={page} currentPage={page.currentPage} totalPages={page.lastPage} />*/}
+                    <Pagination
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onPageChange={handlePageChange}
+                    />
                 </>
             ) : (
-                <p className="text-center mt-4 text-lg font-semibold">Aucun événement trouvé pour {selectedCity}.</p>
+                <p className="text-center mt-4 text-lg font-semibold">
+                    Aucune communauté trouvée pour {selectedCity}.
+                </p>
             )}
         </section>
     );
