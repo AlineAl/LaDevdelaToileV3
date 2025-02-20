@@ -19,9 +19,7 @@ export const EventListComponent = ({ events }: IEventListComponent) => {
     };
 
     const filteredEvents = useMemo(() => {
-        return selectedCity === "Toutes les villes"
-            ? events
-            : events.filter(event => event.data.city === selectedCity);
+        return selectedCity === "Toutes les villes" ? events : events.filter(event => event.data.city === selectedCity);
     }, [events, selectedCity]);
 
     const allCommunities = useMemo(() => {
@@ -74,22 +72,13 @@ export const EventListComponent = ({ events }: IEventListComponent) => {
                 <>
                     <ul className="mx-4 grid grid-cols-1 gap-2">
                         {paginatedCommunities.map(community => (
-                            <CardCommunity
-                                key={`${community.eventId}-${community.id}`}
-                                community={community}
-                            />
+                            <CardCommunity key={`${community.eventId}-${community.id}`} community={community} />
                         ))}
                     </ul>
-                    <Pagination
-                        currentPage={currentPage}
-                        totalPages={totalPages}
-                        onPageChange={handlePageChange}
-                    />
+                    <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
                 </>
             ) : (
-                <p className="text-center mt-4 text-lg font-semibold">
-                    Aucune communauté trouvée pour {selectedCity}.
-                </p>
+                <p className="text-center mt-4 text-lg font-semibold">Aucune communauté trouvée pour {selectedCity}.</p>
             )}
         </section>
     );

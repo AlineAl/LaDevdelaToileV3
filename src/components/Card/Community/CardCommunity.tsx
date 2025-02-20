@@ -19,9 +19,7 @@ interface ICardCommunity {
 
 export const CardCommunity = ({ community }: ICardCommunity) => {
     const sortedEvents = useMemo(() => {
-        return [...community.events].sort(
-            (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-        );
+        return [...community.events].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
     }, [community.events]);
 
     const futureEvents = useMemo(() => {
@@ -48,14 +46,14 @@ export const CardCommunity = ({ community }: ICardCommunity) => {
                                 <h4 className="font-semibold mb-2">{firstFutureEvent.title}</h4>
                                 <div className="space-y-2 text-sm">
                                     <div className="flex items-center gap-2">
-                                    <span>
-                                        {Intl.DateTimeFormat("fr-FR", {
-                                            weekday: "long",
-                                            day: "numeric",
-                                            month: "long",
-                                            year: "numeric",
-                                        }).format(new Date(firstFutureEvent.date))}
-                                    </span>
+                                        <span>
+                                            {Intl.DateTimeFormat("fr-FR", {
+                                                weekday: "long",
+                                                day: "numeric",
+                                                month: "long",
+                                                year: "numeric"
+                                            }).format(new Date(firstFutureEvent.date))}
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -76,4 +74,3 @@ export const CardCommunity = ({ community }: ICardCommunity) => {
         </li>
     );
 };
-
