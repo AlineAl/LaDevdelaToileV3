@@ -48,13 +48,10 @@ export const EventListComponent = ({ events }: IEventListComponent) => {
 
     return (
         <section role="list" className="flex flex-col">
-            <form className="max-w-sm md:max-w-xl m-4">
-                <label htmlFor="city_select" className="block mb-2 text-lg font-medium">
-                    Sélectionnez une ville
-                </label>
+            <form className="max-w-sm md:max-w-xl m-4 flex justify-between">
                 <select
                     id="city_select"
-                    className="border border-gray-300 rounded-lg text-lg block w-full p-2.5 outline-none"
+                    className="border border-gray-300 rounded-lg text-lg block w-full mr-4 p-2.5 outline-none"
                     onChange={handleSelectCity}
                     value={selectedCity}
                 >
@@ -65,11 +62,17 @@ export const EventListComponent = ({ events }: IEventListComponent) => {
                         </option>
                     ))}
                 </select>
+
+                <input
+                    type="text"
+                    placeholder="Rechercher une communauté"
+                    className="border border-gray-300 rounded-lg block w-full p-2.5 outline-none"
+                />
             </form>
 
             {paginatedCommunities.length > 0 ? (
                 <>
-                    <ul className="m-4 grid grid-cols-1 gap-2">
+                    <ul className="mx-4 grid grid-cols-1 gap-2">
                         {paginatedCommunities.map(community => (
                             <CardCommunity
                                 key={`${community.eventId}-${community.id}`}
