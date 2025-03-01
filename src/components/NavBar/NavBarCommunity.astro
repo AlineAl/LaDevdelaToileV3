@@ -1,0 +1,68 @@
+<nav role="navigation" class="nav flex items-center justify-between">
+  <h1 class="text-2xl leading-normal py-2 px-4">France <span class="text-[#766CE2]">Tech</span> Community</h1>
+
+    <ul role="list" class="nav-underline flex items-center text-sm text-[#766CE2]">
+        <li class="p-4">
+            <a href="/communities">Les communautés</a>
+        </li>
+        <li class="p-4">
+            <a href="/events">Les événements</a>
+        </li>
+        <li class="p-4">
+            <a href="/podcasts">Podcasts</a>
+        </li>
+        <li class="p-4">
+            <a href="/books">Ouvrages</a>
+        </li>
+        <li class="p-4">
+            <a href="/">Ressources</a>
+        </li>
+        <li class="p-4">
+            <a href="/conferences/1">Contenus</a>
+        </li>
+    </ul>
+</nav>
+
+<style>
+    .nav {
+        @apply transition-transform duration-500;
+    }
+
+    .nav ul {
+        --_gap: 1rem;
+    }
+
+    .nav-underline li:not(ul li ul li) {
+        @apply relative overflow-hidden;
+        min-inline-size: 1.3rem;
+    }
+
+    .nav-underline li:not(ul li ul li)::after {
+        @apply absolute bg-[#4C40CF];
+        content: "";
+        inset-inline: 0;
+        inset-block-end: 0;
+        block-size: 5px;
+        translate: var(--_translate, 0);
+        scale: var(--_scale, 0) 1;
+        transition: scale 100ms var(--_scale-delay, 0ms),
+        translate 200ms,
+        color 200ms;
+    }
+
+    .nav-underline li:hover ~ li {
+        --_translate: -100%;
+        --_scale-delay: 200ms;
+    }
+
+    .nav:hover li {
+        --_translate: 100%;
+        --_scale-delay: 200ms;
+    }
+
+    .nav li:hover {
+        --_scale: 1;
+        --_translate: 0;
+        --_scale-delay: 0ms;
+    }
+</style>

@@ -1,0 +1,89 @@
+---
+import { ViewTransitions } from 'astro:transitions';
+import NavBarCommunity from "../components/NavBar/NavBarCommunity.astro";
+
+interface Props {
+    title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Site consacré aux développeur·euse·s souhaitant améliorer sa façon d'apprendre, ses pratiques et ses théories de base sur la culture du web." />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/logo-removebg.png" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <title>{title}</title>
+    <ViewTransitions />
+    </head>
+    <body>
+    <NavBarCommunity />
+    <slot />
+    </body>
+    </html>
+
+    <style is:global>
+    :root {
+    --accent: 136, 58, 234;
+    --accent-light: 224, 204, 250;
+    --accent-dark: 49, 10, 101;
+    --accent-gradient: linear-gradient(
+    45deg,
+    rgb(var(--accent)),
+    rgb(var(--accent-light)) 30%,
+    white 60%
+    );
+}
+
+    @font-face {
+    font-family: 'Luciole';
+    src: url('/fonts/Luciole_webfonts/Luciole-Regular/Luciole-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+    @font-face {
+    font-family: 'Luciole';
+    src: url('/fonts/Luciole_webfonts/Luciole-Bold/Luciole-Bold.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+}
+
+    @font-face {
+    font-family: 'Luciole';
+    src: url('/fonts/Luciole_webfonts/Luciole-Italic/Luciole-Italic.woff2') format('woff2');
+    font-weight: normal;
+    font-style: italic;
+}
+
+    @font-face {
+    font-family: 'Luciole';
+    src: url('/fonts/Luciole_webfonts/Luciole-BoldItalic/Luciole-BoldItalic.woff2') format('woff2');
+    font-weight: bold;
+    font-style: italic;
+}
+
+
+    body {
+    font-family: Luciole, sans-serif;
+}
+
+    code {
+    font-family:
+    Luciole,
+    Menlo,
+    Monaco,
+    Lucida Console,
+    Liberation Mono,
+    DejaVu Sans Mono,
+    Bitstream Vera Sans Mono,
+    Courier New,
+    monospace;
+}
+    </style>

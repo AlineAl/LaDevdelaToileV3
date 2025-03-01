@@ -1,0 +1,16 @@
+---
+import Footer from "../../components/Footer.astro";
+import { getCollection } from "astro:content";
+import { CommunityListComponent } from "../../components/List/Community/CommunityListComponent";
+import LayoutCommunity from "../../layouts/LayoutCommunity.astro";
+export const prerender = true;
+const communities = await getCollection("communities");
+---
+
+<LayoutCommunity title="France Tech Communautés">
+    <CommunityListComponent
+        client:only="react"
+        communities={communities}
+    />
+    <Footer />
+</LayoutCommunity>

@@ -33,9 +33,9 @@ const blog = defineCollection({
         })
 });
 
-const events = defineCollection({
+const communities = defineCollection({
     loader: file("public/communities-events.json"),
     schema: citySchema
 });
 
-export const collections = { blog, events };
+export const collections = { blog, communities };
