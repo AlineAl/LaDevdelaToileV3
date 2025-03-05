@@ -59,7 +59,8 @@ export const CommunityListComponent = ({ communities }: ICommunityListComponent)
         return filteredEvents.flatMap(event =>
             event.data.communities.map(community => ({
                 ...community,
-                eventId: event.id
+                eventId: event.id,
+                city: event.data.city
             }))
         );
     }, [filteredEvents]);
@@ -106,7 +107,7 @@ export const CommunityListComponent = ({ communities }: ICommunityListComponent)
         <section role="list" className="flex flex-col">
             <CommunitiesHeader />
             <section role="form" className="flex justify-between items-center flex-wrap md:flex-nowrap">
-                <form className="m-4 flex items-center flex-wrap md:flex-nowrap w-full md:w-auto">
+                <form className="m-8 flex items-center flex-wrap md:flex-nowrap w-full md:w-auto">
                     <select
                         id="city_select"
                         className="border border-[#DEDEDE] text-[#6D6D6D] rounded-lg text-sm h-12 md:mr-4 p-2.5 outline-none w-full md:w-56 mb-2 md:mb-0"
@@ -131,20 +132,23 @@ export const CommunityListComponent = ({ communities }: ICommunityListComponent)
 
                 <button
                     type="button"
-                    className="flex items-center justify-center m-4 p-2.5 h-12 text-sm bg-[#4C40CF] text-white rounded-lg whitespace-nowrap"
+                    className="flex items-center justify-center m-8 p-2.5 h-12 text-sm bg-[#4C40CF] text-white rounded-lg whitespace-nowrap"
                 >
                     <LuCalendar size={20} className="mr-2" />
                     <span className="mt-1">Voir les événements</span>
                 </button>
             </section>
 
+            <span className="mx-8 text-sm text-[#6D6D6D] italic">{filteredCommunities.length} communautés</span>
+
             {paginatedCommunities.length > 0 ? (
                 <>
-                    <ul className="mx-4 grid grid-cols-1 gap-2">
+                    <ul className="mx-8 grid grid-cols-1 gap-2">
                         {paginatedCommunities.map(community => (
                             <CardCommunity
                                 key={`${community.eventId}-${community.id}`}
                                 community={community}
+                                city={community.city}
                             />
                         ))}
                     </ul>
