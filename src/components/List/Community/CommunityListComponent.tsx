@@ -132,7 +132,8 @@ export const CommunityListComponent = ({ communities }: ICommunityListComponent)
 
                 <button
                     type="button"
-                    className="flex items-center justify-center m-8 p-2.5 h-12 text-sm bg-[#4C40CF] text-white rounded-lg whitespace-nowrap"
+                    className="flex items-center justify-center mt-0 md:mt-8 m-8 p-2.5 h-12 text-sm bg-[#4C40CF] text-white rounded-lg whitespace-nowrap"
+                    onClick={() => window.location.href = "/events"}
                 >
                     <LuCalendar size={20} className="mr-2" />
                     <span className="mt-1">Voir les événements</span>

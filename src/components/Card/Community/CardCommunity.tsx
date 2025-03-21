@@ -33,7 +33,7 @@ export const CardCommunity = ({ community }: ICardCommunity) => {
     return (
         <li
             role="listitem"
-            className="flex justify-between items-center border-b p-6"
+            className="md:flex justify-between items-center border-b p-6"
         >
             <div className="mb-6">
                 <h3 className="text-center font-extrabold text-2xl mb-2">{community.name}</h3>
