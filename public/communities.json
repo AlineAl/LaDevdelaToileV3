@@ -179,6 +179,10 @@
       {
         "name": "gdg_nantes_android",
         "platform": "meetup"
+      },
+      {
+        "name": "software_crafters_nantes",
+        "platform": "mobilizon"
       }
     ]
   },
