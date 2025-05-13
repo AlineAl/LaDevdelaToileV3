@@ -173,16 +173,16 @@
         "platform": "meetup"
       },
       {
-        "name": "nantes-software-crafters-nantes",
-        "platform": "meetup"
-      },
-      {
         "name": "generative-ai-nantes",
         "platform": "meetup"
       },
       {
         "name": "gdg_nantes_android",
         "platform": "meetup"
+      },
+      {
+        "name": "software_crafters_nantes",
+        "platform": "mobilizon"
       }
     ]
   },
